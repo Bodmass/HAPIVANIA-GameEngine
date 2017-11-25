@@ -1,0 +1,11 @@
+﻿  Visualisation.cpp
+  Texture.cpp
+  Game.cpp
+p:\github\hapi_milestone\hapi_start\game.cpp(38): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+p:\github\hapi_milestone\hapi_start\game.cpp(39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+p:\github\hapi_milestone\hapi_start\game.cpp(41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  main.cpp
+  Generating Code...
+  HAPI_Start.vcxproj -> P:\GitHub\HAPI_Milestone\x64\Debug\HAPI_Start.exe
