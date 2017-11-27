@@ -1,11 +1,9 @@
-﻿  Visualisation.cpp
-  Texture.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (HAPI_Start.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Game.cpp
-p:\github\hapi_milestone\hapi_start\game.cpp(38): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-p:\github\hapi_milestone\hapi_start\game.cpp(39): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+p:\github\hapi_milestone\hapi_start\game.cpp(40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 p:\github\hapi_milestone\hapi_start\game.cpp(41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+p:\github\hapi_milestone\hapi_start\game.cpp(43): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
-  Compiling...
-  main.cpp
-  Generating Code...
-  HAPI_Start.vcxproj -> P:\GitHub\HAPI_Milestone\x64\Debug\HAPI_Start.exe
+  Skipping... (no relevant changes detected)
+  Texture.cpp
+  HAPI_Start.vcxproj -> P:\GitHub\HAPI_Milestone\x64\Debug\AzEngine (HAPI GEC).exe

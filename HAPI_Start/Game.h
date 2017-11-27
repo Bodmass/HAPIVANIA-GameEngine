@@ -19,8 +19,15 @@ private:
 	Visualisation graphics;
 	BYTE* screen;
 	Rectangle* screenRect;
+	Rectangle* playerRect;
+	Rectangle* platformRect;
 	int CamX{ 0 }, CamY{ 0 };
-	//Rectangle* playerRect;
+
+	//Player Info
+	int playerSpeed = 1;
+	bool player_isJumping{ false };
+	int jumping_time = 0;
+	int jumptime2 = 0;
 
 
 //#define HK_ANALOGUE_LEFT_THUMB_X		2
@@ -37,6 +44,8 @@ public:
 	HAPI_TColour setColour(BYTE* screen, int r, int g, int b, int a);
 	int getCameraX() { return CamX; }
 	int getCameraY() { return CamY; }
+	int gameClock;
+	void player_Jump();
 
 };
 
