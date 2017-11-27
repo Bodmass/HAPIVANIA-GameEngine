@@ -1,6 +1,9 @@
-#include "Rectangle.h"
+#pragma once 
 
-#pragma once
+#include "Rectangle.h"
+#include <iostream>
+
+
 class CollisionDetection
 {
 private:
@@ -8,7 +11,7 @@ private:
 public:
 	static bool CollisionDetection::CheckCollision(Rectangle player, Rectangle object)
 	{
-		//std::cout << "The player is at: " << player.getTop() << " and the Object is at " << object.getTop() << std::endl;
+		//std::cout << "The player is at: " << player.getX() << "," << player.getY() << " and the Object is at " << object.getX() << "," << object.getY() << std::endl;
 		//std::cout << "Checking for Collision: ";
 		if ((player.getX() >= object.getX() && player.getX() <= (object.getX() + object.getWidth())) ||
 			(player.getX() + player.getWidth()) >= object.getX() && (player.getX() + player.getWidth()) <= (object.getX() + object.getWidth()))

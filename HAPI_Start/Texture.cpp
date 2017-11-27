@@ -19,9 +19,9 @@ Texture::Texture(std::string filename, bool hasAlpha) : tName(filename), hasAlph
 
 Texture::~Texture()
 {
-//	if (t_sprite != nullptr)
+	if (t_sprite != nullptr)
 	{
-		//delete[] t_sprite; //TO BE FIXED
+		delete[] t_sprite; //TO BE FIXED
 	}
 		
 }

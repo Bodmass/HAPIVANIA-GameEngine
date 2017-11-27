@@ -1,3 +1,5 @@
+#pragma once
+
 #include <HAPI_lib.h>
 #include <string>
 

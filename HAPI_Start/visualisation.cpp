@@ -1,5 +1,7 @@
 #include "Visualisation.h"
 #include <vector>
+#include <stdio.h>      /* printf */
+#include <assert.h>     /* assert */
 
 
 Visualisation::Visualisation()
@@ -11,7 +13,7 @@ Visualisation::~Visualisation()
 {
 	for (int i = 0; i<index; i++)
 	{
-		delete[] SpriteMap[i]->getSprite();
+		//delete SpriteMap[i]->getSprite();
 		delete SpriteMap[i];
 		//SpriteMap.erase(i);
 	}
@@ -43,9 +45,17 @@ void Visualisation::Blit(BYTE *screen, Rectangle* screenRect, Texture* texture, 
 	Rectangle clippedRect = spriteRect;
 	clippedRect.Translate(-texturePosX, -texturePosY);
 
-	BYTE* screenPtr = screen + ((texturePosX + clippedRect.getLeft()) + (texturePosY + clippedRect.getTop())*screenWidth) * 4;
+	BYTE* screenPtr = screen;
+	BYTE* texturePtr = texture->getSprite();
 
-	BYTE* texturePtr = texture->getSprite() + (clippedRect.getTop() * textureWidth * 4) + (clippedRect.getLeft()*4);
+	if (!screenPtr || !texturePtr)
+	{
+		return;
+	}
+
+	screenPtr = screen + ((texturePosX + clippedRect.getLeft()) + (texturePosY + clippedRect.getTop())*screenWidth) * 4;
+
+	texturePtr = texture->getSprite() + (clippedRect.getTop() * textureWidth * 4) + (clippedRect.getLeft() * 4);
 
 	for (int y = 0; y < clippedRect.getHeight(); y++)
 	{
