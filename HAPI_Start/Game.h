@@ -22,8 +22,8 @@ private:
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	Visualisation graphics;
 	BYTE* screen = nullptr;
-	Rectangle* screenRect;
-	GameScene* game = nullptr;
+	Rectangle screenRect;
+	GameScene game = nullptr;
 	
 
 
@@ -46,7 +46,7 @@ public:
 	int getScreenHeight() { return screenHeight; }
 	void setCamera(int x, int y) { CamX += x; CamY += y; }
 	HAPI_TKeyboardData getKeyboard() { return keyData; }
-	Rectangle* getScreenRect() { return screenRect; }
+	Rectangle& getScreenRect() { return screenRect; }
 	bool checkRunning() { return isRunning; }
 	Visualisation& getGraphics() { return graphics; }
 	BYTE* getScreen() { return screen; }

@@ -20,8 +20,8 @@ private:
 public:
 	Visualisation();
 	~Visualisation();
-	void Blit(BYTE* screen, Rectangle* screenRect, Texture* texture, int CamX, int CamY); //Blits the Texture Line by Line (NO ALPHA)
-	void BlitAlpha(BYTE* screen, Rectangle* screenRect, Texture* texture, int CamX, int CamY); //Blits the Texture pixel by pixel (WITH ALPHA)
+	void Blit(BYTE* screen, Rectangle screenRect, Texture* texture, int posX, int posY, int CamX, int CamY); //Blits the Texture Line by Line (NO ALPHA)
+	void BlitAlpha(BYTE* screen, Rectangle screenRect, Texture* texture, int posX, int posY, int CamX, int CamY); //Blits the Texture pixel by pixel (WITH ALPHA)
 	void loadTexture(std::string tName, bool hasAlpha = true); //pushes the texture into the SpriteMap
 	
 

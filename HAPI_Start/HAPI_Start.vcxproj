@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
@@ -29,15 +30,18 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="SpriteAnimator.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Visualisation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="SpriteAnimator.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Visualisation.h" />
   </ItemGroup>

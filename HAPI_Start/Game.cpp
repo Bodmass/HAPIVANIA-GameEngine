@@ -18,8 +18,8 @@ void Game::Run()
 	if (isRunning)
 	{
 		screen = HAPI.GetScreenPointer();
-		screenRect = new Rectangle(screenWidth, screenHeight);
-		game = new GameScene(this);
+		screenRect = Rectangle(screenWidth, screenHeight);
+		game = GameScene(this);
 
 		HAPI.SetShowFPS(true);
 		
@@ -29,15 +29,13 @@ void Game::Run()
 
 void Game::Update()
 {
-	game = new GameScene(this);
-	game->loadTextures();
+	game.loadTextures();
+	game.loadGameObject();
 	while (HAPI.Update())
 	{
 		const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
-		game->update();
+		game.update();
 	}
-	delete game;
-	delete screenRect;
 }
 
 

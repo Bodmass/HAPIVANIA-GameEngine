@@ -12,8 +12,6 @@ Texture::Texture(std::string filename, bool hasAlpha) : tName(filename), hasAlph
 	if (!HAPI.LoadTexture(filename, &t_sprite, t_Width, t_Height))
 		HAPI.UserMessage("The Texture was unable to be loaded", "Ohh noooo");
 	
-	t_X = 1;
-	t_Y = 1;
 }
 
 

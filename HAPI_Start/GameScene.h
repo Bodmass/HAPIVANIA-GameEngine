@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "Visualisation.h"
 #include "Rectangle.h"
+#include "GameObject.h"
 
 using namespace HAPISPACE;
 
@@ -14,9 +15,13 @@ class GameScene
 {
 private:
 
-	Rectangle playerRect;
-	Rectangle platformRect;
 	std::vector<Rectangle> platforms;
+	std::vector<GameObject*> gameObjects;
+
+	GameObject* BG;
+	GameObject* player;
+	GameObject* platform1;
+	GameObject* platform2;
 
 
 	//Player Info
@@ -36,7 +41,7 @@ public:
 
 	void update();
 	void loadTextures();
-
+	void loadGameObject();
 	GameScene(Game* game);
 	~GameScene();
 };

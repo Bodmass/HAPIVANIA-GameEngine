@@ -20,25 +20,25 @@ Visualisation::~Visualisation()
 	SpriteMap.clear();
 }
 
-void Visualisation::Blit(BYTE *screen, Rectangle* screenRect, Texture* texture, int CamX, int CamY)
+void Visualisation::Blit(BYTE *screen, Rectangle screenRect, Texture* texture, int posX, int posY, int CamX, int CamY)
 {
-	int screenWidth = screenRect->getWidth();
-	int screenHeight = screenRect->getHeight();
+	int screenWidth = screenRect.getWidth();
+	int screenHeight = screenRect.getHeight();
 
 	int textureWidth = texture->getWidth();
 	int textureHeight = texture->getHeight();
 
-	int texturePosX{ texture->getPosX() }, texturePosY{ texture->getPosY() };
+	int texturePosX{ posX }, texturePosY{ posX };
 
 	if (texture->checkEntity())
 	{
-		texturePosX = texture->getPosX() + CamX;
-		texturePosY = texture->getPosY() + CamY;
+		texturePosX = posX + CamX;
+		texturePosY = posY + CamY;
 	}
 	
 	Rectangle spriteRect = Rectangle(texture->getWidth(), texture->getHeight());
 	spriteRect.Translate(texturePosX, texturePosY);
-	spriteRect = screenRect->rContains(spriteRect);
+	spriteRect = screenRect.rContains(spriteRect);
 	if (spriteRect.getWidth() <= 0 && spriteRect.getHeight() <= 0)
 		return; //Returns if Sprite is off screen
 
@@ -66,11 +66,11 @@ void Visualisation::Blit(BYTE *screen, Rectangle* screenRect, Texture* texture, 
 	}
 }
 
-void Visualisation::BlitAlpha(BYTE* screen, Rectangle* screenRect, Texture* texture, int CamX, int CamY)
+void Visualisation::BlitAlpha(BYTE* screen, Rectangle screenRect, Texture* texture, int posX, int posY, int CamX, int CamY)
 {
 
-	int screenWidth = screenRect->getWidth();
-	int screenHeight = screenRect->getHeight();
+	int screenWidth = screenRect.getWidth();
+	int screenHeight = screenRect.getHeight();
 
 	//Rectangle cameraRect = Rectangle(screenWidth, screenHeight);
 	
@@ -80,18 +80,18 @@ void Visualisation::BlitAlpha(BYTE* screen, Rectangle* screenRect, Texture* text
 	int textureWidth = texture->getWidth();
 	int textureHeight = texture->getHeight();
 
-	int texturePosX{ texture->getPosX()}, texturePosY{ texture->getPosY()};
+	int texturePosX{ posX}, texturePosY{ posX };
 
 	if (texture->checkEntity())
 	{
-		texturePosX = texture->getPosX() + CamX;
-		texturePosY = texture->getPosY() + CamY;
+		texturePosX = posX + CamX;
+		texturePosY = posY + CamY;
 	}
 
 
 	Rectangle spriteRect = Rectangle(texture->getWidth(), texture->getHeight());
 	spriteRect.Translate(texturePosX, texturePosY);
-	spriteRect = screenRect->rContains(spriteRect);
+	spriteRect = screenRect.rContains(spriteRect);
 	if (spriteRect.getWidth() <= 0 && spriteRect.getHeight() <= 0)
 		return; //Returns if Sprite is off screen
 

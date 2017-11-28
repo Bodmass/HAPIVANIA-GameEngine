@@ -7,15 +7,13 @@ GameScene::GameScene(Game* game)
 	game_ = game;
 }
 
-/*
-GameScene::GameScene(BYTE * newscreen) : screen(newscreen)
-{
-	screen = newscreen;
-}*/
 
 GameScene::~GameScene()
 {
-
+	for (auto* gameObject : gameObjects)
+	{
+		delete gameObject;
+	}
 }
 
 
@@ -23,16 +21,14 @@ void GameScene::update()
 {
 		gameClock = HAPI.GetTime();
 
-		//setColour(screen, 0, 0, 0, 255); //Clear screen to colour
-		for (size_t i = 0; i < game_->getGraphics().getSpriteMap().size(); i++)
+		for (auto* gameObject : gameObjects)
 		{
-			//if (graphics.getSprite(i)->getAlpha())
-			if (game_->getGraphics().getSprite(i)->getAlpha())
-				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), game_->getGraphics().getSprite(i), game_->getCameraX(), game_->getCameraY());
-			else
-				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), game_->getGraphics().getSprite(i), game_->getCameraX(), game_->getCameraY());
-		}
 
+			if (gameObject->getTexture()->getAlpha())
+				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+			else
+				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+		}
 		/*
 		if (controllerData.isAttached)
 		{
@@ -62,23 +58,25 @@ void GameScene::update()
 
 
 
-		if (game_->getKeyboard().scanCode[HK_LSHIFT])
+		if (game_->getKeyboard().scanCode[HK_LSHIFT] && player)
 			playerSpeed = 2;
 		else
 			playerSpeed = 1;
 
-		Rectangle* player2;
-		player2 = new Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight());
-		player2->Move(game_->getGraphics().getSprite(1)->getPosX() + 1, game_->getGraphics().getSprite(1)->getPosY() + 1);
+		Rectangle player2;
+		if (player)
+		{
+			
+			player2 = Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight());
+			player2.Move(player->getX() + 1, player->getY());
 
-
-
+		}
 		
 		col = false;
 
 		for (int i = 0; i < platforms.size(); i++)
 		{
-			if (CollisionDetection::CheckCollision(*player2, platforms[i]))
+			if (CollisionDetection::CheckCollision(player2, platforms[i]))
 			{
 				col = true;
 				break;
@@ -86,18 +84,18 @@ void GameScene::update()
 
 		}
 
-		if (!col && !player_isJumping)
+		if (!col && !player_isJumping && player)
 		{
-			game_->getGraphics().getSprite(1)->getPosY() += playerSpeed;
+			player->setY(player->getY() + playerSpeed);
 		}
 
-		if (game_->getKeyboard().scanCode['A'])
+		if (game_->getKeyboard().scanCode['A'] && player)
 		{
 			//if(!col)
 			//{
 
-				game_->getGraphics().getSprite(1)->getPosX() -= playerSpeed;
-				if (game_->getGraphics().getSprite(1)->getPosX() > game_->getScreenWidth() / 2)
+				player->setX(player->getX() - playerSpeed);
+				if (player->getX() > game_->getScreenWidth() / 2)
 					game_->setCamera(playerSpeed, 0);
 				else
 					game_->setCamera(0, 0);
@@ -105,13 +103,13 @@ void GameScene::update()
 
 		}
 
-		if (game_->getKeyboard().scanCode['D'])
+		if (game_->getKeyboard().scanCode['D'] && player)
 		{
 
 			//if (!col)
 			//{
-				game_->getGraphics().getSprite(1)->getPosX() += playerSpeed;
-				if (game_->getGraphics().getSprite(1)->getPosX() > game_->getScreenWidth() / 2)
+				player->setX(player->getX() + playerSpeed);
+				if (player->getX() > game_->getScreenWidth() / 2)
 					game_->setCamera(-playerSpeed, 0);
 				else
 					game_->setCamera(0, 0);
@@ -119,21 +117,21 @@ void GameScene::update()
 
 		}//85,359
 
-		if (game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE])
+		if ((game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE]) && player)
 		{
 			if (!player_isJumping)
 				player_Jump();
 
 		}
-		if (player_isJumping)
+		if (player_isJumping && player)
 			player_Jump();
 
-		delete[] player2;
-
-		playerRect.Move(game_->getGraphics().getSprite(1)->getPosX(), game_->getGraphics().getSprite(1)->getPosY());
-		platforms[0].Move(game_->getGraphics().getSprite(2)->getPosX(), game_->getGraphics().getSprite(2)->getPosY());
-		platforms[1].Move(game_->getGraphics().getSprite(3)->getPosX(), game_->getGraphics().getSprite(3)->getPosY());
-
+		if (player && platforms.size() >= 2)
+		{
+			player->getRect().Move(player->getX(), player->getY());
+			platforms[0].Move(platform1->getX(), platform1->getY());
+			platforms[1].Move(platform2->getX(), platform2->getY());
+		}
 		/*
 		if (keyData.scanCode[HK_DOWN])
 			CamY += playerSpeed;
@@ -154,24 +152,26 @@ void GameScene::update()
 
 void GameScene::loadTextures()
 {
-	game_->getGraphics().loadTexture("Data/BG.tga", false); //BG
-	game_->getGraphics().loadTexture("Data/PlayerTest.tga"); //Player
-	game_->getGraphics().getSprite(1)->setEntity();
-	game_->getGraphics().getSprite(1)->getPosX() = 85;
-	game_->getGraphics().getSprite(1)->getPosY() = 359;
-	playerRect = Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight());
-	game_->getGraphics().loadTexture("Data/test.tga", false); //Ground
-	game_->getGraphics().getSprite(2)->setEntity();
-	game_->getGraphics().getSprite(2)->getPosY() = 400;
-	platformRect = Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight());
-	platforms.push_back(platformRect);
-	game_->getGraphics().loadTexture("Data/platform1.tga", false); //Platform 1
-	game_->getGraphics().getSprite(3)->setEntity();
-	game_->getGraphics().getSprite(3)->getPosY() = 300;
-	game_->getGraphics().getSprite(3)->getPosX() = 300;
-	Rectangle platform2Rect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-	platforms.push_back(platform2Rect);
+	game_->getGraphics().loadTexture("Data/BG.tga", false); //0 - BG -
+	game_->getGraphics().loadTexture("Data/PlayerTest.tga"); //1 - Player - 
+	game_->getGraphics().loadTexture("Data/test.tga", false); //2 - Platform 1 -
+	game_->getGraphics().loadTexture("Data/platform1.tga", false); //3 - Platform 2 - 
+}
 
+void GameScene::loadGameObject()
+{
+	BG = new GameObject(game_->getGraphics().getSprite(0), Rectangle(game_->getGraphics().getSprite(0)->getWidth(), game_->getGraphics().getSprite(0)->getHeight()), 0, 0, true);
+	player = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 85, 359);
+	platform1 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 0, 400);
+	platform2 = new GameObject(game_->getGraphics().getSprite(3), Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight()), 300, 300);
+
+	gameObjects.push_back(BG);
+	gameObjects.push_back(player);
+	gameObjects.push_back(platform1);
+	gameObjects.push_back(platform2);
+
+	platforms.push_back(platform1->getRect());
+	platforms.push_back(platform2->getRect());
 }
 
 void GameScene::player_Jump()
@@ -191,14 +191,14 @@ void GameScene::player_Jump()
 			if (col)
 			{
 				player_isJumping = false;
-				game_->getGraphics().getSprite(1)->getPosY() -= 1;
+				player->setY(player->getY() - playerSpeed);
 			}
 			else
-				game_->getGraphics().getSprite(1)->getPosY() += 1;
+				player->setY(player->getY() + playerSpeed);
 		}
 		else
 		{
-			game_->getGraphics().getSprite(1)->getPosY() -= 1;
+			player->setY(player->getY() - playerSpeed);
 			if (col)
 			{
 				jumping_time = gameClock - 1;
