@@ -19,9 +19,9 @@ public:
 	Texture(std::string filename, bool hasAlpha = true);
 	virtual ~Texture();
 	virtual BYTE* getSprite();
-	bool getAlpha() { return hasAlpha_; };
-	int getWidth() { return t_Width; };
-	int getHeight() { return t_Height; };
+	virtual bool getAlpha() { return hasAlpha_; };
+	virtual int getWidth() { return t_Width; };
+	virtual int getHeight() { return t_Height; };
 	bool checkEntity() { return isEntity_; };
 	bool setEntity() { return isEntity_ = true; };
 

@@ -6,6 +6,7 @@
 #include "Visualisation.h"
 #include "Rectangle.h"
 #include "GameScene.h"
+#include "TitleScreen.h"
 
 using namespace HAPISPACE;
 
@@ -23,7 +24,9 @@ private:
 	Visualisation graphics;
 	BYTE* screen = nullptr;
 	Rectangle screenRect;
+	GameScene* current = nullptr;
 	GameScene game = nullptr;
+	TitleScreen title = nullptr;
 	
 
 
@@ -44,12 +47,15 @@ public:
 	int getCameraY() { return CamY; }
 	int getScreenWidth() { return screenWidth; }
 	int getScreenHeight() { return screenHeight; }
-	void setCamera(int x, int y) { CamX += x; CamY += y; }
+	void setCamera(int x, int y) { CamX = x; CamY = y; }
 	HAPI_TKeyboardData getKeyboard() { return keyData; }
 	Rectangle& getScreenRect() { return screenRect; }
 	bool checkRunning() { return isRunning; }
 	Visualisation& getGraphics() { return graphics; }
 	BYTE* getScreen() { return screen; }
+
+	void switchScene_Title() { current = &title; }
+	void switchScene_Game() { current = &game; }
 
 
 };

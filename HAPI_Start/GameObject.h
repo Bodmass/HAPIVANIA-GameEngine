@@ -18,6 +18,8 @@ public:
 	int getY() { return positionY; }
 	void setX(int x) { positionX = x; }
 	void setY(int y) { positionY = y; }
+	void setTexture(Texture* texture) { texture_ = texture; }
+	void setRectangle(Rectangle rectangle) { rectangle_ = rectangle; }
 	~GameObject();
 };
 

@@ -80,7 +80,7 @@ void Visualisation::BlitAlpha(BYTE* screen, Rectangle screenRect, Texture* textu
 	int textureWidth = texture->getWidth();
 	int textureHeight = texture->getHeight();
 
-	int texturePosX{ posX}, texturePosY{ posX };
+	int texturePosX{ posX}, texturePosY{ posY };
 
 	if (texture->checkEntity())
 	{

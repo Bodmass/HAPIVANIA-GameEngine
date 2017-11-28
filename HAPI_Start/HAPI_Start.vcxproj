@@ -32,6 +32,7 @@
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="SpriteAnimator.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="Visualisation.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +44,7 @@
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SpriteAnimator.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="Visualisation.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
