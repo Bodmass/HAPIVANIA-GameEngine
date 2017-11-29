@@ -49,6 +49,7 @@ private:
 
 	//Player Info
 	int playerSpeed = 1;
+	int jumpspeed = 3;
 	bool player_isJumping{ false };
 	int jumping_time = 0;
 	int jumptime2 = 0;
@@ -67,6 +68,7 @@ protected:
 public:
 
 	virtual void update();
+	virtual void render();
 	virtual void loadTextures();
 	virtual void loadGameObject();
 	GameScene(Game* game);

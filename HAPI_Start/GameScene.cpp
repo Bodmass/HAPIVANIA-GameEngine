@@ -41,14 +41,6 @@ void GameScene::update()
 		//player->setTexture(playerSprites_RightRun);
 
 
-		for (auto* gameObject : gameObjects)
-		{
-
-			if (gameObject->getTexture()->getAlpha())
-				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
-			else
-				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
-		}
 		/*
 		if (controllerData.isAttached)
 		{
@@ -83,21 +75,22 @@ void GameScene::update()
 		if (game_->getKeyboard().scanCode[HK_LSHIFT] && player)
 		{
 			playerSprint = true;
-			playerSpeed = 2;
+			playerSpeed = 4;
 		}
 		else
-			playerSpeed = 1;
+			playerSpeed = 2;
 
 		Rectangle player2;
 		if (player)
 		{
 			
 			player2 = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-			player2.Move(player->getX() + 1, player->getY());
+			player2.Move(player->getX(), player->getY() - 1);
 
 		}
 		
 		col = false;
+		bool colx = false;
 
 		for (int i = 0; i < platforms.size(); i++)
 		{
@@ -109,9 +102,19 @@ void GameScene::update()
 
 		}
 
+		for (int i = 0; i < platforms.size(); i++)
+		{
+			if (CollisionDetection::CheckXCollision(player2, platforms[i]))
+			{
+				colx = true;
+				break;
+			}
+
+		}
+
 		if (!col && !player_isJumping && player)
 		{
-			player->setY(player->getY() + 1);
+			player->setY(player->getY() + jumpspeed);
 		}
 
 		
@@ -119,34 +122,31 @@ void GameScene::update()
 
 		if (game_->getKeyboard().scanCode['A'] && player)
 		{
-			isLeft = true;
-			isRight = false;
-			if (!player_isJumping)
-			{
-				if (!playerSprint)
-					playerSprite = playerSprites_LeftRun;
+
+				isLeft = true;
+				isRight = false;
+				if (!player_isJumping)
+				{
+					if (!playerSprint)
+						playerSprite = playerSprites_LeftRun;
+					else
+						playerSprite = playerSprites_LeftSprint;
+				}
 				else
-					playerSprite = playerSprites_LeftSprint;
-			}
-			else
 				{
 					playerSprite = playerSprites_LeftJump;
 				}
-			//if(!col)
-			//{
-
-			player->setX(player->getX() - playerSpeed);
-			if (player->getX() < 0)
-			{
-				player->setX(0);
-			}
-			if (player->getX() > game_->getScreenWidth() / 2 - 48)
-				game_->setCamera(game_->getCameraX() + playerSpeed, game_->getCameraY());
-			else
-				game_->setCamera(0, game_->getCameraY());
-			//}
 
 
+				player->setX(player->getX() - playerSpeed);
+				if (player->getX() < 0)
+				{
+					player->setX(0);
+				}
+				if (player->getX() > game_->getScreenWidth() / 2 - 48)
+					game_->setCamera(game_->getCameraX() + playerSpeed, game_->getCameraY());
+				else
+					game_->setCamera(0, game_->getCameraY());
 		}
 
 		bool isRightHeld = false;
@@ -246,6 +246,18 @@ void GameScene::update()
 		playerRect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
 		player->setRectangle(playerRect);
 
+}
+
+void GameScene::render()
+{
+	for (auto* gameObject : gameObjects)
+	{
+
+		if (gameObject->getTexture()->getAlpha())
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+		else
+			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+	}
 }
 
 void GameScene::loadTextures()
@@ -409,17 +421,17 @@ void GameScene::player_Jump()
 			if (col)
 			{
 				player_isJumping = false;
-				player->setY(player->getY() - 1);
+				player->setY(player->getY() - jumpspeed);
 			}
 			else
 			{
-				player->setY(player->getY() + 1);
+				player->setY(player->getY() + jumpspeed);
 			}
 		}
 		else
 		{
 			if(gameClock < jumping_time - 150)
-				player->setY(player->getY() - 1);
+				player->setY(player->getY() - jumpspeed);
 			if (col)
 			{
 				jumping_time = gameClock - 1;

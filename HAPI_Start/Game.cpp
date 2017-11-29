@@ -36,10 +36,24 @@ void Game::Update()
 	game.loadGameObject();
 	title.loadTextures();
 	title.loadGameObject();
+
+	double time = 0;
+	double deltaTime = 0;
+	double timesincelasttick = 0;
+	double timebetweenticks = 1000 / 60;
 	while (HAPI.Update())
 	{
-		const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
-		current->update();
+		deltaTime = HAPI.GetTime() - time;
+		time = HAPI.GetTime();
+		while(timesincelasttick > timebetweenticks) //lock refresh rate
+		{
+			timesincelasttick -= timebetweenticks;
+			const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
+			current->update();
+		}
+		current->render();
+		timesincelasttick += deltaTime;
+		
 	}
 }
 
