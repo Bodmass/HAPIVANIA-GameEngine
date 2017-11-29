@@ -19,6 +19,8 @@ GameScene::~GameScene()
 	delete playerSprites_RightRun;
 	delete playerSprites_LeftSprint;
 	delete playerSprites_RightSprint;
+	delete playerSprites_LeftJump;
+	delete playerSprites_RightJump;
 }
 
 
@@ -126,6 +128,10 @@ void GameScene::update()
 				else
 					playerSprite = playerSprites_LeftSprint;
 			}
+			else
+				{
+					playerSprite = playerSprites_LeftJump;
+				}
 			//if(!col)
 			//{
 
@@ -156,6 +162,11 @@ void GameScene::update()
 				else
 					playerSprite = playerSprites_RightSprint;
 			}
+			else
+			{
+				playerSprite = playerSprites_RightJump;
+			}
+
 			//if (!col)
 			//{
 			player->setX(player->getX() + playerSpeed);
@@ -195,8 +206,22 @@ void GameScene::update()
 		if ((game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE]) && player)
 		{
 			if (!player_isJumping)
+			{
+				if (isLeft)
+				{
+					playerSprite = playerSprites_LeftJump;
+				}
+				if (isRight)
+				{
+					playerSprite = playerSprites_RightJump;
+				}
+				if (!isLeft && !isRight)
+				{
+					playerSprite = playerSprites_RightJump;
+					isRight = true;
+				}
 				player_Jump();
-
+			}
 		}
 		if (player_isJumping && player)
 			player_Jump();
@@ -284,13 +309,26 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Textures/Player/Player_52.png"); //43
 	game_->getGraphics().loadTexture("Textures/Player/Player_53.png"); //44
 	game_->getGraphics().loadTexture("Textures/Player/Player_54.png"); //45
-
+	//LEFT JUMP
+	leftJumpStartIndex = game_->getGraphics().spriteMapSize();
+	game_->getGraphics().loadTexture("Textures/Player/Player_61.png"); //46
+	game_->getGraphics().loadTexture("Textures/Player/Player_62.png"); //47
+	game_->getGraphics().loadTexture("Textures/Player/Player_63.png"); //48
+	game_->getGraphics().loadTexture("Textures/Player/Player_64.png"); //49
+	//RIGHT JUMP
+	rightJumpStartIndex = game_->getGraphics().spriteMapSize();
+	game_->getGraphics().loadTexture("Textures/Player/Player_73.png"); //50
+	game_->getGraphics().loadTexture("Textures/Player/Player_74.png"); //51
+	game_->getGraphics().loadTexture("Textures/Player/Player_75.png"); //52
+	game_->getGraphics().loadTexture("Textures/Player/Player_76.png"); //53
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
 	playerSprites_LeftSprint = new SpriteAnimator();
 	playerSprites_RightSprint = new SpriteAnimator();
+	playerSprites_LeftJump = new SpriteAnimator();
+	playerSprites_RightJump = new SpriteAnimator();
 	
 	//playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(3));
 	for (int i = 0; i < 10; i++)
@@ -316,6 +354,18 @@ void GameScene::loadTextures()
 		playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite(leftSprintStartIndex + i));
 	}
 	playerSprites_LeftSprint->play();
+
+	for (int i = 0; i < 4; i++)
+	{
+		playerSprites_RightJump->addFrame(game_->getGraphics().getSprite(rightJumpStartIndex + i));
+	}
+	playerSprites_RightJump->play();
+
+	for (int i = 0; i < 4; i++)
+	{
+		playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite(leftJumpStartIndex + i));
+	}
+	playerSprites_LeftJump->play();
 
 	playerSprites_LeftIdle = game_->getGraphics().getSprite(4);
 	playerSprites_RightIdle = game_->getGraphics().getSprite(15);

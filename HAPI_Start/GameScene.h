@@ -28,12 +28,16 @@ private:
 	SpriteAnimator* playerSprites_RightRun = nullptr;
 	SpriteAnimator* playerSprites_LeftSprint = nullptr;
 	SpriteAnimator* playerSprites_RightSprint = nullptr;
+	SpriteAnimator* playerSprites_LeftJump = nullptr;
+	SpriteAnimator* playerSprites_RightJump = nullptr;
 
 
 	int leftRunStartIndex = -1;
 	int rightRunStartIndex = -1;
 	int leftSprintStartIndex = -1;
 	int rightSprintStartIndex = -1;
+	int leftJumpStartIndex = -1;
+	int rightJumpStartIndex = -1;
 
 
 	GameObject* BG;
