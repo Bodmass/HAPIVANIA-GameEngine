@@ -24,7 +24,7 @@ void Game::Run()
 		current = &title;
 
 		HAPI.SetShowFPS(true);
-		
+		HAPI.SetIcon(Icon, 32, 32);
 		Update();
 	}
 }

@@ -27,6 +27,8 @@ private:
 	GameScene* current = nullptr;
 	GameScene game = nullptr;
 	TitleScreen title = nullptr;
+	Texture icontexture = "Textures/Icon.png";
+	BYTE* Icon = icontexture.getSprite();
 	
 
 

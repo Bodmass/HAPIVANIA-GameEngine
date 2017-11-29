@@ -26,7 +26,7 @@ void GameScene::update()
 {
 	if (!BGMPlaying)
 	{
-		//HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
+		HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
 		BGMPlaying = true;
 	}
 
@@ -109,7 +109,7 @@ void GameScene::update()
 
 		if (!col && !player_isJumping && player)
 		{
-			player->setY(player->getY() + playerSpeed);
+			player->setY(player->getY() + 1);
 		}
 
 		
@@ -130,6 +130,10 @@ void GameScene::update()
 			//{
 
 			player->setX(player->getX() - playerSpeed);
+			if (player->getX() < 0)
+			{
+				player->setX(0);
+			}
 			if (player->getX() > game_->getScreenWidth() / 2 - 48)
 				game_->setCamera(game_->getCameraX() + playerSpeed, game_->getCameraY());
 			else
