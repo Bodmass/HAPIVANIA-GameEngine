@@ -84,23 +84,33 @@ void GameScene::update()
 		if(!playerSprint)
 			playerSpeed = 2;
 
-		Rectangle player2;
+		Rectangle playerfeet;
+		Rectangle playerleft;
+		Rectangle playerright;
+		Rectangle player3;
 		if (player)
 		{
 			
-			player2 = Rectangle(game_->getGraphics().getSprite(3)->getWidth() - 4, 4);
-			player2.Translate(player->getX(), player->getY() + 44);
+			playerfeet = Rectangle(game_->getGraphics().getSprite(3)->getWidth() - 8, 4);
+			playerleft = Rectangle(2, game_->getGraphics().getSprite(3)->getHeight() - 2);
+			playerright = Rectangle(2, game_->getGraphics().getSprite(3)->getHeight() - 2);
+			player3 = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight() - 2);
 
+			playerfeet.Translate(player->getX() + 4, player->getY() + 44);
+			playerleft.Translate(player->getX() - 2, player->getY() - 1);
+			playerright.Translate(player->getX() + 48 + 2, player->getY() - 1);
+			player3.Translate(player->getX(), player->getY() - 1);
 		}
 		
 		col = false;
-		bool colx = false;
+		bool col_left = false;
+		bool col_right = false;
 
 
 		for (int i = 0; i < platforms.size(); i++)
 		{
-			
-			if (CollisionDetection::CheckCollision(player2, platforms[i]))
+
+			if (CollisionDetection::CheckCollision(playerfeet, platforms[i]))
 			{
 				groundunder = true;
 				player_isFalling = false;
@@ -111,8 +121,33 @@ void GameScene::update()
 				groundunder = false;
 				player_isFalling = true;
 			}
+		}
 
-			if (CollisionDetection::CheckCollision(player->getRect(), platforms[i]))
+		for (int i = 0; i < platforms.size(); i++)
+		{
+			if (CollisionDetection::CheckCollision(playerright, platforms[i]))
+			{
+				col_right = true;
+				break;
+			}
+
+
+		}
+
+		for (int i = 0; i < platforms.size(); i++)
+		{
+			if (CollisionDetection::CheckCollision(playerleft, platforms[i]))
+			{
+				col_left = true;
+				break;
+			}
+
+
+		}
+
+		for (int i = 0; i < platforms.size(); i++)
+		{
+			if (CollisionDetection::CheckCollision(player3, platforms[i]))
 			{
 				col = true;
 				break;
@@ -120,6 +155,17 @@ void GameScene::update()
 
 
 		}
+
+		/*for (int i = 0; i < platforms.size(); i++)
+		{
+			if (CollisionDetection::CheckCollision(player3, platforms[i]))
+			{
+				col = true;
+				break;
+			}
+
+
+		}*/
 
 
 		if (player && !player_isJumping && !groundunder)
@@ -130,10 +176,14 @@ void GameScene::update()
 		
 		bool isLeftHeld{ false };
 
+		if (col)
+		{
+			
+		}
+
 		if (game_->getKeyboard().scanCode['A'] && player)
 		{
-			if (!col)
-			{
+
 				isLeft = true;
 				isRight = false;
 				if (!player_isJumping)
@@ -148,13 +198,14 @@ void GameScene::update()
 					playerSprite = playerSprites_LeftJump;
 				}
 
+				if(!col_left)
+					player->setX(player->getX() - playerSpeed);
 
-				player->setX(player->getX() - playerSpeed);
 				if (player->getX() < 0)
 				{
 					player->setX(0);
 				}
-			}
+		
 			
 		}
 
@@ -162,8 +213,6 @@ void GameScene::update()
 
 		if (game_->getKeyboard().scanCode['D'] && player)
 		{
-			if (!col)
-			{
 				isLeft = false;
 				isRight = true;
 				if (!player_isJumping)
@@ -178,16 +227,8 @@ void GameScene::update()
 					playerSprite = playerSprites_RightJump;
 				}
 
-				//if (!col)
-				//{
-				player->setX(player->getX() + playerSpeed);
-				/*
-				if (player->getX() > game_->getScreenWidth() / 2 - 48)
-					game_->setCamera(game_->getCameraX() - playerSpeed, game_->getCameraY());
-				else
-					game_->setCamera(0, game_->getCameraY());
-				*/
-			}
+				if(!col_right)
+					player->setX(player->getX() + playerSpeed);
 		}
 
 		//SET CAMERA
