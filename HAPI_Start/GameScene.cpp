@@ -168,6 +168,7 @@ void GameScene::update()
 		}*/
 
 
+
 		if (player && !player_isJumping && !groundunder)
 		{
 			player->setY(player->getY() + jumpspeed);
@@ -181,21 +182,27 @@ void GameScene::update()
 			
 		}
 
+		bool isMoving = false;
+
 		if (game_->getKeyboard().scanCode['A'] && player)
 		{
-
+				isMoving = true;
 				isLeft = true;
 				isRight = false;
-				if (!player_isJumping)
+				if (!player_isJumping && !player_isFalling)
 				{
 					if (!playerSprint)
 						playerSprite = playerSprites_LeftRun;
 					else
 						playerSprite = playerSprites_LeftSprint;
 				}
-				else
+				if(player_isJumping)
 				{
 					playerSprite = playerSprites_LeftJump;
+				}
+				if (player_isFalling && !player_isJumping)
+				{
+					playerSprite = playerSprites_LeftFall;
 				}
 
 				if(!col_left)
@@ -213,6 +220,7 @@ void GameScene::update()
 
 		if (game_->getKeyboard().scanCode['D'] && player)
 		{
+				isMoving = true;
 				isLeft = false;
 				isRight = true;
 				if (!player_isJumping)
@@ -222,9 +230,13 @@ void GameScene::update()
 					else
 						playerSprite = playerSprites_RightSprint;
 				}
-				else
+				if (player_isJumping)
 				{
 					playerSprite = playerSprites_RightJump;
+				}
+				if (player_isFalling && !player_isJumping)
+				{
+					playerSprite = playerSprites_RightFall;
 				}
 
 				if(!col_right)
@@ -274,6 +286,25 @@ void GameScene::update()
 			*/
 
 		//player->getRect() = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
+
+		if (player_isFalling && !player_isJumping)
+		{
+			if (isLeft)
+			{
+				playerSprite = playerSprites_LeftFall;
+			}
+			if (isRight)
+			{
+				playerSprite = playerSprites_RightFall;
+			}
+		}
+		if (!player_isFalling && !player_isJumping && !isMoving)
+		{
+			if (isLeft)
+				playerSprite = playerSprites_LeftIdle;
+			if (isRight)
+				playerSprite = playerSprites_RightIdle;
+		}
 
 		if ((game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE]) && player)
 		{
@@ -403,12 +434,16 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Textures/Player/Player_62.png"); //47
 	game_->getGraphics().loadTexture("Textures/Player/Player_63.png"); //48
 	game_->getGraphics().loadTexture("Textures/Player/Player_64.png"); //49
+	game_->getGraphics().loadTexture("Textures/Player/Player_65.png"); //50
+	game_->getGraphics().loadTexture("Textures/Player/Player_66.png"); //51
 	//RIGHT JUMP
 	rightJumpStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_73.png"); //50
-	game_->getGraphics().loadTexture("Textures/Player/Player_74.png"); //51
-	game_->getGraphics().loadTexture("Textures/Player/Player_75.png"); //52
-	game_->getGraphics().loadTexture("Textures/Player/Player_76.png"); //53
+	game_->getGraphics().loadTexture("Textures/Player/Player_73.png"); //52
+	game_->getGraphics().loadTexture("Textures/Player/Player_74.png"); //53
+	game_->getGraphics().loadTexture("Textures/Player/Player_75.png"); //54
+	game_->getGraphics().loadTexture("Textures/Player/Player_76.png"); //55
+	game_->getGraphics().loadTexture("Textures/Player/Player_77.png"); //56
+	game_->getGraphics().loadTexture("Textures/Player/Player_78.png"); //57
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
@@ -460,8 +495,10 @@ void GameScene::loadTextures()
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
 	playerSprite = game_->getGraphics().getSprite(3);
-	playerSprites_LeftFall = game_->getGraphics().getSprite(49);
-	playerSprites_RightFall = game_->getGraphics().getSprite(53);
+	playerSprites_LeftFall = game_->getGraphics().getSprite(51);
+	playerSprites_LeftFall->setEntity();
+	playerSprites_RightFall = game_->getGraphics().getSprite(57);
+	playerSprites_RightFall->setEntity();
 	
 }
 
