@@ -85,15 +85,17 @@ void GameScene::update()
 		{
 			
 			player2 = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-			player2.Move(player->getX(), player->getY() - 1);
+			player2.Translate(player->getX(), player->getY());
 
 		}
 		
 		col = false;
 		bool colx = false;
 
+
 		for (int i = 0; i < platforms.size(); i++)
 		{
+			
 			if (CollisionDetection::CheckCollision(player2, platforms[i]))
 			{
 				col = true;
@@ -115,14 +117,13 @@ void GameScene::update()
 		if (!col && !player_isJumping && player)
 		{
 			player->setY(player->getY() + jumpspeed);
+			//playerGrounded = true;
 		}
-
 		
 		bool isLeftHeld{ false };
 
 		if (game_->getKeyboard().scanCode['A'] && player)
 		{
-
 				isLeft = true;
 				isRight = false;
 				if (!player_isJumping)
@@ -147,33 +148,34 @@ void GameScene::update()
 					game_->setCamera(game_->getCameraX() + playerSpeed, game_->getCameraY());
 				else
 					game_->setCamera(0, game_->getCameraY());
+			
 		}
 
 		bool isRightHeld = false;
 
 		if (game_->getKeyboard().scanCode['D'] && player)
 		{
-			isLeft = false;
-			isRight = true;
-			if (!player_isJumping)
-			{
-				if (!playerSprint)
-					playerSprite = playerSprites_RightRun;
+				isLeft = false;
+				isRight = true;
+				if (!player_isJumping)
+				{
+					if (!playerSprint)
+						playerSprite = playerSprites_RightRun;
+					else
+						playerSprite = playerSprites_RightSprint;
+				}
 				else
-					playerSprite = playerSprites_RightSprint;
-			}
-			else
-			{
-				playerSprite = playerSprites_RightJump;
-			}
+				{
+					playerSprite = playerSprites_RightJump;
+				}
 
-			//if (!col)
-			//{
-			player->setX(player->getX() + playerSpeed);
-			if (player->getX() > game_->getScreenWidth() / 2 - 48)
-				game_->setCamera(game_->getCameraX() - playerSpeed, game_->getCameraY());
-			else
-				game_->setCamera(0, game_->getCameraY());
+				//if (!col)
+				//{
+				player->setX(player->getX() + playerSpeed);
+				if (player->getX() > game_->getScreenWidth() / 2 - 48)
+					game_->setCamera(game_->getCameraX() - playerSpeed, game_->getCameraY());
+				else
+					game_->setCamera(0, game_->getCameraY());
 
 		}
 
@@ -224,8 +226,10 @@ void GameScene::update()
 			}
 		}
 		if (player_isJumping && player)
+		{
+			playerGrounded = false;
 			player_Jump();
-
+		}
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
@@ -402,6 +406,9 @@ void GameScene::loadGameObject()
 
 	platforms.push_back(platform1->getRect());
 	platforms.push_back(platform2->getRect());
+
+	platforms[0].Translate(platform1->getX(), platform1->getY());
+	platforms[1].Translate(platform2->getX(), platform2->getY());
 }
 
 void GameScene::player_Jump()

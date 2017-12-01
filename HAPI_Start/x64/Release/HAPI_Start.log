@@ -1,32 +1,32 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (HAPI_Start.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (HAPI_Start.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Game.cpp
+u:\github\hapi-engine\hapi_start\Visualisation.h(28): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+u:\github\hapi-engine\hapi_start\SpriteAnimator.h(18): warning C4244: '=': conversion from 'HAPISPACE::DWORD' to 'float', possible loss of data
   GameScene.cpp
-GameScene.cpp(30): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-GameScene.cpp(31): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-GameScene.cpp(33): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  main.cpp
+u:\github\hapi-engine\hapi_start\Visualisation.h(28): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+u:\github\hapi-engine\hapi_start\SpriteAnimator.h(18): warning C4244: '=': conversion from 'HAPISPACE::DWORD' to 'float', possible loss of data
   Generating Code...
-     Creating library P:\GitHub\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).lib and object P:\GitHub\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).exp
-HAPI64.lib(Error.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Error.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiCore.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiCore.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiMain.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiMain.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiOsSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiOsSFML.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiRendererSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiRendererSFML.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiSoundSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiSoundSFML.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(HapiXInput.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiXInput.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(PerfCounters.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(PerfCounters.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(SFMLFontManager.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(SFMLFontManager.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(stdafx.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(stdafx.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(Utility.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Utility.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
-HAPI64.lib(VideoStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(VideoStream.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Utilities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Utilities.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(TimerPriorities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(TimerPriorities.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Timer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Timer.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(SubtitleStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(SubtitleStream.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Stream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Stream.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(MovieImpl.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(MovieImpl.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Movie.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Movie.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Log.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Log.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(Demuxer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Demuxer.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-HAPI64.lib(AudioStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(AudioStream.obj)' or at 'P:\GitHub\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
-  HAPI_Start.vcxproj -> P:\GitHub\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).exe
+     Creating library U:\Github\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).lib and object U:\Github\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).exp
+HAPI64.lib(Error.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Error.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiCore.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiCore.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiMain.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiMain.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiOsSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiOsSFML.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiRendererSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiRendererSFML.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiSoundSFML.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiSoundSFML.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(HapiXInput.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(HapiXInput.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(PerfCounters.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(PerfCounters.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(SFMLFontManager.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(SFMLFontManager.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(stdafx.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(stdafx.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(Utility.obj) : warning LNK4099: PDB 'HAPI_LIB.pdb' was not found with 'HAPI64.lib(Utility.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\HAPI_LIB.pdb'; linking object as if no debug info
+HAPI64.lib(VideoStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(VideoStream.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Utilities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Utilities.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(TimerPriorities.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(TimerPriorities.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Timer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Timer.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(SubtitleStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(SubtitleStream.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Stream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Stream.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(MovieImpl.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(MovieImpl.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Movie.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Movie.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Log.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Log.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(Demuxer.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(Demuxer.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+HAPI64.lib(AudioStream.obj) : warning LNK4099: PDB 'SfeMovie.pdb' was not found with 'HAPI64.lib(AudioStream.obj)' or at 'U:\Github\HAPI-Engine\x64\Release\SfeMovie.pdb'; linking object as if no debug info
+  HAPI_Start.vcxproj -> U:\Github\HAPI-Engine\x64\Release\AzEngine (HAPI GEC).exe

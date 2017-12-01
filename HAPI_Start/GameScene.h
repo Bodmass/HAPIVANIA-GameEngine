@@ -57,6 +57,7 @@ private:
 	int gameClock;
 	void player_Jump();
 
+	bool playerGrounded = true;
 	bool playerSprint = false;
 	bool isLeft = false;
 	bool isRight = false;
