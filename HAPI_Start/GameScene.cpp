@@ -70,22 +70,26 @@ void GameScene::update()
 
 		//std::cout << player->getX() << " , " << player->getY() << std::endl;
 
-		playerSprint = false;
+		//playerSprint = false;
+		bool groundunder = false;
 
-		if (game_->getKeyboard().scanCode[HK_LSHIFT] && player)
+		if (game_->getKeyboard().scanCode[HK_LSHIFT] && player && !player_isFalling && !player_isJumping)
 		{
 			playerSprint = true;
 			playerSpeed = 4;
 		}
-		else
+		if (!game_->getKeyboard().scanCode[HK_LSHIFT])
+			playerSprint = false;
+
+		if(!playerSprint)
 			playerSpeed = 2;
 
 		Rectangle player2;
 		if (player)
 		{
 			
-			player2 = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-			player2.Translate(player->getX(), player->getY());
+			player2 = Rectangle(game_->getGraphics().getSprite(3)->getWidth() - 4, 4);
+			player2.Translate(player->getX(), player->getY() + 44);
 
 		}
 		
@@ -98,23 +102,27 @@ void GameScene::update()
 			
 			if (CollisionDetection::CheckCollision(player2, platforms[i]))
 			{
+				groundunder = true;
+				player_isFalling = false;
+				break;
+			}
+			else
+			{
+				groundunder = false;
+				player_isFalling = true;
+			}
+
+			if (CollisionDetection::CheckCollision(player->getRect(), platforms[i]))
+			{
 				col = true;
 				break;
 			}
 
-		}
-
-		for (int i = 0; i < platforms.size(); i++)
-		{
-			if (CollisionDetection::CheckXCollision(player2, platforms[i]))
-			{
-				colx = true;
-				break;
-			}
 
 		}
 
-		if (!col && !player_isJumping && player)
+
+		if (player && !player_isJumping && !groundunder)
 		{
 			player->setY(player->getY() + jumpspeed);
 			//playerGrounded = true;
@@ -124,6 +132,8 @@ void GameScene::update()
 
 		if (game_->getKeyboard().scanCode['A'] && player)
 		{
+			if (!col)
+			{
 				isLeft = true;
 				isRight = false;
 				if (!player_isJumping)
@@ -144,10 +154,7 @@ void GameScene::update()
 				{
 					player->setX(0);
 				}
-				if (player->getX() > game_->getScreenWidth() / 2 - 48)
-					game_->setCamera(game_->getCameraX() + playerSpeed, game_->getCameraY());
-				else
-					game_->setCamera(0, game_->getCameraY());
+			}
 			
 		}
 
@@ -155,6 +162,8 @@ void GameScene::update()
 
 		if (game_->getKeyboard().scanCode['D'] && player)
 		{
+			if (!col)
+			{
 				isLeft = false;
 				isRight = true;
 				if (!player_isJumping)
@@ -172,13 +181,33 @@ void GameScene::update()
 				//if (!col)
 				//{
 				player->setX(player->getX() + playerSpeed);
+				/*
 				if (player->getX() > game_->getScreenWidth() / 2 - 48)
 					game_->setCamera(game_->getCameraX() - playerSpeed, game_->getCameraY());
 				else
 					game_->setCamera(0, game_->getCameraY());
-
+				*/
+			}
 		}
 
+		//SET CAMERA
+
+		int distancefromcameraX = abs((player->getX() + 48) - 450);
+		int distancefromcameraY = abs(player->getY() - 300);
+		
+		if (player->getX() + 48 > 450)
+		{
+			//distancefromcamera -= 450;
+			game_->setCamera(-distancefromcameraX, game_->getCameraY());
+		}
+		else
+			game_->setCamera(0, game_->getCameraY());
+
+		if (player->getY() < 300)
+		{
+			//distancefromcamera -= 450;
+			game_->setCamera(game_->getCameraX(), distancefromcameraY);
+		}
 
 		//IDLE SETTERS
 
@@ -207,7 +236,7 @@ void GameScene::update()
 
 		if ((game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE]) && player)
 		{
-			if (!player_isJumping)
+			if (!player_isJumping && !player_isFalling)
 			{
 				if (isLeft)
 				{
@@ -245,6 +274,8 @@ void GameScene::update()
 		{
 			game_->setCamera(game_->getCameraX(), game_->getCameraY() + 1);
 		}
+
+		//std::cout << player->getX() << "," << player->getY() << std::endl;
 
 		player->setTexture(playerSprite);
 		playerRect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
@@ -388,6 +419,8 @@ void GameScene::loadTextures()
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
 	playerSprite = game_->getGraphics().getSprite(3);
+	playerSprites_LeftFall = game_->getGraphics().getSprite(49);
+	playerSprites_RightFall = game_->getGraphics().getSprite(53);
 	
 }
 
@@ -424,15 +457,16 @@ void GameScene::player_Jump()
 	{
 		if (gameClock > jumping_time)
 		{
-
+			player_isJumping = false;
 			if (col)
 			{
-				player_isJumping = false;
-				player->setY(player->getY() - jumpspeed);
+				
+				//player->setY(player->getY() - jumpspeed);
 			}
 			else
 			{
-				player->setY(player->getY() + jumpspeed);
+				player_isFalling = true;
+				//player->setY(player->getY() + jumpspeed);
 			}
 		}
 		else

@@ -30,6 +30,8 @@ private:
 	SpriteAnimator* playerSprites_RightSprint = nullptr;
 	SpriteAnimator* playerSprites_LeftJump = nullptr;
 	SpriteAnimator* playerSprites_RightJump = nullptr;
+	Texture* playerSprites_RightFall = nullptr;
+	Texture* playerSprites_LeftFall = nullptr;
 
 
 	int leftRunStartIndex = -1;
@@ -51,6 +53,7 @@ private:
 	int playerSpeed = 1;
 	int jumpspeed = 3;
 	bool player_isJumping{ false };
+	bool player_isFalling{ false };
 	int jumping_time = 0;
 	int jumptime2 = 0;
 
