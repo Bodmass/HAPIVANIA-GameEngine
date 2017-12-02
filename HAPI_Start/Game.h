@@ -5,8 +5,10 @@
 #include <algorithm>
 #include "Visualisation.h"
 #include "Rectangle.h"
+#include "Scene.h"
 #include "GameScene.h"
 #include "TitleScreen.h"
+#include "PauseMenu.h"
 
 using namespace HAPISPACE;
 
@@ -17,16 +19,19 @@ class Game
 
 private:
 	bool isRunning{ true };
-	int screenWidth{ 900 }, screenHeight{ 600 };
+	int screenWidth{ 1080 }, screenHeight{ 720 };
 	int CamX{ 0 }, CamY{ 0 };
 	int posX{ 1 }, posY{ 1 };
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	Visualisation graphics;
 	BYTE* screen = nullptr;
 	Rectangle screenRect;
-	GameScene* current = nullptr;
+	Scene* current = nullptr;
 	GameScene game = nullptr;
 	TitleScreen title = nullptr;
+	PauseMenu pause = nullptr;
+	bool pauseLock = false;
+
 	Texture icontexture = "Textures/Icon.png";
 	BYTE* Icon = icontexture.getSprite();
 	
@@ -58,7 +63,9 @@ public:
 
 	void switchScene_Title() { current = &title; }
 	void switchScene_Game() { current = &game; }
-
+	void switchScene_Pause() { current = &pause; }
+	bool getPauseLock() { return pauseLock; }
+	void setPauseLock(bool yesno) { pauseLock = yesno; }
 
 
 

@@ -21,6 +21,7 @@ void Game::Run()
 		screenRect = Rectangle(screenWidth, screenHeight);
 		game = GameScene(this);
 		title = TitleScreen(this);
+		pause = PauseMenu(this);
 		current = &title;
 
 
@@ -36,24 +37,33 @@ void Game::Update()
 	game.loadGameObject();
 	title.loadTextures();
 	title.loadGameObject();
+	pause.loadTextures();
+	pause.loadGameObject();
 
 	double time = 0;
 	double deltaTime = 0;
 	double timesincelasttick = 0;
 	double timebetweenticks = 1000 / 60;
+	double timebetweenlock = 3000 / 60;
 	while (HAPI.Update())
 	{
 		deltaTime = HAPI.GetTime() - time;
 		time = HAPI.GetTime();
 		while(timesincelasttick > timebetweenticks) //lock refresh rate
 		{
+
 			timesincelasttick -= timebetweenticks;
 			const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 			current->update();
+
 		}
+
+
+
+		
 		current->render();
 		timesincelasttick += deltaTime;
-		
+
 	}
 }
 

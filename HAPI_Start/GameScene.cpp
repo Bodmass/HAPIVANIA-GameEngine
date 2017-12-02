@@ -2,12 +2,6 @@
 #include "Game.h"
 #include "CollisionDetection.h"
 
-GameScene::GameScene(Game* game)
-{
-	game_ = game;
-}
-
-
 GameScene::~GameScene()
 {
 	for (auto* gameObject : gameObjects)
@@ -245,10 +239,10 @@ void GameScene::update()
 
 		//SET CAMERA
 
-		int distancefromcameraX = abs((player->getX() + 48) - 450);
-		int distancefromcameraY = abs(player->getY() - 300);
+		int distancefromcameraX = abs((player->getX() + 48) - (game_->getScreenWidth() / 2));
+		int distancefromcameraY = abs(player->getY() - (game_->getScreenHeight() / 2));
 		
-		if (player->getX() + 48 > 450)
+		if (player->getX() + 48 > (game_->getScreenWidth() / 2))
 		{
 			//distancefromcamera -= 450;
 			game_->setCamera(-distancefromcameraX, game_->getCameraY());
@@ -256,7 +250,7 @@ void GameScene::update()
 		else
 			game_->setCamera(0, game_->getCameraY());
 
-		if (player->getY() < 300)
+		if (player->getY() < (game_->getScreenHeight() / 2))
 		{
 			//distancefromcamera -= 450;
 			game_->setCamera(game_->getCameraX(), distancefromcameraY);
@@ -352,6 +346,17 @@ void GameScene::update()
 		player->setTexture(playerSprite);
 		playerRect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
 		player->setRectangle(playerRect);
+
+		if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
+		{
+			game_->setPauseLock(true);
+			game_->switchScene_Pause();
+		}
+
+		if (!game_->getKeyboard().scanCode[HK_ESCAPE])
+		{
+			game_->setPauseLock(false);
+		}
 
 }
 

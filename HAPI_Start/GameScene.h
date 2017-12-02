@@ -1,18 +1,8 @@
 #pragma once 
 
-#include <HAPI_lib.h>
-#include <string> 
-#include <vector>
-#include <algorithm>
-#include "Visualisation.h"
-#include "Rectangle.h"
-#include "GameObject.h"
-#include "SpriteAnimator.h"
+#include "Scene.h"
 
-using namespace HAPISPACE;
-
-class Game;
-class GameScene
+class GameScene : public Scene
 {
 private:
 
@@ -67,16 +57,14 @@ private:
 	bool col = false;
 	bool BGMPlaying = false;
 
-protected:
-	Game* game_ = nullptr;
 public:
 
-	virtual void update();
-	virtual void render();
-	virtual void loadTextures();
-	virtual void loadGameObject();
-	GameScene(Game* game);
-	virtual~GameScene();
-	Game* getGame() { return game_; }
+	virtual void update() override;
+	virtual void render() override;
+	virtual void loadTextures() override;
+	virtual void loadGameObject() override;
+	GameScene(Game* game) : Scene(game) {};
+	~GameScene();
+	//virtual Game* getGame() { return game_; }
 };
 

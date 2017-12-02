@@ -1,13 +1,13 @@
 #pragma once
-#include "GameScene.h"
+#include "Scene.h"
 
-class TitleScreen : public GameScene
+class TitleScreen : public Scene
 {
 private:
 	bool BGMPlaying = false;
 	Texture* BG = nullptr;
 public:
-	TitleScreen(Game* game) : GameScene(game) {};
+	TitleScreen(Game* game) : Scene(game) {};
 
 	~TitleScreen();
 

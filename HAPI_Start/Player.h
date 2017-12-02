@@ -11,5 +11,13 @@ public:
 	void PlayerMove(HAPI_TKeyboardData &keyCode);
 	Player();
 	~Player();
+
+	void PlayerUpdate()
+	{
+	//player gameobject //vector platforms
+		//powerups
+		//movement
+		//
+	}
 };
 
