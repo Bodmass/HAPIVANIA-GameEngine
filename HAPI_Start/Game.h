@@ -19,7 +19,7 @@ class Game
 
 private:
 	bool isRunning{ true };
-	int screenWidth{ 1080 }, screenHeight{ 720 };
+	int screenWidth{ 1280 }, screenHeight{ 720 };
 	int CamX{ 0 }, CamY{ 0 };
 	int posX{ 1 }, posY{ 1 };
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();

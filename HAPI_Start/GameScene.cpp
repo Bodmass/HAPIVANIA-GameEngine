@@ -374,7 +374,7 @@ void GameScene::render()
 
 void GameScene::loadTextures()
 {
-	game_->getGraphics().loadTexture("Data/BG.tga", false); //0 - BG -
+	game_->getGraphics().loadTexture("Textures/Level/BGs/BG1.tga", false); //0 - BG -
 	game_->getGraphics().loadTexture("Data/test.tga", false); //1 - Platform 1 -
 	game_->getGraphics().loadTexture("Data/platform1.tga", false); //2 - Platform 2 - 
 

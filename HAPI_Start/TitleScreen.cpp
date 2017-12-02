@@ -30,7 +30,7 @@ void TitleScreen::update()
 void TitleScreen::render()
 {
 	game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
-	HAPI.RenderText(400, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "Play", 30);
+	HAPI.RenderText((game_->getScreenWidth() / 2)-30, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "Play", 30);
 }
 
 void TitleScreen::loadTextures()
