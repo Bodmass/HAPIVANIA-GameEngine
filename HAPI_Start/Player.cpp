@@ -93,7 +93,7 @@ void Player::PlayerMovement()
 		{
 			if (upgrade_SUPER_JUMP)
 			{
-				p_jumpspeed = 5;
+				p_jumpspeed = p_superjumpspeed;
 			}
 			p_isSprinting = true;
 			p_speed = 4;
@@ -106,7 +106,7 @@ void Player::PlayerMovement()
 			p_speed = 2;
 			if (upgrade_SUPER_JUMP)
 			{
-				p_jumpspeed = 3;
+				p_jumpspeed = p_normaljumpspeed;
 			}
 		}
 	}

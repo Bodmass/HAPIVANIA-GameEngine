@@ -15,6 +15,8 @@ private:
 	int p_HP = 100;
 	int p_speed = 2;
 	int p_jumpspeed = 3;
+	int p_normaljumpspeed = 3;
+	int p_superjumpspeed = 4;
 
 	//BOOLS
 	bool p_isSprinting{ false };
