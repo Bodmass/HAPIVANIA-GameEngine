@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "Scene.h"
+#include "Player.h"
 
 class GameScene : public Scene
 {
@@ -10,7 +11,6 @@ private:
 	std::vector<GameObject*> gameObjects;
 
 	Texture* playerSprite = nullptr;
-
 	//Animations
 	Texture* playerSprites_LeftIdle = nullptr;
 	Texture* playerSprites_RightIdle = nullptr;
@@ -33,28 +33,13 @@ private:
 
 
 	GameObject* BG;
-	GameObject* player;
+	Player* player;
 	GameObject* platform1;
 	GameObject* platform2;
 
 	Rectangle playerRect = Rectangle(48, 48);
 
-	//Player Info
-	int playerSpeed = 1;
-	int jumpspeed = 3;
-	bool player_isJumping{ false };
-	bool player_isFalling{ false };
-	int jumping_time = 0;
-	int jumptime2 = 0;
-
 	int gameClock;
-	void player_Jump();
-
-	bool playerGrounded = true;
-	bool playerSprint = false;
-	bool isLeft = false;
-	bool isRight = false;
-	bool col = false;
 	bool BGMPlaying = false;
 
 public:

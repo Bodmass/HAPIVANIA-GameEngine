@@ -26,7 +26,7 @@ void GameScene::update()
 		BGMPlaying = true;
 	}
 
-		gameClock = HAPI.GetTime();
+		
 
 
 		//player->setTexture(dynamic_cast<Texture*>(playerSprites_LeftRun));
@@ -65,177 +65,13 @@ void GameScene::update()
 		//std::cout << player->getX() << " , " << player->getY() << std::endl;
 
 		//playerSprint = false;
-		bool groundunder = false;
 
-		if (game_->getKeyboard().scanCode[HK_LSHIFT] && player && !player_isFalling && !player_isJumping)
-		{
-			playerSprint = true;
-			playerSpeed = 4;
-		}
-		if (!game_->getKeyboard().scanCode[HK_LSHIFT])
-			playerSprint = false;
+		player->PlayerCollision(platforms);
+		player->PlayerUpdate();
 
-		if(!playerSprint)
-			playerSpeed = 2;
-
-		Rectangle playerfeet;
-		Rectangle playerleft;
-		Rectangle playerright;
-		Rectangle player3;
-		if (player)
-		{
-			
-			playerfeet = Rectangle(game_->getGraphics().getSprite(3)->getWidth() - 8, 4);
-			playerleft = Rectangle(2, game_->getGraphics().getSprite(3)->getHeight() - 2);
-			playerright = Rectangle(2, game_->getGraphics().getSprite(3)->getHeight() - 2);
-			player3 = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight() - 2);
-
-			playerfeet.Translate(player->getX() + 4, player->getY() + 44);
-			playerleft.Translate(player->getX() - 2, player->getY() - 1);
-			playerright.Translate(player->getX() + 48 + 2, player->getY() - 1);
-			player3.Translate(player->getX(), player->getY() - 1);
-		}
 		
-		col = false;
-		bool col_left = false;
-		bool col_right = false;
 
 
-		for (int i = 0; i < platforms.size(); i++)
-		{
-
-			if (CollisionDetection::CheckCollision(playerfeet, platforms[i]))
-			{
-				groundunder = true;
-				player_isFalling = false;
-				break;
-			}
-			else
-			{
-				groundunder = false;
-				player_isFalling = true;
-			}
-		}
-
-		for (int i = 0; i < platforms.size(); i++)
-		{
-			if (CollisionDetection::CheckCollision(playerright, platforms[i]))
-			{
-				col_right = true;
-				break;
-			}
-
-
-		}
-
-		for (int i = 0; i < platforms.size(); i++)
-		{
-			if (CollisionDetection::CheckCollision(playerleft, platforms[i]))
-			{
-				col_left = true;
-				break;
-			}
-
-
-		}
-
-		for (int i = 0; i < platforms.size(); i++)
-		{
-			if (CollisionDetection::CheckCollision(player3, platforms[i]))
-			{
-				col = true;
-				break;
-			}
-
-
-		}
-
-		/*for (int i = 0; i < platforms.size(); i++)
-		{
-			if (CollisionDetection::CheckCollision(player3, platforms[i]))
-			{
-				col = true;
-				break;
-			}
-
-
-		}*/
-
-
-
-		if (player && !player_isJumping && !groundunder)
-		{
-			player->setY(player->getY() + jumpspeed);
-			//playerGrounded = true;
-		}
-		
-		bool isLeftHeld{ false };
-
-		if (col)
-		{
-			
-		}
-
-		bool isMoving = false;
-
-		if (game_->getKeyboard().scanCode['A'] && player)
-		{
-				isMoving = true;
-				isLeft = true;
-				isRight = false;
-				if (!player_isJumping && !player_isFalling)
-				{
-					if (!playerSprint)
-						playerSprite = playerSprites_LeftRun;
-					else
-						playerSprite = playerSprites_LeftSprint;
-				}
-				if(player_isJumping)
-				{
-					playerSprite = playerSprites_LeftJump;
-				}
-				if (player_isFalling && !player_isJumping)
-				{
-					playerSprite = playerSprites_LeftFall;
-				}
-
-				if(!col_left)
-					player->setX(player->getX() - playerSpeed);
-
-				if (player->getX() < 0)
-				{
-					player->setX(0);
-				}
-		
-			
-		}
-
-		bool isRightHeld = false;
-
-		if (game_->getKeyboard().scanCode['D'] && player)
-		{
-				isMoving = true;
-				isLeft = false;
-				isRight = true;
-				if (!player_isJumping)
-				{
-					if (!playerSprint)
-						playerSprite = playerSprites_RightRun;
-					else
-						playerSprite = playerSprites_RightSprint;
-				}
-				if (player_isJumping)
-				{
-					playerSprite = playerSprites_RightJump;
-				}
-				if (player_isFalling && !player_isJumping)
-				{
-					playerSprite = playerSprites_RightFall;
-				}
-
-				if(!col_right)
-					player->setX(player->getX() + playerSpeed);
-		}
 
 		//SET CAMERA
 
@@ -258,15 +94,7 @@ void GameScene::update()
 
 		//IDLE SETTERS
 
-		if (!game_->getKeyboard().scanCode['A'] && player && isLeft && !player_isJumping)
-		{
-			playerSprite = playerSprites_LeftIdle;
-		}
 
-		if (!game_->getKeyboard().scanCode['D'] && player && isRight && !player_isJumping)
-		{
-			playerSprite = playerSprites_RightIdle;
-		}
 
 		 /*
 		int yt = (game_->getScreenHeight()/2 - (game_->getCameraY() - game_->getScreenHeight() / 2));
@@ -281,50 +109,7 @@ void GameScene::update()
 
 		//player->getRect() = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
 
-		if (player_isFalling && !player_isJumping)
-		{
-			if (isLeft)
-			{
-				playerSprite = playerSprites_LeftFall;
-			}
-			if (isRight)
-			{
-				playerSprite = playerSprites_RightFall;
-			}
-		}
-		if (!player_isFalling && !player_isJumping && !isMoving)
-		{
-			if (isLeft)
-				playerSprite = playerSprites_LeftIdle;
-			if (isRight)
-				playerSprite = playerSprites_RightIdle;
-		}
 
-		if ((game_->getKeyboard().scanCode['W'] || game_->getKeyboard().scanCode[HK_SPACE]) && player)
-		{
-			if (!player_isJumping && !player_isFalling)
-			{
-				if (isLeft)
-				{
-					playerSprite = playerSprites_LeftJump;
-				}
-				if (isRight)
-				{
-					playerSprite = playerSprites_RightJump;
-				}
-				if (!isLeft && !isRight)
-				{
-					playerSprite = playerSprites_RightJump;
-					isRight = true;
-				}
-				player_Jump();
-			}
-		}
-		if (player_isJumping && player)
-		{
-			playerGrounded = false;
-			player_Jump();
-		}
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
@@ -457,7 +242,7 @@ void GameScene::loadTextures()
 	playerSprites_RightSprint = new SpriteAnimator();
 	playerSprites_LeftJump = new SpriteAnimator();
 	playerSprites_RightJump = new SpriteAnimator();
-	
+
 	//playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(3));
 	for (int i = 0; i < 10; i++)
 	{
@@ -504,14 +289,16 @@ void GameScene::loadTextures()
 	playerSprites_LeftFall->setEntity();
 	playerSprites_RightFall = game_->getGraphics().getSprite(57);
 	playerSprites_RightFall->setEntity();
-	
+
+	//player->set_pSprite_LeftIdle(playerSprites_LeftIdle);
+
 }
 
 void GameScene::loadGameObject()
 {
 	BG = new GameObject(game_->getGraphics().getSprite(0), Rectangle(game_->getGraphics().getSprite(0)->getWidth(), game_->getGraphics().getSprite(0)->getHeight()), 0, 0, true);
 	//player = new GameObject(game_->getGraphics().getSprite(3), Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight()), 20, 0);
-	player = new GameObject(playerSprite, playerRect, 60, 352);
+	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 300, 300);
 
@@ -526,43 +313,4 @@ void GameScene::loadGameObject()
 	platforms[0].Translate(platform1->getX(), platform1->getY());
 	platforms[1].Translate(platform2->getX(), platform2->getY());
 }
-
-void GameScene::player_Jump()
-{
-	if (!player_isJumping)
-	{
-		player_isJumping = true;
-		jumping_time = gameClock + 900;
-
-	}
-
-	if (player_isJumping)
-	{
-		if (gameClock > jumping_time)
-		{
-			player_isJumping = false;
-			if (col)
-			{
-				
-				//player->setY(player->getY() - jumpspeed);
-			}
-			else
-			{
-				player_isFalling = true;
-				//player->setY(player->getY() + jumpspeed);
-			}
-		}
-		else
-		{
-			if(gameClock < jumping_time - 150)
-				player->setY(player->getY() - jumpspeed);
-			if (col)
-			{
-				jumping_time = gameClock - 1;
-			}
-		}
-			
-	}
-}
-
 
