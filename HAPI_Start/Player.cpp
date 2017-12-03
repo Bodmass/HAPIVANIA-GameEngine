@@ -76,18 +76,41 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 
 void Player::PlayerMovement()
 {
-	//SPRINTING
-	//Checks whether the Left Shift key is being pressed. If it is and the Player is not in the middle of falling or jumping, change the speed;
-	if (keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
+	if (keyData.scanCode[HK_NUMPAD1])
 	{
-		p_isSprinting = true;
-		p_speed = 4;
+		upgrade_SPRINT = true;
 	}
-	if (!keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
-		p_isSprinting = false;
 
-	if (!p_isSprinting)
-		p_speed = 2;
+	if (keyData.scanCode[HK_NUMPAD2])
+	{
+		upgrade_SUPER_JUMP = true;
+	}
+	//SPRINTING
+	//Checks whether the Left Shift key is being pressed. If its unlocked, If it is and the Player is not in the middle of falling or jumping, change the speed;
+	if (upgrade_SPRINT)
+	{
+		if (keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
+		{
+			if (upgrade_SUPER_JUMP)
+			{
+				p_jumpspeed = 5;
+			}
+			p_isSprinting = true;
+			p_speed = 4;
+		}
+		if (!keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
+			p_isSprinting = false;
+
+		if (!p_isSprinting)
+		{
+			p_speed = 2;
+			if (upgrade_SUPER_JUMP)
+			{
+				p_jumpspeed = 3;
+			}
+		}
+	}
+
 
 	//FORCE DOWN
 	if (!p_isJumping && !p_groundunder)
@@ -105,23 +128,23 @@ void Player::PlayerMovement()
 		p_isLeft = true;
 		p_isRight = false;
 		//ANIMATION
-		/*
+		
 		if (!p_isJumping && !p_isFalling)
 		{
-			if (p_isSprinting)
-				//playerSprite = playerSprites_LeftRun;
+			if (!p_isSprinting)
+				pSprite = pAnim_LeftRun;
 			else
-				//playerSprite = playerSprites_LeftSprint;
+				pSprite = pAnim_LeftSprint;
 		}
 		if (p_isJumping)
 		{
-			//playerSprite = playerSprites_LeftJump;
+			pSprite = pAnim_LeftJump;
 		}
 		if (p_isFalling && !p_isJumping)
 		{
-			//playerSprite = playerSprites_LeftFall;
+			pSprite = pSprite_LeftFall;
 		}
-		*/
+		
 		if (!p_leftCol)
 			setX(getX() - p_speed);
 
@@ -139,60 +162,59 @@ void Player::PlayerMovement()
 		p_isLeft = false;
 		p_isRight = true;
 		//ANIMATIoN
-		/*
+		
 		if (!p_isJumping)
 		{
-			if (p_isSprinting)
-				playerSprite = playerSprites_RightRun;
+			if (!p_isSprinting)
+				pSprite = pAnim_RightRun;
 			else
-				playerSprite = playerSprites_RightSprint;
+				pSprite = pAnim_RightSprint;
 		}
 		if (p_isJumping)
 		{
-			playerSprite = playerSprites_RightJump;
+			pSprite = pAnim_RightJump;
 		}
 		if (p_isFalling && !p_isJumping)
 		{
-			playerSprite = playerSprites_RightFall;
+			pSprite = pSprite_RightFall;
 		}
-		*/
+		
 		if (!p_rightCol)
 			setX(getX() + p_speed);
 	}
 
-	/* ANIMATION
-		if (!game_->getKeyboard().scanCode['A'] && player && isLeft && !player_isJumping)
+		if (!keyData.scanCode['A'] && p_isLeft && !p_isJumping)
 		{
-			playerSprite = playerSprites_LeftIdle;
+			pSprite = pSprite_LeftIdle;
 		}
 
-		if (!game_->getKeyboard().scanCode['D'] && player && isRight && !player_isJumping)
+		if (!keyData.scanCode['D']  && p_isRight && !p_isJumping)
 		{
-			playerSprite = playerSprites_RightIdle;
+			pSprite = pSprite_RightIdle;
 		}
-	*/
+	
 
 	if (p_isFalling && !p_isJumping)
 	{
 		if (p_isLeft)
 		{
-			//playerSprite = playerSprites_LeftFall;
+			pSprite = pSprite_LeftFall;
 		}
 		if (p_isRight)
 		{
-			//playerSprite = playerSprites_RightFall;
+			pSprite = pSprite_RightFall;
 		}
 	}
 	if (!p_isFalling && !p_isJumping && !p_isMoving)
 	{
 		if (p_isLeft)
 		{
-			//playerSprite = playerSprites_LeftIdle;
+			pSprite = pSprite_LeftIdle;
 		}
 			
 		if (p_isRight)
 		{
-			//playerSprite = playerSprites_RightIdle;
+			pSprite = pSprite_RightIdle;
 		}
 	}
 
@@ -202,15 +224,15 @@ void Player::PlayerMovement()
 		{
 			if (p_isLeft)
 			{
-				//playerSprite = playerSprites_LeftJump;
+				pSprite = pAnim_LeftJump;
 			}
 			if (p_isRight)
 			{
-				//playerSprite = playerSprites_RightJump;
+				pSprite = pAnim_RightJump;
 			}
 			if (!p_isLeft && !p_isRight)
 			{
-				//playerSprite = playerSprites_RightJump;
+				pSprite = pAnim_RightJump;
 				p_isRight = true;
 			}
 			PlayerJump();
@@ -222,6 +244,7 @@ void Player::PlayerMovement()
 		PlayerJump();;
 	}
 
+	setTexture(pSprite);
 }
 
 void Player::PlayerJump()
@@ -266,18 +289,13 @@ void Player::PlayerJump()
 Player::~Player()
 {
 
-	delete pAnim_LeftRun;
-	delete pAnim_RightRun;
-	delete pAnim_LeftSprint;
-	delete pAnim_RightSprint;
-	delete pAnim_LeftJump;
-	delete pAnim_RightJump;
 }
 
 void Player::PlayerUpdate()
 {
 	gameClock = HAPI.GetTime();
 	PlayerMovement();
+
 }
 
 void Player::MakeAnims()

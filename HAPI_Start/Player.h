@@ -72,6 +72,15 @@ public:
 	int p_getSpeed() { return p_speed; }
 	bool p_getSprintInfo() { return p_isSprinting; }
 
+
+
+	//UPGRADES
+	bool checkSprintUpgrade() { return upgrade_SPRINT; }
+	void setSprintUpgrade() { upgrade_SPRINT = true; }
+	bool checkJumpUpgrade() { return upgrade_SUPER_JUMP; }
+	void setJumpUpgrade() { upgrade_SUPER_JUMP = true; }
+
+	//ANIMATIONS
 	void MakeAnims();
 	
 	void set_pSprite(Texture* sprite) { pSprite = sprite; }

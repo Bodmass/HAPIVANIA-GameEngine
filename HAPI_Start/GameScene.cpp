@@ -4,10 +4,6 @@
 
 GameScene::~GameScene()
 {
-	for (auto* gameObject : gameObjects)
-	{
-		delete gameObject;
-	}
 
 	delete playerSprites_LeftRun;
 	delete playerSprites_RightRun;
@@ -15,6 +11,13 @@ GameScene::~GameScene()
 	delete playerSprites_RightSprint;
 	delete playerSprites_LeftJump;
 	delete playerSprites_RightJump;
+
+	for (auto* gameObject : gameObjects)
+	{
+		delete gameObject;
+	}
+
+
 }
 
 
@@ -128,7 +131,7 @@ void GameScene::update()
 
 		//std::cout << player->getX() << "," << player->getY() << std::endl;
 
-		player->setTexture(playerSprite);
+		//player->setTexture(playerSprite);
 		playerRect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
 		player->setRectangle(playerRect);
 
@@ -136,6 +139,9 @@ void GameScene::update()
 		{
 			game_->setPauseLock(true);
 			game_->switchScene_Pause();
+			//TEMP HERE
+			game_->p_SprintU_Set(player->checkSprintUpgrade());
+			game_->p_SuperJump_Set(player->checkJumpUpgrade());
 		}
 
 		if (!game_->getKeyboard().scanCode[HK_ESCAPE])
@@ -290,7 +296,7 @@ void GameScene::loadTextures()
 	playerSprites_RightFall = game_->getGraphics().getSprite(57);
 	playerSprites_RightFall->setEntity();
 
-	//player->set_pSprite_LeftIdle(playerSprites_LeftIdle);
+	
 
 }
 
@@ -312,5 +318,17 @@ void GameScene::loadGameObject()
 
 	platforms[0].Translate(platform1->getX(), platform1->getY());
 	platforms[1].Translate(platform2->getX(), platform2->getY());
+
+	player->set_pSprite(playerSprite);
+	player->set_pSprite_LeftIdle(playerSprites_LeftIdle);
+	player->set_pSprite_RightIdle(playerSprites_RightIdle);
+	player->set_pSprite_LeftFall(playerSprites_LeftFall);
+	player->set_pSprite_RightFall(playerSprites_RightFall);
+	player->set_pAnim_LeftRun(playerSprites_LeftRun);
+	player->set_pAnim_RightRun(playerSprites_RightRun);
+	player->set_pAnim_LeftJump(playerSprites_LeftJump);
+	player->set_pAnim_RightJump(playerSprites_RightJump);
+	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
+	player->set_pAnim_RightSprint(playerSprites_RightSprint);
 }
 

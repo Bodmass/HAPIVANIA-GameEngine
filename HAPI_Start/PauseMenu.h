@@ -6,6 +6,9 @@ class PauseMenu : public Scene
 private:
 	bool BGMPlaying = false;
 	Texture* BG = nullptr;
+	Texture* Upgrade1 = nullptr;
+	Texture* Upgrade2 = nullptr;
+
 public:
 	PauseMenu(Game* game) : Scene(game) {};
 

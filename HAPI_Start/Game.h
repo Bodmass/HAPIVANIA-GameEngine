@@ -34,6 +34,9 @@ private:
 
 	Texture icontexture = "Textures/Icon.png";
 	BYTE* Icon = icontexture.getSprite();
+
+	bool p_SprintU = false;
+	bool p_SuperJump = false;
 	
 
 
@@ -67,6 +70,10 @@ public:
 	bool getPauseLock() { return pauseLock; }
 	void setPauseLock(bool yesno) { pauseLock = yesno; }
 
+	bool p_SprintU_Get() { return p_SprintU; }
+	bool p_SuperJump_Get() { return p_SuperJump; }
+	void p_SprintU_Set(bool yesno) { p_SprintU = yesno; }
+	void p_SuperJump_Set(bool yesno) { p_SuperJump = yesno; }
 
 
 };
