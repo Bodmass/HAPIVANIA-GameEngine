@@ -6,11 +6,6 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 {
 	p_groundunder = false;
 
-	Rectangle playerfeet;
-	Rectangle playerleft;
-	Rectangle playerright;
-	Rectangle player3;
-	
 	playerfeet = Rectangle(this->getTexture()->getWidth() - 8, 4);
 	playerleft = Rectangle(2, this->getTexture()->getHeight() - 2);
 	playerright = Rectangle(2, this->getTexture()->getHeight() - 2);
@@ -72,6 +67,10 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 		}
 	}
 
+}
+
+void Player::PlayerPickup(Rectangle pickup)
+{
 }
 
 void Player::PlayerMovement()

@@ -5,18 +5,18 @@ Pickup::~Pickup()
 {
 }
 
-void Pickup::Update(Player* plyr)
+void Pickup::Update(Rectangle plyr)
 {
-	if (CollisionDetection::CheckCollision(this->getRect() , plyr->getRect()))
-	{
-		Collected = true;
-	}
+	setRectangle(Rectangle(getTexture()->getWidth(), getTexture()->getHeight()));
+	getRect().Translate(getX(), getY());
 
-	if (Collected)
+	if (CollisionDetection::CheckCollision(getRect(), plyr))
 	{
-		if (p_ID == 1) //SPRINT
-		{
-			plyr->setSprintUpgrade();
-		}
+		std::cout << "Picked Up" << std::endl;
 	}
+}
+
+void Pickup::Destroy()
+{
+
 }

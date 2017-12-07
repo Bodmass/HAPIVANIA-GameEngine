@@ -16,7 +16,6 @@ GameScene::~GameScene()
 	{
 		delete gameObject;
 	}
-
 }
 
 
@@ -27,15 +26,6 @@ void GameScene::update()
 		HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
 		BGMPlaying = true;
 	}
-
-		
-
-
-		//player->setTexture(dynamic_cast<Texture*>(playerSprites_LeftRun));
-
-		//playerSprite = playerSprites_RightRun;
-		//player->setTexture(playerSprites_RightRun);
-
 
 		/*
 		if (controllerData.isAttached)
@@ -64,20 +54,13 @@ void GameScene::update()
 		}
 		*/
 
-		//std::cout << player->getX() << " , " << player->getY() << std::endl;
-
-		//playerSprint = false;
-
 		player->PlayerCollision(platforms);
+
 		player->PlayerUpdate();
-		if (Sprint_PU)
-		{
-			Sprint_PU->Update(player);
-			if (Sprint_PU->CheckCollected())
-			{
-				gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), Sprint_PU), gameObjects.end());
-			}
-		}
+
+		//std::cout << player->getX() << ", " << player->getY() << std::endl;
+
+		Sprint_PU->Update(player->getPlayerRect());
 		
 
 
@@ -89,7 +72,6 @@ void GameScene::update()
 		
 		if (player->getX() + 48 > (game_->getScreenWidth() / 2))
 		{
-			//distancefromcamera -= 450;
 			game_->setCamera(-distancefromcameraX, game_->getCameraY());
 		}
 		else
@@ -97,49 +79,19 @@ void GameScene::update()
 
 		if (player->getY() < (game_->getScreenHeight() / 2))
 		{
-			//distancefromcamera -= 450;
 			game_->setCamera(game_->getCameraX(), distancefromcameraY);
 		}
 
-		//IDLE SETTERS
-
-
-
-		 /*
-		int yt = (game_->getScreenHeight()/2 - (game_->getCameraY() - game_->getScreenHeight() / 2));
-
-		if (player->getY() < (game_->getCameraY() + game_->getScreenHeight() / 2))
-			game_->setCamera(game_->getCameraX(), (game_->getScreenHeight() / 2 + (game_->getCameraY() - game_->getScreenHeight() / 2) + playerSpeed));
-
-		if ((player->getY() > (game_->getCameraY() - game_->getScreenHeight() / 2)) && game_->getCameraY > 0)
-			game_->setCamera(game_->getCameraX(), (game_->getScreenHeight() / 2 + (game_->getCameraY() - game_->getScreenHeight() / 2) - playerSpeed));
-
-			*/
-
-		//player->getRect() = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-
+		//END CAMERA
 
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
 			platforms[0].Move(platform1->getX(), platform1->getY());
 			platforms[1].Move(platform2->getX(), platform2->getY());
+			gameObjects[4]->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
 
-		if (game_->getKeyboard().scanCode[HK_UP])
-		{
-			game_->setCamera(game_->getCameraX(), game_->getCameraY() - 1);
-		}
-		if (game_->getKeyboard().scanCode[HK_DOWN])
-		{
-			game_->setCamera(game_->getCameraX(), game_->getCameraY() + 1);
-		}
-
-		//std::cout << player->getX() << "," << player->getY() << std::endl;
-
-		//player->setTexture(playerSprite);
-		playerRect = Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight());
-		player->setRectangle(playerRect);
 
 		if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
 		{
@@ -303,7 +255,7 @@ void GameScene::loadTextures()
 	playerSprites_RightFall->setEntity();
 
 	//END OF PLAYER
-	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png"); //58
+	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png", false); //58
 
 
 	
@@ -312,12 +264,14 @@ void GameScene::loadTextures()
 
 void GameScene::loadGameObject()
 {
+
 	BG = new GameObject(game_->getGraphics().getSprite(0), Rectangle(game_->getGraphics().getSprite(0)->getWidth(), game_->getGraphics().getSprite(0)->getHeight()), 0, 0, true);
 	//player = new GameObject(game_->getGraphics().getSprite(3), Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight()), 20, 0);
 	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 300, 300);
-	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284),
+	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284);
+
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
@@ -327,9 +281,14 @@ void GameScene::loadGameObject()
 
 	platforms.push_back(platform1->getRect());
 	platforms.push_back(platform2->getRect());
+	platforms.push_back(Sprint_PU->getRect());
 
 	platforms[0].Translate(platform1->getX(), platform1->getY());
 	platforms[1].Translate(platform2->getX(), platform2->getY());
+
+	player->getRect().Translate(player->getX(), player->getY());
+	gameObjects[4]->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+	
 
 	player->set_pSprite(playerSprite);
 	player->set_pSprite_LeftIdle(playerSprites_LeftIdle);

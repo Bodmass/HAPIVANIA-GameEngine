@@ -48,6 +48,10 @@ private:
 
 
 	//COLLISION
+	Rectangle playerfeet;
+	Rectangle playerleft;
+	Rectangle playerright;
+	Rectangle player3;
 
 	//ANIMATION / TEXTURES
 	//Animations
@@ -70,6 +74,7 @@ public:
 	//Player player;
 
 	void PlayerCollision(std::vector<Rectangle> platforms);
+	void PlayerPickup(Rectangle pickup);
 	void PlayerUpdate();
 	int p_getSpeed() { return p_speed; }
 	bool p_getSprintInfo() { return p_isSprinting; }
@@ -110,6 +115,7 @@ public:
 	SpriteAnimator* get_pAnim_LeftJump() { return pAnim_LeftJump; }
 	SpriteAnimator* get_pAnim_RightJump() { return pAnim_RightJump; }
 
+	Rectangle getPlayerRect() { return player3; }
 	
 };
 
