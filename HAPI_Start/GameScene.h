@@ -2,6 +2,8 @@
 
 #include "Scene.h"
 #include "Player.h"
+#include "Pickup.h"
+#include "Enemy.h"
 
 class GameScene : public Scene
 {
@@ -36,6 +38,7 @@ private:
 	Player* player;
 	GameObject* platform1;
 	GameObject* platform2;
+	Pickup* Sprint_PU;
 
 	Rectangle playerRect = Rectangle(48, 48);
 

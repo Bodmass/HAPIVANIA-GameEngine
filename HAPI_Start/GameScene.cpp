@@ -17,7 +17,6 @@ GameScene::~GameScene()
 		delete gameObject;
 	}
 
-
 }
 
 
@@ -71,7 +70,14 @@ void GameScene::update()
 
 		player->PlayerCollision(platforms);
 		player->PlayerUpdate();
-
+		if (Sprint_PU)
+		{
+			Sprint_PU->Update(player);
+			if (Sprint_PU->CheckCollected())
+			{
+				gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), Sprint_PU), gameObjects.end());
+			}
+		}
 		
 
 
@@ -296,6 +302,10 @@ void GameScene::loadTextures()
 	playerSprites_RightFall = game_->getGraphics().getSprite(57);
 	playerSprites_RightFall->setEntity();
 
+	//END OF PLAYER
+	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png"); //58
+
+
 	
 
 }
@@ -307,11 +317,13 @@ void GameScene::loadGameObject()
 	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 300, 300);
+	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284),
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
 	gameObjects.push_back(platform1);
 	gameObjects.push_back(platform2);
+	gameObjects.push_back(Sprint_PU);
 
 	platforms.push_back(platform1->getRect());
 	platforms.push_back(platform2->getRect());
