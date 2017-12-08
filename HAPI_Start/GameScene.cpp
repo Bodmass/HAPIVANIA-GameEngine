@@ -125,82 +125,82 @@ void GameScene::render()
 
 void GameScene::loadTextures()
 {
-	game_->getGraphics().loadTexture("Textures/Level/BGs/BG1.tga", false); //0 - BG -
-	game_->getGraphics().loadTexture("Data/test.tga", false); //1 - Platform 1 -
-	game_->getGraphics().loadTexture("Data/platform1.tga", false); //2 - Platform 2 - 
+	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
+	game_->getGraphics().loadTexture("Platform 1","Data/test.tga", false); //1 - Platform 1 -
+	game_->getGraphics().loadTexture("Platform 2","Data/platform1.tga", false); //2 - Platform 2 - 
 
 	//PLAYER//
 	//IDLE
-	game_->getGraphics().loadTexture("Textures/Player/Player_01.png"); //3 - Player - 
+	game_->getGraphics().loadTexture("Player_Idle","Textures/Player/Player_01.png"); //3 - Player - 
 	//LEFT IDLE
-	game_->getGraphics().loadTexture("Textures/Player/Player_12.png"); //4
+	game_->getGraphics().loadTexture("Player_Left_Idle", "Textures/Player/Player_12.png"); //4
 	//LEFT RUN
 	leftRunStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_13.png"); //5
-	game_->getGraphics().loadTexture("Textures/Player/Player_14.png"); //6
-	game_->getGraphics().loadTexture("Textures/Player/Player_15.png"); //7
-	game_->getGraphics().loadTexture("Textures/Player/Player_16.png"); //8
-	game_->getGraphics().loadTexture("Textures/Player/Player_17.png"); //9
-	game_->getGraphics().loadTexture("Textures/Player/Player_18.png"); //10
-	game_->getGraphics().loadTexture("Textures/Player/Player_19.png"); //11
-	game_->getGraphics().loadTexture("Textures/Player/Player_20.png"); //12
-	game_->getGraphics().loadTexture("Textures/Player/Player_21.png"); //13
-	game_->getGraphics().loadTexture("Textures/Player/Player_22.png"); //14
+	game_->getGraphics().loadTexture("Player_Left_Run_1", "Textures/Player/Player_13.png"); //5
+	game_->getGraphics().loadTexture("Player_Left_Run_2", "Textures/Player/Player_14.png"); //6
+	game_->getGraphics().loadTexture("Player_Left_Run_3", "Textures/Player/Player_15.png"); //7
+	game_->getGraphics().loadTexture("Player_Left_Run_4", "Textures/Player/Player_16.png"); //8
+	game_->getGraphics().loadTexture("Player_Left_Run_5", "Textures/Player/Player_17.png"); //9
+	game_->getGraphics().loadTexture("Player_Left_Run_6", "Textures/Player/Player_18.png"); //10
+	game_->getGraphics().loadTexture("Player_Left_Run_7", "Textures/Player/Player_19.png"); //11
+	game_->getGraphics().loadTexture("Player_Left_Run_8", "Textures/Player/Player_20.png"); //12
+	game_->getGraphics().loadTexture("Player_Left_Run_9", "Textures/Player/Player_21.png"); //13
+	game_->getGraphics().loadTexture("Player_Left_Run_10", "Textures/Player/Player_22.png"); //14
 	//RIGHT IDLE
-	game_->getGraphics().loadTexture("Textures/Player/Player_23.png"); //15
+	game_->getGraphics().loadTexture("Player_Right_Idle", "Textures/Player/Player_23.png"); //15
 	//RIGHT RUN
 	rightRunStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_24.png"); //16
-	game_->getGraphics().loadTexture("Textures/Player/Player_25.png"); //17
-	game_->getGraphics().loadTexture("Textures/Player/Player_26.png"); //18
-	game_->getGraphics().loadTexture("Textures/Player/Player_27.png"); //19
-	game_->getGraphics().loadTexture("Textures/Player/Player_28.png"); //20
-	game_->getGraphics().loadTexture("Textures/Player/Player_29.png"); //21
-	game_->getGraphics().loadTexture("Textures/Player/Player_30.png"); //22
-	game_->getGraphics().loadTexture("Textures/Player/Player_31.png"); //23
-	game_->getGraphics().loadTexture("Textures/Player/Player_32.png"); //24
-	game_->getGraphics().loadTexture("Textures/Player/Player_33.png"); //25
+	game_->getGraphics().loadTexture("Player_Right_Run_1", "Textures/Player/Player_24.png"); //16
+	game_->getGraphics().loadTexture("Player_Right_Run_2", "Textures/Player/Player_25.png"); //17
+	game_->getGraphics().loadTexture("Player_Right_Run_3", "Textures/Player/Player_26.png"); //18
+	game_->getGraphics().loadTexture("Player_Right_Run_4", "Textures/Player/Player_27.png"); //19
+	game_->getGraphics().loadTexture("Player_Right_Run_5", "Textures/Player/Player_28.png"); //20
+	game_->getGraphics().loadTexture("Player_Right_Run_6", "Textures/Player/Player_29.png"); //21
+	game_->getGraphics().loadTexture("Player_Right_Run_7", "Textures/Player/Player_30.png"); //22
+	game_->getGraphics().loadTexture("Player_Right_Run_8", "Textures/Player/Player_31.png"); //23
+	game_->getGraphics().loadTexture("Player_Right_Run_9", "Textures/Player/Player_32.png"); //24
+	game_->getGraphics().loadTexture("Player_Right_Run_10", "Textures/Player/Player_33.png"); //25
 	//LEFT SPRINT
 	leftSprintStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_34.png"); //26
-	game_->getGraphics().loadTexture("Textures/Player/Player_35.png"); //27
-	game_->getGraphics().loadTexture("Textures/Player/Player_36.png"); //28
-	game_->getGraphics().loadTexture("Textures/Player/Player_37.png"); //29
-	game_->getGraphics().loadTexture("Textures/Player/Player_38.png"); //30
-	game_->getGraphics().loadTexture("Textures/Player/Player_39.png"); //31
-	game_->getGraphics().loadTexture("Textures/Player/Player_40.png"); //32
-	game_->getGraphics().loadTexture("Textures/Player/Player_41.png"); //33
-	game_->getGraphics().loadTexture("Textures/Player/Player_42.png"); //34
-	game_->getGraphics().loadTexture("Textures/Player/Player_43.png"); //35
+	game_->getGraphics().loadTexture("Player_Left_Sprint_1", "Textures/Player/Player_34.png"); //26
+	game_->getGraphics().loadTexture("Player_Left_Sprint_2", "Textures/Player/Player_35.png"); //27
+	game_->getGraphics().loadTexture("Player_Left_Sprint_3", "Textures/Player/Player_36.png"); //28
+	game_->getGraphics().loadTexture("Player_Left_Sprint_4", "Textures/Player/Player_37.png"); //29
+	game_->getGraphics().loadTexture("Player_Left_Sprint_5", "Textures/Player/Player_38.png"); //30
+	game_->getGraphics().loadTexture("Player_Left_Sprint_6", "Textures/Player/Player_39.png"); //31
+	game_->getGraphics().loadTexture("Player_Left_Sprint_7", "Textures/Player/Player_40.png"); //32
+	game_->getGraphics().loadTexture("Player_Left_Sprint_8", "Textures/Player/Player_41.png"); //33
+	game_->getGraphics().loadTexture("Player_Left_Sprint_9", "Textures/Player/Player_42.png"); //34
+	game_->getGraphics().loadTexture("Player_Left_Sprint_10", "Textures/Player/Player_43.png"); //35
 	//RIGHT SPRINT
 	rightSprintStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_45.png"); //36
-	game_->getGraphics().loadTexture("Textures/Player/Player_46.png"); //37
-	game_->getGraphics().loadTexture("Textures/Player/Player_47.png"); //38
-	game_->getGraphics().loadTexture("Textures/Player/Player_48.png"); //39
-	game_->getGraphics().loadTexture("Textures/Player/Player_49.png"); //40
-	game_->getGraphics().loadTexture("Textures/Player/Player_50.png"); //41
-	game_->getGraphics().loadTexture("Textures/Player/Player_51.png"); //42
-	game_->getGraphics().loadTexture("Textures/Player/Player_52.png"); //43
-	game_->getGraphics().loadTexture("Textures/Player/Player_53.png"); //44
-	game_->getGraphics().loadTexture("Textures/Player/Player_54.png"); //45
+	game_->getGraphics().loadTexture("Player_Right_Sprint_1", "Textures/Player/Player_45.png"); //36
+	game_->getGraphics().loadTexture("Player_Right_Sprint_2", "Textures/Player/Player_46.png"); //37
+	game_->getGraphics().loadTexture("Player_Right_Sprint_3", "Textures/Player/Player_47.png"); //38
+	game_->getGraphics().loadTexture("Player_Right_Sprint_4", "Textures/Player/Player_48.png"); //39
+	game_->getGraphics().loadTexture("Player_Right_Sprint_5", "Textures/Player/Player_49.png"); //40
+	game_->getGraphics().loadTexture("Player_Right_Sprint_6", "Textures/Player/Player_50.png"); //41
+	game_->getGraphics().loadTexture("Player_Right_Sprint_7", "Textures/Player/Player_51.png"); //42
+	game_->getGraphics().loadTexture("Player_Right_Sprint_8", "Textures/Player/Player_52.png"); //43
+	game_->getGraphics().loadTexture("Player_Right_Sprint_9", "Textures/Player/Player_53.png"); //44
+	game_->getGraphics().loadTexture("Player_Right_Sprint_10", "Textures/Player/Player_54.png"); //45
 	//LEFT JUMP
 	leftJumpStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_61.png"); //46
-	game_->getGraphics().loadTexture("Textures/Player/Player_62.png"); //47
-	game_->getGraphics().loadTexture("Textures/Player/Player_63.png"); //48
-	game_->getGraphics().loadTexture("Textures/Player/Player_64.png"); //49
-	game_->getGraphics().loadTexture("Textures/Player/Player_65.png"); //50
-	game_->getGraphics().loadTexture("Textures/Player/Player_66.png"); //51
+	game_->getGraphics().loadTexture("Player_Left_Jump_1", "Textures/Player/Player_61.png"); //46
+	game_->getGraphics().loadTexture("Player_Left_Jump_2", "Textures/Player/Player_62.png"); //47
+	game_->getGraphics().loadTexture("Player_Left_Jump_3", "Textures/Player/Player_63.png"); //48
+	game_->getGraphics().loadTexture("Player_Left_Jump_4", "Textures/Player/Player_64.png"); //49
+	game_->getGraphics().loadTexture("Player_Left_Fall_1", "Textures/Player/Player_65.png"); //50
+	game_->getGraphics().loadTexture("Player_Left_Fall_2", "Textures/Player/Player_66.png"); //51
 	//RIGHT JUMP
 	rightJumpStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Textures/Player/Player_73.png"); //52
-	game_->getGraphics().loadTexture("Textures/Player/Player_74.png"); //53
-	game_->getGraphics().loadTexture("Textures/Player/Player_75.png"); //54
-	game_->getGraphics().loadTexture("Textures/Player/Player_76.png"); //55
-	game_->getGraphics().loadTexture("Textures/Player/Player_77.png"); //56
-	game_->getGraphics().loadTexture("Textures/Player/Player_78.png"); //57
-	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png"); //58
+	game_->getGraphics().loadTexture("Player_Right_Jump_1", "Textures/Player/Player_73.png"); //52
+	game_->getGraphics().loadTexture("Player_Right_Jump_2", "Textures/Player/Player_74.png"); //53
+	game_->getGraphics().loadTexture("Player_Right_Jump_3", "Textures/Player/Player_75.png"); //54
+	game_->getGraphics().loadTexture("Player_Right_Jump_4", "Textures/Player/Player_76.png"); //55
+	game_->getGraphics().loadTexture("Player_Right_Fall_1", "Textures/Player/Player_77.png"); //56
+	game_->getGraphics().loadTexture("Player_Right_Fall_2", "Textures/Player/Player_78.png"); //57
+	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
@@ -210,7 +210,16 @@ void GameScene::loadTextures()
 	playerSprites_LeftJump = new SpriteAnimator();
 	playerSprites_RightJump = new SpriteAnimator();
 
+	//TEMP (Push sprites through a spritesheet instead and fix this?)
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_1"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_1"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_1"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_1"));
+	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_1"));
+	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_1"));
+
 	//playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(3));
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(leftRunStartIndex + i));
@@ -245,16 +254,17 @@ void GameScene::loadTextures()
 	{
 		playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite(leftJumpStartIndex + i));
 	}
-	playerSprites_LeftJump->play();
+	*/
+	//playerSprites_LeftJump->play();
 
-	playerSprites_LeftIdle = game_->getGraphics().getSprite(4);
-	playerSprites_RightIdle = game_->getGraphics().getSprite(15);
+	playerSprites_LeftIdle = game_->getGraphics().getSprite("Player_Left_Idle");
+	playerSprites_RightIdle = game_->getGraphics().getSprite("Player_Right_Idle");
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
-	playerSprite = game_->getGraphics().getSprite(3);
-	playerSprites_LeftFall = game_->getGraphics().getSprite(51);
+	playerSprite = game_->getGraphics().getSprite("Player_Idle");
+	playerSprites_LeftFall = game_->getGraphics().getSprite("Player_Left_Fall_1");
 	playerSprites_LeftFall->setEntity();
-	playerSprites_RightFall = game_->getGraphics().getSprite(57);
+	playerSprites_RightFall = game_->getGraphics().getSprite("Player_Right_Fall_1");
 	playerSprites_RightFall->setEntity();
 
 	//END OF PLAYER
@@ -268,12 +278,12 @@ void GameScene::loadTextures()
 void GameScene::loadGameObject()
 {
 
-	BG = new GameObject(game_->getGraphics().getSprite(0), Rectangle(game_->getGraphics().getSprite(0)->getWidth(), game_->getGraphics().getSprite(0)->getHeight()), 0, 0, true);
+	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	//player = new GameObject(game_->getGraphics().getSprite(3), Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight()), 20, 0);
 	player = new Player(playerSprite, playerRect, 60, 352);
-	platform1 = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 0, 400);
-	platform2 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 300, 300);
-	Sprint_PU = new Pickup(game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284);
+	platform1 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 0, 400);
+	platform2 = new GameObject(game_->getGraphics().getSprite("Platform 2"), Rectangle(game_->getGraphics().getSprite("Platform 2")->getWidth(), game_->getGraphics().getSprite("Platform 2")->getHeight()), 300, 300);
+	Sprint_PU = new Pickup(game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
 
 
 	gameObjects.push_back(BG);

@@ -6,7 +6,7 @@
 //	memcpy(t_sprite, other.t_sprite, other.t_Width * other.t_Height * 4);
 //}
 
-Texture::Texture(std::string filename, bool hasAlpha) : tName(filename), hasAlpha_(hasAlpha)
+Texture::Texture(std::string filename, bool hasAlpha) : fileName(filename), hasAlpha_(hasAlpha)
 {
 
 	if (!HAPI.LoadTexture(filename, &t_sprite, t_Width, t_Height))

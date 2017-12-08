@@ -9,7 +9,7 @@ class Texture
 {
 private:
 	int t_Width, t_Height;
-	std::string tName;
+	std::string fileName;
 	BYTE* t_sprite{nullptr};
 	bool hasAlpha_{ true };
 	bool isEntity_{ false };

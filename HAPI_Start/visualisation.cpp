@@ -11,10 +11,10 @@ Visualisation::Visualisation()
 
 Visualisation::~Visualisation()
 {
-	for (int i = 0; i<index; i++)
+	for (int i = 0; i<SpriteMap.size(); i++)
 	{
 		//delete SpriteMap[i]->getSprite();
-		delete SpriteMap[i];
+		SpriteMap.erase(SpriteMap.begin());
 		//SpriteMap.erase(i);
 	}
 	SpriteMap.clear();
@@ -155,19 +155,19 @@ void Visualisation::BlitAlpha(BYTE* screen, Rectangle screenRect, Texture* textu
 	}
 }
 
-void Visualisation::loadTexture(std::string tName, bool hasAlpha) //Pushes new texture into the vector
+void Visualisation::loadTexture(std::string tName, std::string fileName, bool hasAlpha) //Pushes new texture into the vector
 {
-	SpriteMap[index] = new Texture(tName, hasAlpha);
-	index += 1;
+	SpriteMap[tName] = new Texture(fileName, hasAlpha);
+	//index += 1;
 }
 
-Texture* Visualisation::getSprite(int index) //Returns the Vectors sprite
+Texture* Visualisation::getSprite(std::string tName) //Returns the Vectors sprite
 {
-	return SpriteMap[index];
+	return SpriteMap[tName];
 }
 
 
-std::unordered_map<int, Texture*>& Visualisation::getSpriteMap()
+std::unordered_map<std::string, Texture*>& Visualisation::getSpriteMap()
 {
 	return SpriteMap;
 }
