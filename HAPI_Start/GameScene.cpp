@@ -60,7 +60,7 @@ void GameScene::update()
 
 		//std::cout << player->getX() << ", " << player->getY() << std::endl;
 
-		Sprint_PU->Update(player->getPlayerRect());
+		Sprint_PU->Update(player);
 		
 
 
@@ -84,13 +84,15 @@ void GameScene::update()
 
 		//END CAMERA
 
+		
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
 			platforms[0].Move(platform1->getX(), platform1->getY());
 			platforms[1].Move(platform2->getX(), platform2->getY());
-			gameObjects[4]->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
+			Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
+		
 
 
 		if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
@@ -198,6 +200,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Textures/Player/Player_76.png"); //55
 	game_->getGraphics().loadTexture("Textures/Player/Player_77.png"); //56
 	game_->getGraphics().loadTexture("Textures/Player/Player_78.png"); //57
+	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png"); //58
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
@@ -255,7 +258,7 @@ void GameScene::loadTextures()
 	playerSprites_RightFall->setEntity();
 
 	//END OF PLAYER
-	game_->getGraphics().loadTexture("Textures/Pickups/Sprint/Sprint_0.png", false); //58
+
 
 
 	
@@ -270,7 +273,7 @@ void GameScene::loadGameObject()
 	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite(1), Rectangle(game_->getGraphics().getSprite(1)->getWidth(), game_->getGraphics().getSprite(1)->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite(2), Rectangle(game_->getGraphics().getSprite(2)->getWidth(), game_->getGraphics().getSprite(2)->getHeight()), 300, 300);
-	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284);
+	Sprint_PU = new Pickup(game_->getGraphics().getSprite(58), Rectangle(game_->getGraphics().getSprite(58)->getWidth(), game_->getGraphics().getSprite(58)->getHeight()), 350, 284);
 
 
 	gameObjects.push_back(BG);
@@ -287,7 +290,9 @@ void GameScene::loadGameObject()
 	platforms[1].Translate(platform2->getX(), platform2->getY());
 
 	player->getRect().Translate(player->getX(), player->getY());
-	gameObjects[4]->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+	
+	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
 	
 
 	player->set_pSprite(playerSprite);

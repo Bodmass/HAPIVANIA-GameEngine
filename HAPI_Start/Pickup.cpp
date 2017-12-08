@@ -5,18 +5,31 @@ Pickup::~Pickup()
 {
 }
 
-void Pickup::Update(Rectangle plyr)
+void Pickup::Update(Player* plyr)
 {
-	setRectangle(Rectangle(getTexture()->getWidth(), getTexture()->getHeight()));
-	getRect().Translate(getX(), getY());
-
-	if (CollisionDetection::CheckCollision(getRect(), plyr))
+	if (!Collected)
 	{
-		std::cout << "Picked Up" << std::endl;
+		PickupRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
+		PickupRect.Translate(getX(), getY());
+
+		//setRectangle(Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight()));
+		//getRect().setLeft(getX());
+		//getRect().setTop(getY());
+
+		//std::cout << "Player: " << plyr.getLeft() <<  ", " << plyr.getTop() << std::endl;
+		//std::cout << "Pickup: " << PickupRect.getLeft() << ", " << PickupRect.getTop() << std::endl;
+
+		if (CollisionDetection::CheckCollision(plyr->getPlayerRect(), PickupRect))
+		{
+			plyr->setSprintUpgrade();
+			std::cout << "Picked Up" << std::endl;
+			Destroy();
+		}
 	}
 }
 
 void Pickup::Destroy()
 {
-
+	this->setX(-100);
+	this->setY(-100);
 }

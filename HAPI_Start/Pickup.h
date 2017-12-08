@@ -1,16 +1,18 @@
 #pragma once
 #include "GameObject.h"
+#include "Visualisation.h"
 #include "Player.h"
-class Pickup :
-	public GameObject
+
+class Pickup : public GameObject
 {
 private:
-	int p_ID;
+	//int p_ID;
+	Rectangle PickupRect;
 	bool Collected = false;
 public:
-	Pickup(int p_ID_, Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) { p_ID = p_ID_; };
+	Pickup(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	~Pickup();
-	void Update(Rectangle plyr);
+	void Update(Player* plyr);
 	bool CheckCollected() { return Collected; }
 	void Destroy();
 };
