@@ -211,12 +211,57 @@ void GameScene::loadTextures()
 	playerSprites_RightJump = new SpriteAnimator();
 
 	//TEMP (Push sprites through a spritesheet instead and fix this?)
+
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_1"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_2"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_3"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_4"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_5"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_6"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_7"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_8"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_9"));
+	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_10"));
+	playerSprites_LeftRun->play();
+
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_1"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_2"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_3"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_4"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_5"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_6"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_7"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_8"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_9"));
+	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_10"));
+	playerSprites_RightRun->play();
+
 	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_1"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_2"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_3"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_4"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_5"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_6"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_7"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_8"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_9"));
+	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_10"));
+	playerSprites_RightSprint->play();
+
 	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_1"));
-	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_1"));
-	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_1"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_2"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_3"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_4"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_5"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_6"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_7"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_8"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_9"));
+	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_10"));
+	playerSprites_LeftSprint->play();
+
+	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_3"));
+	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_3"));
 
 	//playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(3));
 	/*

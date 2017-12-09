@@ -11,11 +11,12 @@ Visualisation::Visualisation()
 
 Visualisation::~Visualisation()
 {
-	for (int i = 0; i<SpriteMap.size(); i++)
+
+	for (std::unordered_map<std::string, Texture*>::iterator it = SpriteMap.begin(); it!=SpriteMap.end(); it++)
 	{
-		//delete SpriteMap[i]->getSprite();
-		SpriteMap.erase(SpriteMap.begin());
-		//SpriteMap.erase(i);
+
+		delete it->second;
+		//SpriteMap.erase(SpriteMap.begin());
 	}
 	SpriteMap.clear();
 }
