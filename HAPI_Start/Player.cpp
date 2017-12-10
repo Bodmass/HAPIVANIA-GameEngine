@@ -302,7 +302,7 @@ void Player::PlayerUpdate()
 
 bool Player::PlayerShoot()
 {
-	if (keyData.scanCode[','])
+	if (keyData.scanCode['n'] || keyData.scanCode['N'])
 	{
 		if (!p_isShooting)
 		{
@@ -315,7 +315,7 @@ bool Player::PlayerShoot()
 		{
 			if (gameClock > p_shootingtime)
 			{
-				std::cout << "I've shot!\n";
+				//std::cout << "I've shot!\n";
 				p_isShooting = false;
 				return true;
 			}

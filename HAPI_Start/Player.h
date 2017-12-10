@@ -39,7 +39,7 @@ private:
 	int gameClock;
 	int p_jumpingtime = 0;
 	int p_shootingtime = 0;
-	int p_shootingdelay = 750;
+	int p_shootingdelay = 300;
 
 	//FUNCTIONS
 	bool p_leftCol{ false };

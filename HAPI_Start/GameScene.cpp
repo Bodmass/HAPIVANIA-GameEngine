@@ -75,6 +75,7 @@ void GameScene::update()
 
 		player->PlayerUpdate();
 
+
 		if (player->PlayerShoot())
 		{
 			if (player->FacingLeft())
@@ -396,6 +397,8 @@ void GameScene::loadGameObject()
 	player->getRect().Translate(player->getX(), player->getY());
 	
 	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+
+	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
 	
 
