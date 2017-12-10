@@ -145,8 +145,9 @@ void Player::PlayerMovement()
 		}
 		
 		if (!p_leftCol)
+		{
 			setX(getX() - p_speed);
-
+		}
 		if (getX() < 0)
 		{
 			setX(0);
@@ -179,7 +180,9 @@ void Player::PlayerMovement()
 		}
 		
 		if (!p_rightCol)
+		{
 			setX(getX() + p_speed);
+		}
 	}
 
 		if (!keyData.scanCode['A'] && p_isLeft && !p_isJumping)
@@ -295,6 +298,31 @@ void Player::PlayerUpdate()
 	gameClock = HAPI.GetTime();
 	PlayerMovement();
 
+}
+
+bool Player::PlayerShoot()
+{
+	if (keyData.scanCode[','])
+	{
+		if (!p_isShooting)
+		{
+			p_isShooting = true;
+			p_shootingtime = gameClock + p_shootingdelay;
+
+		}
+
+		if (p_isShooting)
+		{
+			if (gameClock > p_shootingtime)
+			{
+				std::cout << "I've shot!\n";
+				p_isShooting = false;
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 void Player::MakeAnims()

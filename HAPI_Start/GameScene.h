@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Pickup.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 class GameScene : public Scene
 {
@@ -43,7 +44,10 @@ private:
 	Rectangle playerRect = Rectangle(48, 48);
 
 	int gameClock;
+	int GameStartWait;
+	bool Setup = false;
 	bool BGMPlaying = false;
+	bool GameStarted = false;
 
 public:
 

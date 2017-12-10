@@ -21,10 +21,25 @@ GameScene::~GameScene()
 
 void GameScene::update()
 {
+	gameClock = HAPI.GetTime();
+	if (!Setup)
+	{
+		player->PlayerUpdate();
+		GameStartWait = gameClock + 7000;
+		HAPI.PlayStreamedMedia("Audio/SE/Appear.mp3");
+		Setup = true;
+	}
+
 	if (!BGMPlaying)
 	{
-		HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
-		BGMPlaying = true;
+		std::cout << gameClock << " " << GameStartWait << std::endl;
+		if(gameClock > GameStartWait)
+		{
+			HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
+			std::cout << "Playing Theme" << std::endl;
+			BGMPlaying = true;
+			GameStarted = true;
+		}
 	}
 
 		/*
@@ -54,14 +69,38 @@ void GameScene::update()
 		}
 		*/
 
+	if (GameStarted)
+	{
 		player->PlayerCollision(platforms);
 
 		player->PlayerUpdate();
 
-		//std::cout << player->getX() << ", " << player->getY() << std::endl;
+		if (player->PlayerShoot())
+		{
+			if (player->FacingLeft())
+			{
+				HAPI.PlaySound("Audio/SE/laser5.wav");
+				Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
+				gameObjects.push_back(newbullet);
+			}
+			else if (player->FacingRight())
+			{
+				HAPI.PlaySound("Audio/SE/laser5.wav");
+				Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
+				gameObjects.push_back(newbullet);
+			}
+		}
+
+		for (auto gbs : gameObjects)
+		{
+			if (dynamic_cast<Bullet*>(gbs))
+			{
+				dynamic_cast<Bullet*>(gbs)->Update();
+			}
+		}
 
 		Sprint_PU->Update(player);
-		
+	}
 
 
 
@@ -125,9 +164,18 @@ void GameScene::render()
 
 void GameScene::loadTextures()
 {
+	HAPI.LoadSound("Audio/SE/laser3.wav");
+
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
+	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBarTest.png", false); //HUD Bar
 	game_->getGraphics().loadTexture("Platform 1","Data/test.tga", false); //1 - Platform 1 -
 	game_->getGraphics().loadTexture("Platform 2","Data/platform1.tga", false); //2 - Platform 2 - 
+
+	//BULLETS
+	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
+
+	//PICKUPS
+	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
 
 	//PLAYER//
 	//IDLE
@@ -200,7 +248,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Right_Jump_4", "Textures/Player/Player_76.png"); //55
 	game_->getGraphics().loadTexture("Player_Right_Fall_1", "Textures/Player/Player_77.png"); //56
 	game_->getGraphics().loadTexture("Player_Right_Fall_2", "Textures/Player/Player_78.png"); //57
-	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
+	
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
@@ -307,9 +355,9 @@ void GameScene::loadTextures()
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
 	playerSprite = game_->getGraphics().getSprite("Player_Idle");
-	playerSprites_LeftFall = game_->getGraphics().getSprite("Player_Left_Fall_1");
+	playerSprites_LeftFall = game_->getGraphics().getSprite("Player_Left_Fall_2");
 	playerSprites_LeftFall->setEntity();
-	playerSprites_RightFall = game_->getGraphics().getSprite("Player_Right_Fall_1");
+	playerSprites_RightFall = game_->getGraphics().getSprite("Player_Right_Fall_2");
 	playerSprites_RightFall->setEntity();
 
 	//END OF PLAYER
@@ -324,11 +372,11 @@ void GameScene::loadGameObject()
 {
 
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
-	//player = new GameObject(game_->getGraphics().getSprite(3), Rectangle(game_->getGraphics().getSprite(3)->getWidth(), game_->getGraphics().getSprite(3)->getHeight()), 20, 0);
 	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite("Platform 2"), Rectangle(game_->getGraphics().getSprite("Platform 2")->getWidth(), game_->getGraphics().getSprite("Platform 2")->getHeight()), 300, 300);
 	Sprint_PU = new Pickup(game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
+	GameObject* HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 
 
 	gameObjects.push_back(BG);
@@ -336,6 +384,7 @@ void GameScene::loadGameObject()
 	gameObjects.push_back(platform1);
 	gameObjects.push_back(platform2);
 	gameObjects.push_back(Sprint_PU);
+	gameObjects.push_back(HUDBar);
 
 	platforms.push_back(platform1->getRect());
 	platforms.push_back(platform2->getRect());

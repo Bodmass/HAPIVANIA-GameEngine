@@ -25,7 +25,7 @@ void PauseMenu::update()
 
 void PauseMenu::render()
 {
-	game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
+	game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
 	if(game_->p_SprintU_Get())
 		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade1, 0, 0, game_->getCameraX(), game_->getCameraY());
 	if (game_->p_SuperJump_Get())
@@ -34,7 +34,7 @@ void PauseMenu::render()
 
 void PauseMenu::loadTextures()
 {
-	BG = new Texture("Textures/UI/Pause/PauseBG.tga");
+	BG = new Texture("Textures/UI/Pause/PauseBG.png");
 	Upgrade1 = new Texture("Textures/UI/Pause/PauseSprint.png");
 	Upgrade2 = new Texture("Textures/UI/Pause/PauseJump.png");
 }

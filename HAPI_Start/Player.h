@@ -19,6 +19,7 @@ private:
 	int p_superjumpspeed = 4;
 
 	//BOOLS
+	bool p_isShooting{ false };
 	bool p_isSprinting{ false };
 	bool p_isJumping{ false };
 	bool p_isFalling{ false };
@@ -37,6 +38,8 @@ private:
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	int gameClock;
 	int p_jumpingtime = 0;
+	int p_shootingtime = 0;
+	int p_shootingdelay = 750;
 
 	//FUNCTIONS
 	bool p_leftCol{ false };
@@ -76,10 +79,13 @@ public:
 	void PlayerCollision(std::vector<Rectangle> platforms);
 	void PlayerPickup(Rectangle pickup);
 	void PlayerUpdate();
+	bool PlayerShoot();
 	int p_getSpeed() { return p_speed; }
 	bool p_getSprintInfo() { return p_isSprinting; }
 
-
+	//FACING
+	bool FacingLeft() { return p_isLeft; }
+	bool FacingRight() { return p_isRight; }
 
 	//UPGRADES
 	bool checkSprintUpgrade() { return upgrade_SPRINT; }
