@@ -159,7 +159,6 @@ void Visualisation::BlitAlpha(BYTE* screen, Rectangle screenRect, Texture* textu
 void Visualisation::loadTexture(std::string tName, std::string fileName, bool hasAlpha) //Pushes new texture into the vector
 {
 	SpriteMap[tName] = new Texture(fileName, hasAlpha);
-	//index += 1;
 }
 
 Texture* Visualisation::getSprite(std::string tName) //Returns the Vectors sprite

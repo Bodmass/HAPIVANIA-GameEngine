@@ -166,6 +166,7 @@ void GameScene::render()
 void GameScene::loadTextures()
 {
 	HAPI.LoadSound("Audio/SE/laser3.wav");
+	//HAPI.LoadSound("Audio/SE/ItemRecieved.mp3");
 
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
 	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBarTest.png", false); //HUD Bar

@@ -22,7 +22,8 @@ void Pickup::Update(Player* plyr)
 		if (CollisionDetection::CheckCollision(plyr->getPlayerRect(), PickupRect))
 		{
 			plyr->setSprintUpgrade();
-			std::cout << "Picked Up" << std::endl;
+			HAPI.PlayStreamedMedia("Audio/SE/ItemRecieved.mp3");
+			//std::cout << "Picked Up" << std::endl;
 			Destroy();
 		}
 	}
