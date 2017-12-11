@@ -55,6 +55,7 @@ public:
 	virtual void render() override;
 	virtual void loadTextures() override;
 	virtual void loadGameObject() override;
+	virtual void loadSounds() override;
 	GameScene(Game* game) : Scene(game) {};
 	~GameScene();
 	//virtual Game* getGame() { return game_; }

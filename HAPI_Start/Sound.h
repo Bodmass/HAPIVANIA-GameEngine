@@ -5,7 +5,7 @@
 class Sound
 {
 private:
-	std::unordered_map<std::string, std::pair<std::string, int>>SoundEffects;
+	std::unordered_map<std::string, std::string> SoundEffects;
 	int sound_Index = 0;
 	std::unordered_map<std::string, std::pair<std::string, int>> Music;
 	int music_Index = 0;
@@ -20,5 +20,6 @@ public:
 	void playMusic(std::string mName);
 	void stopSound(std::string sName);
 	void stopMusic(std::string mName);
+	std::string getSound(std::string sName);
 };
 

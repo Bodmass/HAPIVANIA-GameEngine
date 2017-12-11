@@ -43,11 +43,11 @@
     <Filter Include="Source Files\Scenes">
       <UniqueIdentifier>{99a7fc25-def9-4430-9ecf-7e3ba042fb0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{8869dc12-8e59-455c-9a1f-85fe92079610}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{8afd5e4e-17de-4e65-98bc-2dab9c1f99d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{8869dc12-8e59-455c-9a1f-85fe92079610}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,7 @@
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>Audio</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

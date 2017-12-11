@@ -26,17 +26,15 @@ void GameScene::update()
 	{
 		player->PlayerUpdate();
 		GameStartWait = gameClock + 7000;
-		HAPI.PlayStreamedMedia("Audio/SE/Appear.mp3");
+		game_->getAudio().playSound("Appear");
 		Setup = true;
 	}
 
 	if (!BGMPlaying)
 	{
-		std::cout << gameClock << " " << GameStartWait << std::endl;
 		if(gameClock > GameStartWait)
 		{
-			HAPI.PlayStreamedMedia("Audio/BGM/Stage1.mp3");
-			std::cout << "Playing Theme" << std::endl;
+			game_->getAudio().playMusic("BGM 1");
 			BGMPlaying = true;
 			GameStarted = true;
 		}
@@ -80,13 +78,14 @@ void GameScene::update()
 		{
 			if (player->FacingLeft())
 			{
-				HAPI.PlaySound("Audio/SE/laser5.wav");
+				HAPI.PlaySound(game_->getAudio().getSound("Shoot"));
 				Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
 				gameObjects.push_back(newbullet);
 			}
 			else if (player->FacingRight())
 			{
-				HAPI.PlaySound("Audio/SE/laser5.wav");
+				HAPI.PlaySound(game_->getAudio().getSound("Shoot"));
+				//game_->getAudio().playSound("Shoot");
 				Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
 				gameObjects.push_back(newbullet);
 			}
@@ -165,9 +164,6 @@ void GameScene::render()
 
 void GameScene::loadTextures()
 {
-	HAPI.LoadSound("Audio/SE/laser3.wav");
-	//HAPI.LoadSound("Audio/SE/ItemRecieved.mp3");
-
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
 	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBarTest.png", false); //HUD Bar
 	game_->getGraphics().loadTexture("Platform 1","Data/test.tga", false); //1 - Platform 1 -
@@ -414,5 +410,13 @@ void GameScene::loadGameObject()
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
+}
+
+void GameScene::loadSounds()
+{
+	game_->getAudio().addMusic("BGM 1", "Audio/BGM/Stage1.mp3");
+	game_->getAudio().addSound("Appear", "Audio/SE/Appear.mp3");
+	game_->getAudio().addSound("Shoot", "Audio/SE/laser5.wav");
+	game_->getAudio().addSound("Upgrade", "Audio/SE/ItemRecieved.mp3");
 }
 

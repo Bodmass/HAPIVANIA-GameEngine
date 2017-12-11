@@ -33,11 +33,12 @@ void Game::Run()
 
 void Game::Update()
 {
-	game.loadTextures();
-	game.loadGameObject();
 	title.loadTextures();
 	title.loadGameObject();
 	title.loadSounds();
+	game.loadTextures();
+	game.loadGameObject();
+	game.loadSounds();
 	pause.loadTextures();
 	pause.loadGameObject();
 
