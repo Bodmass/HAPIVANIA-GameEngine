@@ -15,5 +15,6 @@ public:
 	virtual void render() override;
 	virtual void loadTextures() override;
 	virtual void loadGameObject() override;
+	virtual void loadSounds() override;
 };
 

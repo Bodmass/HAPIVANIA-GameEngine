@@ -37,6 +37,7 @@ void Game::Update()
 	game.loadGameObject();
 	title.loadTextures();
 	title.loadGameObject();
+	title.loadSounds();
 	pause.loadTextures();
 	pause.loadGameObject();
 

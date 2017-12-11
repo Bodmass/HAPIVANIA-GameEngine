@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "TitleScreen.h"
 #include "PauseMenu.h"
+#include "Sound.h"
 
 using namespace HAPISPACE;
 
@@ -24,6 +25,7 @@ private:
 	int posX{ 1 }, posY{ 1 };
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
 	Visualisation graphics;
+	Sound audio;
 	BYTE* screen = nullptr;
 	Rectangle screenRect;
 	Scene* current = nullptr;
@@ -62,6 +64,7 @@ public:
 	Rectangle& getScreenRect() { return screenRect; }
 	bool checkRunning() { return isRunning; }
 	Visualisation& getGraphics() { return graphics; }
+	Sound& getAudio() { return audio; }
 	BYTE* getScreen() { return screen; }
 
 	void switchScene_Title() { current = &title; }

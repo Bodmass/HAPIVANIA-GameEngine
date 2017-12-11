@@ -34,6 +34,7 @@
     <ClCompile Include="Pickup.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SpriteAnimator.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="SpriteAnimator.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TitleScreen.h" />

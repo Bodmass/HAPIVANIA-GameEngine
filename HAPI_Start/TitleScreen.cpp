@@ -14,13 +14,13 @@ void TitleScreen::update()
 
 	if (!BGMPlaying)
 	{
-		HAPI.PlayStreamedMedia("Audio/BGM/Title.ogg");
+		game_->getAudio().playMusic("Title");
 		BGMPlaying = true;
 	}
 
 	if (game_->getKeyboard().scanCode[HK_RETURN])
 	{
-		HAPI.StopStreamedMedia(0);
+		game_->getAudio().stopMusic("Title");
 		game_->switchScene_Game();
 	}
 
@@ -40,4 +40,9 @@ void TitleScreen::loadTextures()
 
 void TitleScreen::loadGameObject()
 {
+}
+
+void TitleScreen::loadSounds()
+{
+	game_->getAudio().addMusic("Title", "Audio/BGM/Title.ogg");
 }
