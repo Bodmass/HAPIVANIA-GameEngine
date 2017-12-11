@@ -14,13 +14,13 @@ void TitleScreen::update()
 
 	if (!BGMPlaying)
 	{
-		game_->getAudio().playMusic("Title");
+		Sound::playMusic("Title");
 		BGMPlaying = true;
 	}
 
 	if (game_->getKeyboard().scanCode[HK_RETURN])
 	{
-		game_->getAudio().stopMusic("Title");
+		Sound::stopMusic("Title");
 		game_->switchScene_Game();
 	}
 
@@ -44,5 +44,5 @@ void TitleScreen::loadGameObject()
 
 void TitleScreen::loadSounds()
 {
-	game_->getAudio().addMusic("Title", "Audio/BGM/Title.ogg");
+	Sound::addMusic("Title", "Audio/BGM/Title.ogg");
 }

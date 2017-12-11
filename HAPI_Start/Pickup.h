@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Visualisation.h"
 #include "Player.h"
+#include "CollisionDetection.h"
+
 
 class Pickup : public GameObject
 {

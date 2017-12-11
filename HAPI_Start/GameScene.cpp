@@ -26,7 +26,7 @@ void GameScene::update()
 	{
 		player->PlayerUpdate();
 		GameStartWait = gameClock + 7000;
-		game_->getAudio().playSound("Appear");
+		Sound::playSound("Appear");
 		Setup = true;
 	}
 
@@ -34,38 +34,11 @@ void GameScene::update()
 	{
 		if(gameClock > GameStartWait)
 		{
-			game_->getAudio().playMusic("BGM 1");
+			Sound::playMusic("BGM 1");
 			BGMPlaying = true;
 			GameStarted = true;
 		}
 	}
-
-		/*
-		if (controllerData.isAttached)
-		{
-
-		HAPI.RenderText(screenWidth - 130, 0, HAPI_TColour::BLACK, HAPI_TColour::WHITE, 2, "is Attached!", 22);
-
-		if (controllerData.digitalButtons[HK_DIGITAL_DPAD_DOWN])
-		graphics.getSprite(1)->getPosY() += 1;
-		if (controllerData.digitalButtons[HK_DIGITAL_DPAD_UP])
-		graphics.getSprite(1)->getPosY() -= 1;
-		if (controllerData.digitalButtons[HK_DIGITAL_DPAD_LEFT])
-		graphics.getSprite(1)->getPosX() -= 1;
-		if (controllerData.digitalButtons[HK_DIGITAL_DPAD_RIGHT])
-		graphics.getSprite(1)->getPosX() += 1;
-
-		if (graphics.getSprite(1)->getPosY() > screenHeight / 2 - 100 && graphics.getSprite(1)->getPosY() < screenHeight / 2 + 100)
-		{
-		if (graphics.getSprite(1)->getPosX() > screenWidth / 2 - 100 && graphics.getSprite(1)->getPosX() < screenWidth / 2 + 100)
-		HAPI.SetControllerRumble(0, 15000, 15000);
-		else
-		HAPI.SetControllerRumble(0, 0, 0);
-		}
-		else
-		HAPI.SetControllerRumble(0, 0, 0);
-		}
-		*/
 
 	if (GameStarted)
 	{
@@ -78,14 +51,13 @@ void GameScene::update()
 		{
 			if (player->FacingLeft())
 			{
-				HAPI.PlaySound(game_->getAudio().getSound("Shoot"));
+				Sound::playSound("Shoot");
 				Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
 				gameObjects.push_back(newbullet);
 			}
 			else if (player->FacingRight())
 			{
-				HAPI.PlaySound(game_->getAudio().getSound("Shoot"));
-				//game_->getAudio().playSound("Shoot");
+				Sound::playSound("Shoot");
 				Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
 				gameObjects.push_back(newbullet);
 			}
@@ -414,9 +386,10 @@ void GameScene::loadGameObject()
 
 void GameScene::loadSounds()
 {
-	game_->getAudio().addMusic("BGM 1", "Audio/BGM/Stage1.mp3");
-	game_->getAudio().addSound("Appear", "Audio/SE/Appear.mp3");
-	game_->getAudio().addSound("Shoot", "Audio/SE/laser5.wav");
-	game_->getAudio().addSound("Upgrade", "Audio/SE/ItemRecieved.mp3");
+	Sound::addMusic("BGM 1", "Audio/BGM/Stage1.ogg");
+	Sound::addSound("Appear", "Audio/SE/Appear.wav");
+	Sound::addSound("Shoot", "Audio/SE/laser5.wav");
+	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
+	Sound::addSound("Steps", "Audio/SE/steps.wav");
 }
 
