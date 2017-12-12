@@ -6,6 +6,7 @@ PauseMenu::~PauseMenu()
 	delete[] BG;
 	delete[] Upgrade1;
 	delete[] Upgrade2;
+	delete[] Upgrade3;
 }
 
 void PauseMenu::update()
@@ -30,6 +31,9 @@ void PauseMenu::render()
 		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade1, 0, 0, game_->getCameraX(), game_->getCameraY());
 	if (game_->p_SuperJump_Get())
 		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade2, 0, 0, game_->getCameraX(), game_->getCameraY());
+	if (game_->p_XRAYB_Get())
+		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade3, 0, 0, game_->getCameraX(), game_->getCameraY());
+
 }
 
 void PauseMenu::loadTextures()
@@ -37,6 +41,7 @@ void PauseMenu::loadTextures()
 	BG = new Texture("Textures/UI/Pause/PauseBG.png");
 	Upgrade1 = new Texture("Textures/UI/Pause/PauseSprint.png");
 	Upgrade2 = new Texture("Textures/UI/Pause/PauseJump.png");
+	Upgrade3 = new Texture("Textures/UI/Pause/PauseXRAY.png");
 }
 
 void PauseMenu::loadGameObject()

@@ -4,6 +4,8 @@
 #include "Visualisation.h"
 #include <HAPI_lib.h>
 #include <HAPI_InputCodes.h>
+#include "Bullet.h"
+#include "Sound.h"
 using namespace HAPISPACE;
 
 class Player : public GameObject
@@ -92,6 +94,8 @@ public:
 	void setSprintUpgrade() { upgrade_SPRINT = true; }
 	bool checkJumpUpgrade() { return upgrade_SUPER_JUMP; }
 	void setJumpUpgrade() { upgrade_SUPER_JUMP = true; }
+	bool checkXRAYUpgrade() { return upgrade_XRAY_BEAM; }
+	void setXRAYUpgrade() { upgrade_XRAY_BEAM = true; }
 
 	//ANIMATIONS
 	void MakeAnims();

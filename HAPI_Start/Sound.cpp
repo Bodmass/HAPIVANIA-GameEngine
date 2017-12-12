@@ -4,8 +4,8 @@ std::unordered_map<std::string, std::string> Sound::SoundEffects;
 int Sound::sound_Index = 0;
 std::unordered_map<std::string, std::pair<std::string, int>> Sound::Music;
 int Sound::music_Index = 0;
-const HAPISPACE::HAPI_TSoundOptions Sound::soundOptions = HAPISPACE::HAPI_TSoundOptions(0.85f, false);
-const HAPISPACE::HAPI_TSoundOptions Sound::musicOptions = HAPISPACE::HAPI_TSoundOptions(0.55f, false);
+const HAPISPACE::HAPI_TSoundOptions Sound::soundOptions = HAPISPACE::HAPI_TSoundOptions(0.55f, false);
+const HAPISPACE::HAPI_TSoundOptions Sound::musicOptions = HAPISPACE::HAPI_TSoundOptions(0.25f, false);
 
 Sound::Sound()
 {

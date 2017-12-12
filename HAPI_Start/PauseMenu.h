@@ -8,6 +8,7 @@ private:
 	Texture* BG = nullptr;
 	Texture* Upgrade1 = nullptr;
 	Texture* Upgrade2 = nullptr;
+	Texture* Upgrade3 = nullptr;
 
 public:
 	PauseMenu(Game* game) : Scene(game) {};

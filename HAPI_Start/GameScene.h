@@ -11,6 +11,7 @@ class GameScene : public Scene
 private:
 
 	std::vector<Rectangle> platforms;
+	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
 
 	Texture* playerSprite = nullptr;

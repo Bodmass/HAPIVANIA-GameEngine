@@ -38,6 +38,7 @@ private:
 
 	bool p_SprintU = false;
 	bool p_SuperJump = false;
+	bool p_XRAYB = false;
 	
 
 
@@ -73,6 +74,8 @@ public:
 
 	bool p_SprintU_Get() { return p_SprintU; }
 	bool p_SuperJump_Get() { return p_SuperJump; }
+	bool p_XRAYB_Get() { return p_XRAYB; }
+	void p_XRAYB_Set(bool yesno) { p_XRAYB = yesno; }
 	void p_SprintU_Set(bool yesno) { p_SprintU = yesno; }
 	void p_SuperJump_Set(bool yesno) { p_SuperJump = yesno; }
 

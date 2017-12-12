@@ -14,11 +14,34 @@ void Pickup::Update(Player* plyr)
 
 		if (CollisionDetection::CheckCollision(plyr->getPlayerRect(), PickupRect))
 		{
-			plyr->setSprintUpgrade();
-			Sound::playSound("Upgrade");
-			Destroy();
+			PickedUp(plyr);
 		}
 	}
+}
+
+void Pickup::PickedUp(Player* plyr)
+{
+	std::cout << "Something Picked Up" << std::endl;
+	if (p_ID == 0)
+	{
+		//HEALTH
+	}
+	if (p_ID == 1)
+	{
+		plyr->setSprintUpgrade();
+		Sound::playSound("Upgrade");
+	}
+	if (p_ID == 2)
+	{
+		plyr->setJumpUpgrade();
+		Sound::playSound("Upgrade");
+	}
+	if (p_ID == 3)
+	{
+		plyr->setXRAYUpgrade();
+		Sound::playSound("Upgrade");
+	}
+	Destroy();
 }
 
 void Pickup::Destroy()

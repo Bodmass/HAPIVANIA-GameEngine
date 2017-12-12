@@ -25,8 +25,9 @@ void GameScene::update()
 	if (!Setup)
 	{
 		player->PlayerUpdate();
+		GameStartWait = gameClock;
 		GameStartWait = gameClock + 7000;
-		Sound::playSound("Appear");
+		Sound::playMusic("Appear");
 		Setup = true;
 	}
 
@@ -51,15 +52,33 @@ void GameScene::update()
 		{
 			if (player->FacingLeft())
 			{
-				Sound::playSound("Shoot");
-				Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
-				gameObjects.push_back(newbullet);
+				if (player->checkXRAYUpgrade())
+				{
+					Sound::playSound("Shoot 2");
+					Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_2"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_2")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_2")->getHeight()), player->getX(), player->getY() + 10);
+					gameObjects.push_back(newbullet);
+				}
+				else
+				{
+					Sound::playSound("Shoot 1");
+					Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
+					gameObjects.push_back(newbullet);
+				}
 			}
 			else if (player->FacingRight())
 			{
-				Sound::playSound("Shoot");
-				Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
-				gameObjects.push_back(newbullet);
+				if (player->checkXRAYUpgrade())
+				{
+					Sound::playSound("Shoot 2");
+					Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_2"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_2")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_2")->getHeight()), player->getX() + 48, player->getY() + 10);
+					gameObjects.push_back(newbullet);
+				}
+				else
+				{
+					Sound::playSound("Shoot 1");
+					Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
+					gameObjects.push_back(newbullet);
+				}
 			}
 		}
 
@@ -68,10 +87,16 @@ void GameScene::update()
 			if (dynamic_cast<Bullet*>(gbs))
 			{
 				dynamic_cast<Bullet*>(gbs)->Update();
+				if(!player->checkXRAYUpgrade())
+					dynamic_cast<Bullet*>(gbs)->CheckCollision(platforms);
 			}
 		}
 
-		Sprint_PU->Update(player);
+		for (auto p : pickups)
+		{
+			p->Update(player);
+		}
+		
 	}
 
 
@@ -101,6 +126,7 @@ void GameScene::update()
 			player->getRect().Move(player->getX(), player->getY());
 			platforms[0].Move(platform1->getX(), platform1->getY());
 			platforms[1].Move(platform2->getX(), platform2->getY());
+			platforms[3].Move(platforms[3].getX(), platforms[3].getY());
 			Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
 		
@@ -112,6 +138,7 @@ void GameScene::update()
 			game_->switchScene_Pause();
 			//TEMP HERE
 			game_->p_SprintU_Set(player->checkSprintUpgrade());
+			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
 			game_->p_SuperJump_Set(player->checkJumpUpgrade());
 		}
 
@@ -143,9 +170,11 @@ void GameScene::loadTextures()
 
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
+	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
 
 	//PICKUPS
 	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
+	game_->getGraphics().loadTexture("Pickup_XRAY_1", "Textures/Pickups/Xray/XRAY_0.png"); //58
 
 	//PLAYER//
 	//IDLE
@@ -345,7 +374,10 @@ void GameScene::loadGameObject()
 	player = new Player(playerSprite, playerRect, 60, 352);
 	platform1 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 0, 400);
 	platform2 = new GameObject(game_->getGraphics().getSprite("Platform 2"), Rectangle(game_->getGraphics().getSprite("Platform 2")->getWidth(), game_->getGraphics().getSprite("Platform 2")->getHeight()), 300, 300);
-	Sprint_PU = new Pickup(game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
+	GameObject* platform3 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 1000, 400);
+	GameObject* platform4 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 2250, 400);
+	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
+	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 384);
 	GameObject* HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 
 
@@ -353,19 +385,31 @@ void GameScene::loadGameObject()
 	gameObjects.push_back(player);
 	gameObjects.push_back(platform1);
 	gameObjects.push_back(platform2);
+	gameObjects.push_back(platform3);
+	gameObjects.push_back(platform4);
 	gameObjects.push_back(Sprint_PU);
+	gameObjects.push_back(XRAY_PU);
 	gameObjects.push_back(HUDBar);
+
+	pickups.push_back(Sprint_PU);
+	pickups.push_back(XRAY_PU);
 
 	platforms.push_back(platform1->getRect());
 	platforms.push_back(platform2->getRect());
+	platforms.push_back(platform3->getRect());
+	platforms.push_back(platform4->getRect());
 	platforms.push_back(Sprint_PU->getRect());
 
 	platforms[0].Translate(platform1->getX(), platform1->getY());
 	platforms[1].Translate(platform2->getX(), platform2->getY());
+	platforms[2].Translate(platform3->getX(), platform3->getY());
+	platforms[3].Translate(platform4->getX(), platform4->getY());
 
 	player->getRect().Translate(player->getX(), player->getY());
 	
 	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+	XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
+
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
@@ -387,8 +431,9 @@ void GameScene::loadGameObject()
 void GameScene::loadSounds()
 {
 	Sound::addMusic("BGM 1", "Audio/BGM/Stage1.ogg");
-	Sound::addSound("Appear", "Audio/SE/Appear.wav");
-	Sound::addSound("Shoot", "Audio/SE/laser5.wav");
+	Sound::addMusic("Appear", "Audio/SE/Appear.wav");
+	Sound::addSound("Shoot 1", "Audio/SE/laser1.wav");
+	Sound::addSound("Shoot 2", "Audio/SE/laser2.wav");
 	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
 	Sound::addSound("Steps", "Audio/SE/steps.wav");
 }
