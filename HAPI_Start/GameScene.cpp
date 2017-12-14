@@ -82,6 +82,8 @@ void GameScene::update()
 			}
 		}
 
+		//std::cout << player->getX() << " " << player->getY() << std::endl;
+
 		for (auto gbs : gameObjects)
 		{
 			if (dynamic_cast<Bullet*>(gbs))
@@ -124,9 +126,6 @@ void GameScene::update()
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
-			platforms[0].Move(platform1->getX(), platform1->getY());
-			platforms[1].Move(platform2->getX(), platform2->getY());
-			platforms[3].Move(platforms[3].getX(), platforms[3].getY());
 			Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
 		
@@ -164,7 +163,7 @@ void GameScene::render()
 void GameScene::loadTextures()
 {
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
-	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBarTest.png", false); //HUD Bar
+	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png", false); //HUD Bar
 	game_->getGraphics().loadTexture("Platform 1","Data/test.tga", false); //1 - Platform 1 -
 	game_->getGraphics().loadTexture("Platform 2","Data/platform1.tga", false); //2 - Platform 2 - 
 
@@ -371,11 +370,7 @@ void GameScene::loadGameObject()
 {
 
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
-	player = new Player(playerSprite, playerRect, 60, 352);
-	platform1 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 0, 400);
-	platform2 = new GameObject(game_->getGraphics().getSprite("Platform 2"), Rectangle(game_->getGraphics().getSprite("Platform 2")->getWidth(), game_->getGraphics().getSprite("Platform 2")->getHeight()), 300, 300);
-	GameObject* platform3 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 1000, 400);
-	GameObject* platform4 = new GameObject(game_->getGraphics().getSprite("Platform 1"), Rectangle(game_->getGraphics().getSprite("Platform 1")->getWidth(), game_->getGraphics().getSprite("Platform 1")->getHeight()), 2250, 400);
+	player = new Player(playerSprite, playerRect, 60, 560);
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 384);
 	GameObject* HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
@@ -383,10 +378,6 @@ void GameScene::loadGameObject()
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
-	gameObjects.push_back(platform1);
-	gameObjects.push_back(platform2);
-	gameObjects.push_back(platform3);
-	gameObjects.push_back(platform4);
 	gameObjects.push_back(Sprint_PU);
 	gameObjects.push_back(XRAY_PU);
 	gameObjects.push_back(HUDBar);
@@ -394,16 +385,7 @@ void GameScene::loadGameObject()
 	pickups.push_back(Sprint_PU);
 	pickups.push_back(XRAY_PU);
 
-	platforms.push_back(platform1->getRect());
-	platforms.push_back(platform2->getRect());
-	platforms.push_back(platform3->getRect());
-	platforms.push_back(platform4->getRect());
 	platforms.push_back(Sprint_PU->getRect());
-
-	platforms[0].Translate(platform1->getX(), platform1->getY());
-	platforms[1].Translate(platform2->getX(), platform2->getY());
-	platforms[2].Translate(platform3->getX(), platform3->getY());
-	platforms[3].Translate(platform4->getX(), platform4->getY());
 
 	player->getRect().Translate(player->getX(), player->getY());
 	
@@ -426,6 +408,7 @@ void GameScene::loadGameObject()
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
+
 }
 
 void GameScene::loadSounds()
@@ -436,5 +419,70 @@ void GameScene::loadSounds()
 	Sound::addSound("Shoot 2", "Audio/SE/laser2.wav");
 	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
 	Sound::addSound("Steps", "Audio/SE/steps.wav");
+}
+
+void GameScene::loadLevel(std::string level)
+{
+
+
+	CHapiXML levelxml = level;
+	std::cout << "Setting Up Level Sprites: " << level << std::endl;
+	std::vector<CHapiXMLNode*> tilesused = levelxml.GetAllNodesWithName("sprite");
+
+	for (auto sprite : tilesused)
+	{
+		CHapiXMLAttribute attr;
+		if (!sprite->GetAttributeWithName("location", attr))
+			return; //temp
+		std::string tilename = attr.AsString();
+		std::string tilelocation = "Textures/Level/Tiles/" + tilename;
+		std::cout << "Sprite Name: " + tilename << " and Location: " + tilelocation << std::endl;
+		game_->getGraphics().loadTexture(tilename, tilelocation, false);
+	}
+
+	std::cout << "Setting Up Level Tiles: " << level << std::endl;
+
+	std::vector<CHapiXMLNode*> tilesdown = levelxml.GetAllNodesWithName("tile");
+
+	for (auto t : tilesdown)
+	{
+		CHapiXMLAttribute attr1;
+		if (!t->GetAttributeWithName("x", attr1))
+			return; //temp
+		std::cout << attr1.AsString();
+		CHapiXMLAttribute attr2;
+		if (!t->GetAttributeWithName("y", attr2))
+			return; //temp
+		std::cout << ", " << attr2.AsString();
+		CHapiXMLAttribute attr3;
+		if (!t->GetAttributeWithName("look", attr3))
+			return; //temp
+		std::cout << " that looks like " << attr3.AsString() << std::endl;
+
+		bool dontcollide = false;
+
+		if (attr3.AsString() == "Cave/Cave_21.png" || attr3.AsString() == "Cave/Cave_20.png" || attr3.AsString() == "Cave/Cave_18.png" || attr3.AsString() == "Cave/Cave_17.png" || attr3.AsString() == "Cave/Cave_08.png" || attr3.AsString() == "Cave/Cave_09.png" || attr3.AsString() == "Cave/Cave_10.png")
+		{
+			dontcollide = true;
+		}
+
+		std::string t_name = attr3.AsString();
+
+
+		 
+		
+
+		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+
+		gameObjects.push_back(newtile);
+		if (!dontcollide)
+		{
+			platforms.push_back(newtile->getRect());
+			platforms.back().Translate(newtile->getX(), newtile->getY());
+		}
+
+	}
+
+
 }
 

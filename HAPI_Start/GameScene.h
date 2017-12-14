@@ -38,8 +38,6 @@ private:
 
 	GameObject* BG;
 	Player* player;
-	GameObject* platform1;
-	GameObject* platform2;
 	Pickup* Sprint_PU;
 
 	Rectangle playerRect = Rectangle(48, 48);
@@ -57,6 +55,7 @@ public:
 	virtual void loadTextures() override;
 	virtual void loadGameObject() override;
 	virtual void loadSounds() override;
+	void loadLevel(std::string level);
 	GameScene(Game* game) : Scene(game) {};
 	~GameScene();
 	//virtual Game* getGame() { return game_; }

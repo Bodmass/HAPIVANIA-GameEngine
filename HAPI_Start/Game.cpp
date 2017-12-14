@@ -39,6 +39,7 @@ void Game::Update()
 	game.loadTextures();
 	game.loadGameObject();
 	game.loadSounds();
+	game.loadLevel("Data/DemoLevel.xml");
 	pause.loadTextures();
 	pause.loadGameObject();
 
