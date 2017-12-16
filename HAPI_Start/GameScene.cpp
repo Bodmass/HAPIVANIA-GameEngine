@@ -16,6 +16,11 @@ GameScene::~GameScene()
 	{
 		delete gameObject;
 	}
+
+	for (auto* enemy : enemies)
+	{
+		delete enemy;
+	}
 }
 
 
@@ -47,51 +52,9 @@ void GameScene::update()
 
 		player->PlayerUpdate();
 
-
-		if (player->PlayerShoot())
+		if (player->PlayerShoot(bulletObjects))
 		{
-			if (player->FacingLeft())
-			{
-				if (player->checkXRAYUpgrade())
-				{
-					Sound::playSound("Shoot 2");
-					bulletObjects.front()->setX(player->getX());
-					bulletObjects.front()->setY(player->getY() + 10);
-					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
-					bulletObjects.front()->fire(false);
-					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
-				}
-				else
-				{
-					Sound::playSound("Shoot 1");
-					bulletObjects.front()->setX(player->getX());
-					bulletObjects.front()->setY(player->getY() + 10);
-					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
-					bulletObjects.front()->fire(false);
-					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
-				}
-			}
-			else if (player->FacingRight())
-			{
-				if (player->checkXRAYUpgrade())
-				{
-					Sound::playSound("Shoot 2");
-					bulletObjects.front()->setX(player->getX() + 48);
-					bulletObjects.front()->setY(player->getY() + 10);
-					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
-					bulletObjects.front()->fire(true);
-					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
-				}
-				else
-				{
-					Sound::playSound("Shoot 1");
-					bulletObjects.front()->setX(player->getX() + 48);
-					bulletObjects.front()->setY(player->getY() + 10);
-					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
-					bulletObjects.front()->fire(true);
-					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
-				}
-			}
+			std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 		}
 
 		//std::cout << player->getX() << " " << player->getY() << std::endl;
@@ -101,8 +64,15 @@ void GameScene::update()
 			if (dynamic_cast<Bullet*>(gbs))
 			{
 				dynamic_cast<Bullet*>(gbs)->Update();
-				if(!player->checkXRAYUpgrade())
+				if (!player->checkXRAYUpgrade())
+				{
 					dynamic_cast<Bullet*>(gbs)->CheckCollision(platforms);
+					
+				}
+				else
+				{
+					dynamic_cast<Bullet*>(gbs)->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+				}
 			}
 		}
 
@@ -170,6 +140,11 @@ void GameScene::render()
 		else
 			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
 	}
+
+	for (auto* enemy : enemies)
+	{
+		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
+	}
 }
 
 void GameScene::loadTextures()
@@ -187,6 +162,9 @@ void GameScene::loadTextures()
 	//PICKUPS
 	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
 	game_->getGraphics().loadTexture("Pickup_XRAY_1", "Textures/Pickups/Xray/XRAY_0.png"); //58
+
+	//ENEMIES
+	game_->getGraphics().loadTexture("Enemy_SP_FaceLeft", "Textures/AI/SpacePirate/SpacePirate_10.png");
 
 	//PLAYER//
 	//IDLE
@@ -412,6 +390,10 @@ void GameScene::loadGameObject()
 		gameObjects.push_back(newbullet);
 		bulletObjects.push_back(newbullet);
 	}
+
+	//Enemy (Temp here, move into new function)
+	Enemy* SpacePirate = new Enemy(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 600, 284);
+	enemies.push_back(SpacePirate);
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));

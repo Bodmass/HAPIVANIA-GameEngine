@@ -81,7 +81,7 @@ public:
 	void PlayerCollision(std::vector<Rectangle> platforms);
 	void PlayerPickup(Rectangle pickup);
 	void PlayerUpdate();
-	bool PlayerShoot();
+	bool PlayerShoot(std::vector<Bullet*> bullets);
 	int p_getSpeed() { return p_speed; }
 	bool p_getSprintInfo() { return p_isSprinting; }
 

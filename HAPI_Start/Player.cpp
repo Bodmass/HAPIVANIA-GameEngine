@@ -300,7 +300,7 @@ void Player::PlayerUpdate()
 
 }
 
-bool Player::PlayerShoot()
+bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 {
 	if (keyData.scanCode['n'] || keyData.scanCode['N'])
 	{
@@ -317,11 +317,53 @@ bool Player::PlayerShoot()
 			{
 				//std::cout << "I've shot!\n";
 				p_isShooting = false;
+
+				if (FacingLeft())
+				{
+					if (checkXRAYUpgrade())
+					{
+						Sound::playSound("Shoot 2");
+						bullets.front()->setX(getX());
+						bullets.front()->setY(getY() + 10);
+						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+						bullets.front()->fire(false);
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+					else
+					{
+						Sound::playSound("Shoot 1");
+						bullets.front()->setX(getX());
+						bullets.front()->setY(getY() + 10);
+						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+						bullets.front()->fire(false);
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+				}
+				else if (FacingRight())
+				{
+					if (checkXRAYUpgrade())
+					{
+						Sound::playSound("Shoot 2");
+						bullets.front()->setX(getX() + 48);
+						bullets.front()->setY(getY() + 10);
+						
+						bullets.front()->fire(true);
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+					else
+					{
+						Sound::playSound("Shoot 1");
+						bullets.front()->setX(getX() + 48);
+						bullets.front()->setY(getY() + 10);
+						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+						bullets.front()->fire(true);
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+				}
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
 

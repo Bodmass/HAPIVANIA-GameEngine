@@ -10,6 +10,7 @@ class GameScene : public Scene
 {
 private:
 
+	std::vector<Enemy*> enemies;
 	std::vector<Rectangle> platforms;
 	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
