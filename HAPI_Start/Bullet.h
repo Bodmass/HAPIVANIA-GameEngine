@@ -6,13 +6,14 @@ class Bullet : public GameObject
 {
 private:
 	bool isRight_{ false };
-	int bulletspeed = 5;
+	int bulletspeed = 0;
 	Rectangle BulletRect;
 public:
-	Bullet(bool isRight, Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) { isRight_ = isRight; };
+	Bullet(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	void Update();
 	void CheckCollision(std::vector<Rectangle> platforms);
 	void Destroy();
+	void fire(bool isRight);
 	~Bullet();
 
 };

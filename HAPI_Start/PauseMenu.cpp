@@ -11,8 +11,10 @@ PauseMenu::~PauseMenu()
 
 void PauseMenu::update()
 {
+
 	if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
 	{
+		justopened = true;
 		game_->setPauseLock(true);
 		game_->switchScene_Game();
 	}
@@ -26,13 +28,20 @@ void PauseMenu::update()
 
 void PauseMenu::render()
 {
-	game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
-	if(game_->p_SprintU_Get())
-		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade1, 0, 0, game_->getCameraX(), game_->getCameraY());
-	if (game_->p_SuperJump_Get())
-		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade2, 0, 0, game_->getCameraX(), game_->getCameraY());
-	if (game_->p_XRAYB_Get())
-		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade3, 0, 0, game_->getCameraX(), game_->getCameraY());
+	if (justopened)
+	{
+		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
+		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
+		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
+		if (game_->p_SprintU_Get())
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade1, 0, 0, game_->getCameraX(), game_->getCameraY());
+		if (game_->p_SuperJump_Get())
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade2, 0, 0, game_->getCameraX(), game_->getCameraY());
+		if (game_->p_XRAYB_Get())
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), Upgrade3, 0, 0, game_->getCameraX(), game_->getCameraY());
+		justopened = false;
+	}
+
 
 }
 

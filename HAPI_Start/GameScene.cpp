@@ -55,14 +55,20 @@ void GameScene::update()
 				if (player->checkXRAYUpgrade())
 				{
 					Sound::playSound("Shoot 2");
-					Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_2"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_2")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_2")->getHeight()), player->getX(), player->getY() + 10);
-					gameObjects.push_back(newbullet);
+					bulletObjects.front()->setX(player->getX());
+					bulletObjects.front()->setY(player->getY() + 10);
+					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+					bulletObjects.front()->fire(false);
+					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 				}
 				else
 				{
 					Sound::playSound("Shoot 1");
-					Bullet* newbullet = new Bullet(false, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX(), player->getY() + 10);
-					gameObjects.push_back(newbullet);
+					bulletObjects.front()->setX(player->getX());
+					bulletObjects.front()->setY(player->getY() + 10);
+					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+					bulletObjects.front()->fire(false);
+					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 				}
 			}
 			else if (player->FacingRight())
@@ -70,14 +76,20 @@ void GameScene::update()
 				if (player->checkXRAYUpgrade())
 				{
 					Sound::playSound("Shoot 2");
-					Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_2"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_2")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_2")->getHeight()), player->getX() + 48, player->getY() + 10);
-					gameObjects.push_back(newbullet);
+					bulletObjects.front()->setX(player->getX() + 48);
+					bulletObjects.front()->setY(player->getY() + 10);
+					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+					bulletObjects.front()->fire(true);
+					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 				}
 				else
 				{
 					Sound::playSound("Shoot 1");
-					Bullet* newbullet = new Bullet(true, game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), player->getX() + 48, player->getY() + 10);
-					gameObjects.push_back(newbullet);
+					bulletObjects.front()->setX(player->getX() + 48);
+					bulletObjects.front()->setY(player->getY() + 10);
+					bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+					bulletObjects.front()->fire(true);
+					std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 				}
 			}
 		}
@@ -170,6 +182,7 @@ void GameScene::loadTextures()
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
 	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
+	game_->getGraphics().getSprite("Player_Bullet_2")->setEntity();
 
 	//PICKUPS
 	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
@@ -392,6 +405,13 @@ void GameScene::loadGameObject()
 	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
 	XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
 
+	//Offscreen Bullets
+	for (int i = 0; i < 14; i++)
+	{
+		Bullet* newbullet = new Bullet(game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), -100, -100);
+		gameObjects.push_back(newbullet);
+		bulletObjects.push_back(newbullet);
+	}
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
@@ -426,7 +446,7 @@ void GameScene::loadLevel(std::string level)
 
 
 	CHapiXML levelxml = level;
-	std::cout << "Setting Up Level Sprites: " << level << std::endl;
+	//std::cout << "Setting Up Level Sprites: " << level << std::endl;
 	std::vector<CHapiXMLNode*> tilesused = levelxml.GetAllNodesWithName("sprite");
 
 	for (auto sprite : tilesused)
@@ -436,11 +456,11 @@ void GameScene::loadLevel(std::string level)
 			return; //temp
 		std::string tilename = attr.AsString();
 		std::string tilelocation = "Textures/Level/Tiles/" + tilename;
-		std::cout << "Sprite Name: " + tilename << " and Location: " + tilelocation << std::endl;
+		//std::cout << "Sprite Name: " + tilename << " and Location: " + tilelocation << std::endl;
 		game_->getGraphics().loadTexture(tilename, tilelocation, false);
 	}
 
-	std::cout << "Setting Up Level Tiles: " << level << std::endl;
+	//std::cout << "Setting Up Level Tiles: " << level << std::endl;
 
 	std::vector<CHapiXMLNode*> tilesdown = levelxml.GetAllNodesWithName("tile");
 
@@ -449,15 +469,15 @@ void GameScene::loadLevel(std::string level)
 		CHapiXMLAttribute attr1;
 		if (!t->GetAttributeWithName("x", attr1))
 			return; //temp
-		std::cout << attr1.AsString();
+		//std::cout << attr1.AsString();
 		CHapiXMLAttribute attr2;
 		if (!t->GetAttributeWithName("y", attr2))
 			return; //temp
-		std::cout << ", " << attr2.AsString();
+		//std::cout << ", " << attr2.AsString();
 		CHapiXMLAttribute attr3;
 		if (!t->GetAttributeWithName("look", attr3))
 			return; //temp
-		std::cout << " that looks like " << attr3.AsString() << std::endl;
+		//std::cout << " that looks like " << attr3.AsString() << std::endl;
 
 		bool dontcollide = false;
 

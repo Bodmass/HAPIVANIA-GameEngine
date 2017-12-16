@@ -6,15 +6,15 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 {
 	p_groundunder = false;
 
-	playerfeet = Rectangle(this->getTexture()->getWidth() - 8, 4);
-	playerleft = Rectangle(2, this->getTexture()->getHeight() - 2);
-	playerright = Rectangle(2, this->getTexture()->getHeight() - 2);
-	player3 = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight() - 2);
+	playerfeet = Rectangle(this->getTexture()->getWidth() - 6, 4);
+	playerleft = Rectangle(1, this->getTexture()->getHeight() - 2);
+	playerright = Rectangle(1, this->getTexture()->getHeight() - 2);
+	player3 = Rectangle(this->getTexture()->getWidth() - 4, this->getTexture()->getHeight() - 2);
 
-	playerfeet.Translate(getX() + 4, getY() + 44);
-	playerleft.Translate(getX() - 2, getY() - 1);
-	playerright.Translate(getX() + 48 + 2, getY() - 1);
-	player3.Translate(getX(), getY() - 1);
+	playerfeet.Translate(getX() + 3, getY() + 44);
+	playerleft.Translate(getX() - 1, getY() - 1);
+	playerright.Translate(getX() + 48 + 1, getY() - 1);
+	player3.Translate(getX() + 2, getY() - 1);
 
 	p_leftCol = false;
 	p_rightCol = false;

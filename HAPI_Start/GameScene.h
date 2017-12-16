@@ -13,6 +13,7 @@ private:
 	std::vector<Rectangle> platforms;
 	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
+	std::vector<Bullet*> bulletObjects;
 
 	Texture* playerSprite = nullptr;
 	//Animations

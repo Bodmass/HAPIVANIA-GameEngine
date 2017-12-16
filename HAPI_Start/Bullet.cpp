@@ -31,6 +31,12 @@ void Bullet::Destroy()
 	this->setY(-100);
 }
 
+void Bullet::fire(bool isRight)
+{
+	isRight_ = isRight;
+	bulletspeed = 7;
+}
+
 Bullet::~Bullet()
 {
 }
