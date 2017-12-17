@@ -16,6 +16,12 @@ GameObject::GameObject(Texture* texture, Rectangle rectangle, int posX, int posY
 		texture_->setEntity();
 }
 
+void GameObject::setTexture(Texture * texture)
+{
+	texture_ = texture;
+	texture->setEntity();
+}
+
 GameObject::~GameObject()
 {
 }

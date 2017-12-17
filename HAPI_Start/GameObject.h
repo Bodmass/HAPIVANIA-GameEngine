@@ -18,7 +18,7 @@ public:
 	virtual int getY() { return positionY; }
 	virtual void setX(int x) { positionX = x; }
 	virtual void setY(int y) { positionY = y; }
-	virtual void setTexture(Texture* texture) { texture_ = texture; }
+	virtual void setTexture(Texture* texture);
 	virtual void setRectangle(Rectangle rectangle) { rectangle_ = rectangle; }
 	virtual ~GameObject();
 };

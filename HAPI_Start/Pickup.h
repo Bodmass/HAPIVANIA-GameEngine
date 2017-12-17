@@ -17,6 +17,7 @@ public:
 	void Update(Player* plyr);
 	void PickedUp(Player* plyr);
 	bool CheckCollected() { return Collected; }
+	virtual Rectangle getRect() override { return PickupRect; }
 	void Destroy();
 };
 

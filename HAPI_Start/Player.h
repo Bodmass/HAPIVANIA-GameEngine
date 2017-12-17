@@ -14,7 +14,8 @@ private:
 
 	//* //* PLAYER \\* \\*
 	//STATS
-	int p_HP = 100;
+	int p_HP_max = 99;
+	int p_HP_cur = p_HP_max;
 	int p_speed = 2;
 	int p_jumpspeed = 3;
 	int p_normaljumpspeed = 3;
@@ -78,11 +79,12 @@ public:
 	~Player();
 	//Player player;
 
-	void PlayerCollision(std::vector<Rectangle> platforms);
+	void PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect);
 	void PlayerPickup(Rectangle pickup);
 	void PlayerUpdate();
 	bool PlayerShoot(std::vector<Bullet*> bullets);
 	int p_getSpeed() { return p_speed; }
+	int p_getcurHP() { return p_HP_cur; }
 	bool p_getSprintInfo() { return p_isSprinting; }
 
 	//FACING

@@ -9,6 +9,7 @@ void Pickup::Update(Player* plyr)
 {
 	if (!Collected)
 	{
+
 		PickupRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 		PickupRect.Translate(getX(), getY());
 
@@ -22,6 +23,7 @@ void Pickup::Update(Player* plyr)
 void Pickup::PickedUp(Player* plyr)
 {
 	std::cout << "Something Picked Up" << std::endl;
+	Collected = true;
 	if (p_ID == 0)
 	{
 		//HEALTH

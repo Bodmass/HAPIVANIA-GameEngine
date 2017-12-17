@@ -31,3 +31,29 @@ Rectangle Rectangle::rContains(Rectangle & rect)
 
 	return clippedRect;
 }
+
+bool Rectangle::rOutside(Rectangle & rect)
+{
+	//Rectangle contains = rContains(rect);
+	if (getRight() > rect.getLeft())
+	{
+		return true;
+	}
+
+	if (getBtm() < rect.getTop())
+	{
+		return true;
+	}
+
+	if (getLeft() > rect.getRight())
+	{
+		return true;
+	}
+
+	if (getTop() > rect.getBtm())
+	{
+		return true;
+	}
+
+	return false;
+}

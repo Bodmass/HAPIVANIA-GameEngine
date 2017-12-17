@@ -35,6 +35,7 @@ public:
 	void Move(int x, int y);
 	int Clamp(int number, int lowest, int highest); 
 	Rectangle rContains(Rectangle &rect);
+	bool rOutside(Rectangle &rect);
 
 
 };

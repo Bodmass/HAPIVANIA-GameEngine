@@ -34,6 +34,11 @@ void GameScene::update()
 		GameStartWait = gameClock + 7000;
 		Sound::playMusic("Appear");
 		Setup = true;
+
+		for (auto p : pickups)
+		{
+			p->Update(player);
+		}
 	}
 
 	if (!BGMPlaying)
@@ -48,16 +53,20 @@ void GameScene::update()
 
 	if (GameStarted)
 	{
-		player->PlayerCollision(platforms);
+		Rectangle* CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
+		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
+
+		player->PlayerCollision(platforms, *CamRect);
 
 		player->PlayerUpdate();
 
 		if (player->PlayerShoot(bulletObjects))
 		{
+			//Check if the Player Shoots, if they do, move the bullet to the back (so we can rotate between a number of them)
 			std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 		}
 
-		//std::cout << player->getX() << " " << player->getY() << std::endl;
+;
 
 		for (auto gbs : gameObjects)
 		{
@@ -67,20 +76,25 @@ void GameScene::update()
 				if (!player->checkXRAYUpgrade())
 				{
 					dynamic_cast<Bullet*>(gbs)->CheckCollision(platforms);
-					
+
 				}
 				else
 				{
-					dynamic_cast<Bullet*>(gbs)->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+					if (dynamic_cast<Bullet*>(gbs)->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
+						dynamic_cast<Bullet*>(gbs)->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 				}
 			}
 		}
 
 		for (auto p : pickups)
 		{
-			p->Update(player);
+			if(CamRect->rOutside(p->getRect()))
+				p->Update(player);
 		}
-		
+
+
+
+		delete CamRect;
 	}
 
 
@@ -108,7 +122,7 @@ void GameScene::update()
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
-			Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
+			//Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
 		
 
@@ -145,6 +159,8 @@ void GameScene::render()
 	{
 		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
 	}
+
+	HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
 }
 
 void GameScene::loadTextures()
@@ -157,7 +173,6 @@ void GameScene::loadTextures()
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
 	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
-	game_->getGraphics().getSprite("Player_Bullet_2")->setEntity();
 
 	//PICKUPS
 	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
@@ -165,6 +180,7 @@ void GameScene::loadTextures()
 
 	//ENEMIES
 	game_->getGraphics().loadTexture("Enemy_SP_FaceLeft", "Textures/AI/SpacePirate/SpacePirate_10.png");
+	game_->getGraphics().loadTexture("Enemy_SP_FaceRight", "Textures/AI/SpacePirate/SpacePirate_02.png");
 
 	//PLAYER//
 	//IDLE
@@ -392,7 +408,7 @@ void GameScene::loadGameObject()
 	}
 
 	//Enemy (Temp here, move into new function)
-	Enemy* SpacePirate = new Enemy(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 600, 284);
+	Enemy* SpacePirate = new Enemy(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
 	enemies.push_back(SpacePirate);
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());

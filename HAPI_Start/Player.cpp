@@ -2,7 +2,7 @@
 #include "CollisionDetection.h"
 
 
-void Player::PlayerCollision(std::vector<Rectangle> platforms)
+void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect)
 {
 	p_groundunder = false;
 
@@ -22,37 +22,31 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-
-		if (CollisionDetection::CheckCollision(playerfeet, platforms[i]))
+		if (camRect.rOutside(platforms[i]))
 		{
-			p_groundunder = true;
-			p_isFalling = false;
-			break;
-		}
-		else
-		{
-			p_groundunder = false;
-			p_isFalling = true;
+			if (CollisionDetection::CheckCollision(playerfeet, platforms[i]))
+			{
+				p_groundunder = true;
+				p_isFalling = false;
+				break;
+			}
+			else
+			{
+				p_groundunder = false;
+				p_isFalling = true;
+			}
 		}
 	}
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (CollisionDetection::CheckCollision(playerright, platforms[i]))
+		if (camRect.rOutside(platforms[i]))
 		{
-			p_rightCol = true;
-			break;
-		}
-
-
-	}
-
-	for (int i = 0; i < platforms.size(); i++)
-	{
-		if (CollisionDetection::CheckCollision(playerleft, platforms[i]))
-		{
-			p_leftCol = true;
-			break;
+			if (CollisionDetection::CheckCollision(playerright, platforms[i]))
+			{
+				p_rightCol = true;
+				break;
+			}
 		}
 
 
@@ -60,10 +54,26 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms)
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (CollisionDetection::CheckCollision(player3, platforms[i]))
+		if (camRect.rOutside(platforms[i]))
 		{
-			p_Col = true;
-			break;
+			if (CollisionDetection::CheckCollision(playerleft, platforms[i]))
+			{
+				p_leftCol = true;
+				break;
+			}
+		}
+
+	}
+
+	for (int i = 0; i < platforms.size(); i++)
+	{
+		if (camRect.rOutside(platforms[i]))
+		{
+			if (CollisionDetection::CheckCollision(player3, platforms[i]))
+			{
+				p_Col = true;
+				break;
+			}
 		}
 	}
 
