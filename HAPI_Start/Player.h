@@ -30,6 +30,10 @@ private:
 	bool p_isMoving{ false };
 	bool p_isLeft{ false };
 	bool p_isRight{ false };
+	bool p_isAlive{ true };
+
+	bool p_Immunity{ false };
+	int p_Immunity_Delay = 1;
 
 	//PLAYER UPGRADE
 	bool upgrade_SPRINT{ false };
@@ -43,12 +47,15 @@ private:
 	int p_jumpingtime = 0;
 	int p_shootingtime = 0;
 	int p_shootingdelay = 300;
+	int p_Immunity_Time = 0;
 
 	//FUNCTIONS
 	bool p_leftCol{ false };
 	bool p_rightCol{ false };
 	bool p_Col{ false };
 
+
+	bool PlayerImmunityCheck();
 	void PlayerMovement();
 	void PlayerJump();
 
@@ -87,6 +94,8 @@ public:
 	int p_getcurHP() { return p_HP_cur; }
 	bool p_getSprintInfo() { return p_isSprinting; }
 
+	bool p_CheckAlive() { return p_isAlive; }
+
 	//FACING
 	bool FacingLeft() { return p_isLeft; }
 	bool FacingRight() { return p_isRight; }
@@ -102,6 +111,8 @@ public:
 	//ANIMATIONS
 	void MakeAnims();
 	
+	void Attacked(int damage);
+
 	void set_pSprite(Texture* sprite) { pSprite = sprite; }
 	void set_pSprite_LeftIdle(Texture* sprite) { pSprite_LeftIdle = sprite; }
 	void set_pSprite_RightIdle(Texture* sprite) { pSprite_RightIdle = sprite; }

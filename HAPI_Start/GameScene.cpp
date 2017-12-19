@@ -95,7 +95,19 @@ void GameScene::update()
 				p->Update(player);
 		}
 
+		for (auto e : enemies)
+		{
+			e->Update(player);
+		}
 
+		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
+			player->Attacked(99); //Instant Death
+
+		if (!player->p_CheckAlive())
+		{
+			Sound::stopMusic("BGM 1");
+			game_->switchScene_Death();
+		}
 
 		delete CamRect;
 	}
@@ -170,9 +182,6 @@ void GameScene::loadTextures()
 {
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
 	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png", false); //HUD Bar
-	game_->getGraphics().loadTexture("Platform 1","Data/test.tga", false); //1 - Platform 1 -
-	game_->getGraphics().loadTexture("Platform 2","Data/platform1.tga", false); //2 - Platform 2 - 
-
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
 	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
@@ -440,6 +449,8 @@ void GameScene::loadSounds()
 	Sound::addSound("Shoot 2", "Audio/SE/laser2.wav");
 	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
 	Sound::addSound("Steps", "Audio/SE/steps.wav");
+	Sound::addSound("Damaged 1", "Audio/SE/player_damaged1.wav");
+	Sound::addSound("Death", "Audio/SE/player_death.wav");
 }
 
 void GameScene::loadLevel(std::string level)

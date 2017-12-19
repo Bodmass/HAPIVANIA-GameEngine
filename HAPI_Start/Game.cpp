@@ -22,6 +22,7 @@ void Game::Run()
 		game = GameScene(this);
 		title = TitleScreen(this);
 		pause = PauseMenu(this);
+		gameover = GameOverScene(this);
 		current = &title;
 
 
@@ -40,6 +41,8 @@ void Game::Update()
 	game.loadGameObject();
 	game.loadSounds();
 	game.loadLevel("Data/DemoLevel.xml");
+	gameover.loadTextures();
+	gameover.loadSounds();
 	pause.loadTextures();
 	pause.loadGameObject();
 

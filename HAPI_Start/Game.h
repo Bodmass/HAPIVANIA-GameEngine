@@ -9,6 +9,7 @@
 #include "GameScene.h"
 #include "TitleScreen.h"
 #include "PauseMenu.h"
+#include "GameOverScene.h"
 #include "Sound.h"
 
 using namespace HAPISPACE;
@@ -31,6 +32,7 @@ private:
 	GameScene game = nullptr;
 	TitleScreen title = nullptr;
 	PauseMenu pause = nullptr;
+	GameOverScene gameover = nullptr;
 	bool pauseLock = false;
 
 	Texture icontexture = "Textures/Icon.png";
@@ -69,6 +71,7 @@ public:
 	void switchScene_Title() { current = &title; }
 	void switchScene_Game() { current = &game; }
 	void switchScene_Pause() { current = &pause; }
+	void switchScene_Death() { current = &gameover; }
 	bool getPauseLock() { return pauseLock; }
 	void setPauseLock(bool yesno) { pauseLock = yesno; }
 
@@ -78,6 +81,7 @@ public:
 	void p_XRAYB_Set(bool yesno) { p_XRAYB = yesno; }
 	void p_SprintU_Set(bool yesno) { p_SprintU = yesno; }
 	void p_SuperJump_Set(bool yesno) { p_SuperJump = yesno; }
+	
 
 
 };

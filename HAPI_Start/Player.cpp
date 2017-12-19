@@ -83,6 +83,25 @@ void Player::PlayerPickup(Rectangle pickup)
 {
 }
 
+bool Player::PlayerImmunityCheck()
+{
+	if (!p_Immunity)
+	{
+		p_Immunity = true;
+		p_Immunity_Time = gameClock + (p_Immunity_Delay * 1000);
+
+		return false;
+	}
+
+	if(p_Immunity)
+		if (gameClock > p_Immunity_Time)
+		{
+			p_Immunity = false;
+		}
+
+	return true;
+}
+
 void Player::PlayerMovement()
 {
 	if (keyData.scanCode[HK_NUMPAD1])
@@ -379,4 +398,23 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 
 void Player::MakeAnims()
 {
+}
+
+void Player::Attacked(int damage)
+{
+	if (!PlayerImmunityCheck())
+	{
+		p_HP_cur -= damage;
+		if (p_HP_cur > 0)
+		{
+			Sound::playSound("Damaged 1");
+		}
+		else
+		{
+			p_HP_cur = 0;
+			Sound::playSound("Death");
+			p_isAlive = false;
+
+		}
+	}
 }
