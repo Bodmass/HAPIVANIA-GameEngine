@@ -66,22 +66,25 @@ void GameScene::update()
 			std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 		}
 
-;
-
-		for (auto gbs : gameObjects)
+		for (auto b : bulletObjects)
 		{
-			if (dynamic_cast<Bullet*>(gbs))
+			if (b->checkActive())
 			{
-				dynamic_cast<Bullet*>(gbs)->Update();
+				b->Update();
+
+				if (!CamRect->rOutside(b->getRect()))
+					b->Destroy();
+
+
+
 				if (!player->checkXRAYUpgrade())
 				{
-					dynamic_cast<Bullet*>(gbs)->CheckCollision(platforms);
-
+					b->CheckCollision(platforms);
 				}
 				else
 				{
-					if (dynamic_cast<Bullet*>(gbs)->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
-						dynamic_cast<Bullet*>(gbs)->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
+						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 				}
 			}
 		}

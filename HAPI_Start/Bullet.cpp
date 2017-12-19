@@ -3,12 +3,13 @@
 
 void Bullet::Update()
 {
+	BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
+	BulletRect.Translate(getX(), getY());
+
 	if (isRight_)
 		setX(getX() + bulletspeed);
 	else
 		setX(getX() - bulletspeed);
-
-	BulletRect.Translate(getX(), getY());
 }
 
 void Bullet::CheckCollision(std::vector<Rectangle> platforms)
@@ -28,14 +29,15 @@ void Bullet::CheckCollision(std::vector<Rectangle> platforms)
 void Bullet::Destroy()
 {
 	//TEMP
+	isActive = false;
 	bulletspeed = 0;
 	this->setX(-100);
 	this->setY(-100);
-	BulletRect.Translate(getX(), getY());
 }
 
 void Bullet::fire(bool isRight)
 {
+	isActive = true;
 	isRight_ = isRight;
 	bulletspeed = 7;
 }

@@ -5,6 +5,7 @@
 class Bullet : public GameObject
 {
 private:
+	bool isActive{ false };
 	bool isRight_{ false };
 	int bulletspeed = 0;
 	Rectangle BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
@@ -15,6 +16,7 @@ public:
 	void Destroy();
 	Rectangle getRect() override { return BulletRect; }
 	void fire(bool isRight);
+	bool checkActive() { return isActive; }
 	~Bullet();
 
 };
