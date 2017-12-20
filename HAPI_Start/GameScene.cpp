@@ -452,6 +452,9 @@ void GameScene::loadGameObject()
 	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
 	enemies.push_back(SpacePirate);
 
+	Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 940, 467);
+	enemies.push_back(SpacePirate2);
+
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
 	
@@ -468,11 +471,17 @@ void GameScene::loadGameObject()
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
 
-	SpacePirate->set_pAnim_RightRun(spacePirate_RightRun);
-	SpacePirate->set_pAnim_LeftRun(spacePirate_LeftRun);
-	SpacePirate->set_pSprite_LeftIdle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"));
-	SpacePirate->set_pSprite_RightIdle(game_->getGraphics().getSprite("Enemy_SP_FaceRight"));
 
+	for (auto spe : enemies)
+	{
+		if (dynamic_cast<Enemy_SP*>(spe))
+		{
+			dynamic_cast<Enemy_SP*>(spe)->set_pAnim_RightRun(spacePirate_RightRun);
+			dynamic_cast<Enemy_SP*>(spe)->set_pAnim_LeftRun(spacePirate_LeftRun);
+			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_LeftIdle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"));
+			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_RightIdle(game_->getGraphics().getSprite("Enemy_SP_FaceRight"));
+		}
+	}
 }
 
 void GameScene::loadSounds()
@@ -538,7 +547,7 @@ void GameScene::loadLevel(std::string level)
 		 
 		
 
-		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt());
 
 		gameObjects.push_back(newtile);
 		if (!dontcollide)

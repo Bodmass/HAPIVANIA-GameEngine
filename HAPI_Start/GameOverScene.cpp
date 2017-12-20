@@ -38,12 +38,12 @@ void GameOverScene::update()
 void GameOverScene::render()
 {
 	game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), BG, 0, 0, game_->getCameraX(), game_->getCameraY());
-	HAPI.RenderText((game_->getScreenWidth() / 2) - 30, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "You have died... :'(", 30);
+	//HAPI.RenderText((game_->getScreenWidth() / 2) - 30, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "You have died... :'(", 30);
 }
 
 void GameOverScene::loadTextures()
 {
-	BG = new Texture("Textures/TitleScreen/Logo.tga");
+	BG = new Texture("Textures/TitleScreen/Gameover.tga");
 }
 
 void GameOverScene::loadGameObject()

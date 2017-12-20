@@ -12,6 +12,7 @@ private:
 	std::vector<Texture*> frames;
 	Texture* getTexture();
 public:
+	//SpriteAnimator(int framerate_) { framerate = framerate_; }
 	SpriteAnimator();
 	~SpriteAnimator();
 	void addFrame(Texture* texture) { frames.push_back(texture); }
