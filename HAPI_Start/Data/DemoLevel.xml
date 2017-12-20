@@ -636,8 +636,7 @@
     <tile x="0" y="288" look="Cave/Cave_11.png" />
     <tile x="3136" y="288" look="Cave/Cave_07.png" />
     <tile x="3168" y="288" look="Cave/Cave_11.png" />
-    <tile x="0" y="320" look="Cave/Cave_09.png" />
-    <tile x="32" y="320" look="Cave/Cave_05.png" />
+    <tile x="0" y="320" look="Cave/Cave_11.png" />
     <tile x="128" y="320" look="Cave/Cave_01.png" />
     <tile x="160" y="320" look="Cave/Cave_02.png" />
     <tile x="192" y="320" look="Cave/Cave_02.png" />
@@ -734,8 +733,8 @@
     <tile x="3104" y="320" look="Cave/Cave_02.png" />
     <tile x="3136" y="320" look="Cave/Cave_21.png" />
     <tile x="3168" y="320" look="Cave/Cave_11.png" />
-    <tile x="0" y="352" look="Cave/Cave_17.png" />
-    <tile x="32" y="352" look="Cave/Cave_16.png" />
+    <tile x="0" y="352" look="Cave/Cave_20.png" />
+    <tile x="32" y="352" look="Cave/Cave_05.png" />
     <tile x="128" y="352" look="Cave/Cave_12.png" />
     <tile x="160" y="352" look="Cave/Cave_15.png" />
     <tile x="192" y="352" look="Cave/Cave_15.png" />
@@ -832,7 +831,8 @@
     <tile x="3104" y="352" look="Cave/Cave_15.png" />
     <tile x="3136" y="352" look="Cave/Cave_18.png" />
     <tile x="3168" y="352" look="Cave/Cave_11.png" />
-    <tile x="0" y="384" look="Cave/Cave_11.png" />
+    <tile x="0" y="384" look="Cave/Cave_17.png" />
+    <tile x="32" y="384" look="Cave/Cave_16.png" />
     <tile x="3136" y="384" look="Cave/Cave_07.png" />
     <tile x="3168" y="384" look="Cave/Cave_11.png" />
     <tile x="0" y="416" look="Cave/Cave_11.png" />
