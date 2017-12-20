@@ -15,6 +15,9 @@ private:
 	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
 	std::vector<Bullet*> bulletObjects;
+	std::vector<GameObject*> gameUI;
+
+	GameObject* HUDBar;
 
 	Texture* playerSprite = nullptr;
 	//Animations

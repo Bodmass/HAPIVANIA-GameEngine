@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "CollisionDetection.h"
 
+
 class Bullet : public GameObject
 {
 private:

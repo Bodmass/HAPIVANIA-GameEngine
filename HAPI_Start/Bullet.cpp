@@ -1,6 +1,5 @@
 #include "Bullet.h"
 
-
 void Bullet::Update()
 {
 	BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
@@ -25,6 +24,8 @@ void Bullet::CheckCollision(std::vector<Rectangle> platforms)
 		}
 	}
 }
+
+
 
 void Bullet::Destroy()
 {

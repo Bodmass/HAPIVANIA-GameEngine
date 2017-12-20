@@ -22,6 +22,11 @@ GameScene::~GameScene()
 		delete gameObject;
 	}
 
+	for (auto* UI : gameUI)
+	{
+		delete UI;
+	}
+
 	for (auto* enemy : enemies)
 	{
 		delete enemy;
@@ -76,9 +81,11 @@ void GameScene::update()
 			if (b->checkActive())
 			{
 				b->Update();
+				
 
 				if (!CamRect->rOutside(b->getRect()))
 					b->Destroy();
+
 
 
 
@@ -102,6 +109,7 @@ void GameScene::update()
 
 		for (auto e : enemies)
 		{
+			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
 		}
 
@@ -175,9 +183,19 @@ void GameScene::render()
 			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
 	}
 
+
 	for (auto* enemy : enemies)
 	{
 		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
+	}
+
+
+	for (auto* UI : gameUI)
+	{
+		if (UI->getTexture()->getAlpha())
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
+		else
+			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
 	}
 
 	HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
@@ -421,14 +439,14 @@ void GameScene::loadGameObject()
 	player = new Player(playerSprite, playerRect, 60, 560);
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 350, 284);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 384);
-	GameObject* HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
+	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
 	gameObjects.push_back(Sprint_PU);
 	gameObjects.push_back(XRAY_PU);
-	gameObjects.push_back(HUDBar);
+	gameUI.push_back(HUDBar);
 
 	pickups.push_back(Sprint_PU);
 	pickups.push_back(XRAY_PU);
@@ -493,7 +511,10 @@ void GameScene::loadSounds()
 	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
 	Sound::addSound("Steps", "Audio/SE/steps.wav");
 	Sound::addSound("Damaged 1", "Audio/SE/player_damaged1.wav");
+	Sound::addSound("Damaged 2", "Audio/SE/player_damaged2.wav");
 	Sound::addSound("Death", "Audio/SE/player_death.wav");
+	Sound::addSound("Enemy Damaged 1", "Audio/SE/enemy_damaged1.wav");
+	Sound::addSound("Enemy Death", "Audio/SE/enemy_death.wav");
 }
 
 void GameScene::loadLevel(std::string level)
@@ -547,7 +568,7 @@ void GameScene::loadLevel(std::string level)
 		 
 		
 
-		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt());
+		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
 
 		gameObjects.push_back(newtile);
 		if (!dontcollide)

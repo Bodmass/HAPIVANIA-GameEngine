@@ -28,7 +28,9 @@ protected:
 public:
 	Enemy(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	~Enemy();
-	virtual void Kill() { e_isAlive = false; }
+	virtual void checkHit(std::vector<Bullet*> b);
+	virtual void isHit(int amount);
+	virtual void Kill();
 	virtual void Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect);
 	virtual float CheckDistance(int x1, int y1, int x2, int y2);
 	virtual float AngleToTarget(int x1, int y1, int x2, int y2);
