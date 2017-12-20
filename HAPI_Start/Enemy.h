@@ -4,14 +4,18 @@
 class Enemy : 
 	public GameObject
 {
-private:
+protected:
 
 	//Enemy Stats
 	int e_HP{ 100 };
-	int e_Damage{ 10 };
+	int e_Damage_Min{ 3 };
+	int e_Damage_Max{ 10 };
 	bool e_isAlive{ true };
 	int threshold = 300;
 	int attack_range = 30;
+
+	int origin_x = getX();
+	int origin_y = getY();
 
 	
 	//Enemy Settings
@@ -24,9 +28,10 @@ private:
 public:
 	Enemy(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	~Enemy();
-	void Kill() { e_isAlive = false; }
-	void Update(Player* plyr);
-	float CheckDistance(int x1, int y1, int x2, int y2);
-	float AngleToTarget(int x1, int y1, int x2, int y2);
+	virtual void Kill() { e_isAlive = false; }
+	virtual void Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect);
+	virtual float CheckDistance(int x1, int y1, int x2, int y2);
+	virtual float AngleToTarget(int x1, int y1, int x2, int y2);
+	virtual bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect);
 };
 

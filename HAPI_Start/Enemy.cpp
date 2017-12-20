@@ -5,10 +5,11 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Update(Player* plyr)
+void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect)
 {
 	if (state == State::Idle)
 	{
+
 		//std::cout << "I'm Idle, and you're " << CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()) << " pixels from me." << std::endl;
 		if (threshold >= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 		{
@@ -16,18 +17,50 @@ void Enemy::Update(Player* plyr)
 		}
 	}
 
-	if (state == State::Follow)
+	else if (state == State::Follow)
 	{
 		//std::cout << "I'm Following" << std::endl;
+		float angle = AngleToTarget(getX(), getY(), plyr->getX(), plyr->getY());
+		
+		//if (threshold < CheckDistance(getX(), getY(), plyr->getX(), plyr->getY()))
+			//state = State::Return;
+
+		if (!ReachedEnd(platforms, camRect))
+		{
+
+			if (attack_range <= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
+				setX(getX() + (2 * cos(angle)));
+
+		}
+		else
+		{
+			state = State::Return;
+		}
+
 		if (attack_range >= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 		{
+			int e_Damage = rand() % (e_Damage_Max - e_Damage_Min + 1) + e_Damage_Min;
 			plyr->Attacked(e_Damage);
 		}
 	}
 
-	if (state == State::Return)
+	else if (state == State::Return)
 	{
-		//std::cout << "I'm Returning" << std::endl;
+		if (5 >= CheckDistance(getX(), getY(), origin_x, origin_y))
+		{
+			setX(origin_x);
+			state = State::Idle;
+		}
+		else
+		{
+			float angle = AngleToTarget(getX(), getY(), origin_x, origin_y);
+			setX(getX() + (2 * cos(angle)));
+
+			if (threshold/4 > CheckDistance(getX(), getY(), plyr->getX(), plyr->getY()))
+			{
+				state = State::Follow;
+			}
+		}
 	}
 }
 
@@ -41,4 +74,41 @@ float Enemy::AngleToTarget(int x1, int y1, int x2, int y2)
 	float deltaX = (x2 - x1);
 	float deltaY = (y2 - y1);
 	return atan2(deltaY, deltaX);
+}
+
+bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
+{
+	Rectangle enemyfeetLeft = Rectangle(2, 4);
+	Rectangle enemyfeetRight = Rectangle(2, 4);
+
+	enemyfeetLeft.Translate(getX() - 2, getY() + 44);
+	enemyfeetRight.Translate(getX() + this->getTexture()->getWidth() + 2, getY() + 44);
+
+	bool leftdown{ false };
+	bool rightdown{ false };
+
+	for (int i = 0; i < platforms.size(); i++)
+	{
+		if (camRect.rOutside(platforms[i]))
+		{
+			if (CollisionDetection::CheckCollision(enemyfeetLeft, platforms[i]))
+			{
+				std::cout << "Left Down\n";
+				leftdown = true;
+			}
+			if (CollisionDetection::CheckCollision(enemyfeetRight, platforms[i]))
+			{
+				rightdown = true;
+				std::cout << "Right Down\n";
+			}
+		}
+	}
+
+	if (leftdown&&rightdown)
+	{
+		return false;
+	}
+
+
+	return true;
 }

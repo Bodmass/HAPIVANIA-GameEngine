@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Audio">
       <UniqueIdentifier>{8869dc12-8e59-455c-9a1f-85fe92079610}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Entity\Enemies">
+      <UniqueIdentifier>{85c5539c-4467-4fe5-9a2e-890a9c7e50bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity\Enemies">
+      <UniqueIdentifier>{18128690-297a-400c-89cc-a1e28673a7d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="GameOverScene.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_SP.cpp">
+      <Filter>Source Files\Entity\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="GameOverScene.h">
       <Filter>Header Files\Scene\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_SP.h">
+      <Filter>Header Files\Entity\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

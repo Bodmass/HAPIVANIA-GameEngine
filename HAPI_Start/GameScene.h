@@ -29,6 +29,11 @@ private:
 	Texture* playerSprites_RightFall = nullptr;
 	Texture* playerSprites_LeftFall = nullptr;
 
+	//Enemy
+
+	SpriteAnimator* spacePirate_LeftRun = nullptr;
+	SpriteAnimator* spacePirate_RightRun = nullptr;
+
 
 	int leftRunStartIndex = -1;
 	int rightRunStartIndex = -1;

@@ -26,11 +26,13 @@ void GameOverScene::update()
 		}
 	}
 
+	/*
 	if (game_->getKeyboard().scanCode[HK_ESCAPE])
 	{
 		Sound::stopMusic("GameOver");
 		game_->switchScene_Title();
 	}
+	*/
 }
 
 void GameOverScene::render()

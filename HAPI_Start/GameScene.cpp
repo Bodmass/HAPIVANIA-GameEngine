@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "CollisionDetection.h"
 
+#include "Enemy_SP.h"
+
 GameScene::~GameScene()
 {
 
@@ -11,6 +13,9 @@ GameScene::~GameScene()
 	delete playerSprites_RightSprint;
 	delete playerSprites_LeftJump;
 	delete playerSprites_RightJump;
+
+	delete spacePirate_LeftRun;
+	delete spacePirate_RightRun;
 
 	for (auto* gameObject : gameObjects)
 	{
@@ -97,7 +102,7 @@ void GameScene::update()
 
 		for (auto e : enemies)
 		{
-			e->Update(player);
+			e->Update(player, platforms, *CamRect);
 		}
 
 		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
@@ -194,6 +199,16 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Enemy_SP_FaceLeft", "Textures/AI/SpacePirate/SpacePirate_10.png");
 	game_->getGraphics().loadTexture("Enemy_SP_FaceRight", "Textures/AI/SpacePirate/SpacePirate_02.png");
 
+	game_->getGraphics().loadTexture("Enemy_SP_RunRight_1", "Textures/AI/SpacePirate/SpacePirate_05.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunRight_2", "Textures/AI/SpacePirate/SpacePirate_06.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunRight_3", "Textures/AI/SpacePirate/SpacePirate_07.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunRight_4", "Textures/AI/SpacePirate/SpacePirate_08.png");
+
+	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_1", "Textures/AI/SpacePirate/SpacePirate_13.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_2", "Textures/AI/SpacePirate/SpacePirate_14.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_3", "Textures/AI/SpacePirate/SpacePirate_15.png");
+	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_4", "Textures/AI/SpacePirate/SpacePirate_16.png");
+
 	//PLAYER//
 	//IDLE
 	game_->getGraphics().loadTexture("Player_Idle","Textures/Player/Player_01.png"); //3 - Player - 
@@ -274,6 +289,8 @@ void GameScene::loadTextures()
 	playerSprites_RightSprint = new SpriteAnimator();
 	playerSprites_LeftJump = new SpriteAnimator();
 	playerSprites_RightJump = new SpriteAnimator();
+	spacePirate_LeftRun = new SpriteAnimator();
+	spacePirate_RightRun = new SpriteAnimator();
 
 	//TEMP (Push sprites through a spritesheet instead and fix this?)
 
@@ -324,6 +341,18 @@ void GameScene::loadTextures()
 	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_9"));
 	playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite("Player_Left_Sprint_10"));
 	playerSprites_LeftSprint->play();
+
+	spacePirate_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunRight_1"));
+	spacePirate_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunRight_2"));
+	spacePirate_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunRight_3"));
+	spacePirate_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunRight_4"));
+	spacePirate_RightRun->play();
+
+	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_1"));
+	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_2"));
+	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_3"));
+	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_4"));
+	spacePirate_LeftRun->play();
 
 	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_3"));
 	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_3"));
@@ -420,7 +449,7 @@ void GameScene::loadGameObject()
 	}
 
 	//Enemy (Temp here, move into new function)
-	Enemy* SpacePirate = new Enemy(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
+	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
 	enemies.push_back(SpacePirate);
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
@@ -438,6 +467,11 @@ void GameScene::loadGameObject()
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
+
+	SpacePirate->set_pAnim_RightRun(spacePirate_RightRun);
+	SpacePirate->set_pAnim_LeftRun(spacePirate_LeftRun);
+	SpacePirate->set_pSprite_LeftIdle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"));
+	SpacePirate->set_pSprite_RightIdle(game_->getGraphics().getSprite("Enemy_SP_FaceRight"));
 
 }
 
