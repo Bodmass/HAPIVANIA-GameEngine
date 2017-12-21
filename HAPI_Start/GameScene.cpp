@@ -3,6 +3,7 @@
 #include "CollisionDetection.h"
 
 #include "Enemy_SP.h"
+#include "Enemy_Bat.h"
 
 GameScene::~GameScene()
 {
@@ -16,6 +17,9 @@ GameScene::~GameScene()
 
 	delete spacePirate_LeftRun;
 	delete spacePirate_RightRun;
+
+	delete bat_LeftRun;
+	delete bat_RightRun;
 
 	for (auto* gameObject : gameObjects)
 	{
@@ -107,10 +111,15 @@ void GameScene::update()
 				p->Update(player);
 		}
 
+		//Enemy Update
+
+		
 		for (auto e : enemies)
 		{
 			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
+			dynamic_cast<Enemy_Bat*>(e)->BatConflict(e);
+			
 		}
 
 		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
@@ -214,6 +223,8 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Pickup_XRAY_1", "Textures/Pickups/Xray/XRAY_0.png"); //58
 
 	//ENEMIES
+
+	//SP
 	game_->getGraphics().loadTexture("Enemy_SP_FaceLeft", "Textures/AI/SpacePirate/SpacePirate_10.png");
 	game_->getGraphics().loadTexture("Enemy_SP_FaceRight", "Textures/AI/SpacePirate/SpacePirate_02.png");
 
@@ -226,6 +237,14 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_2", "Textures/AI/SpacePirate/SpacePirate_14.png");
 	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_3", "Textures/AI/SpacePirate/SpacePirate_15.png");
 	game_->getGraphics().loadTexture("Enemy_SP_RunLeft_4", "Textures/AI/SpacePirate/SpacePirate_16.png");
+
+	//BAT
+	game_->getGraphics().loadTexture("Enemy_Bat_Idle", "Textures/AI/Bat/Bat_01.png");
+
+	game_->getGraphics().loadTexture("Enemy_Bat_RunRight_1", "Textures/AI/Bat/Bat_04.png");
+	game_->getGraphics().loadTexture("Enemy_Bat_RunRight_2", "Textures/AI/Bat/Bat_05.png");
+	game_->getGraphics().loadTexture("Enemy_Bat_RunLeft_1", "Textures/AI/Bat/Bat_02.png");
+	game_->getGraphics().loadTexture("Enemy_Bat_RunLeft_2", "Textures/AI/Bat/Bat_03.png");
 
 	//PLAYER//
 	//IDLE
@@ -309,6 +328,8 @@ void GameScene::loadTextures()
 	playerSprites_RightJump = new SpriteAnimator();
 	spacePirate_LeftRun = new SpriteAnimator();
 	spacePirate_RightRun = new SpriteAnimator();
+	bat_LeftRun = new SpriteAnimator();
+	bat_RightRun = new SpriteAnimator();
 
 	//TEMP (Push sprites through a spritesheet instead and fix this?)
 
@@ -371,6 +392,14 @@ void GameScene::loadTextures()
 	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_3"));
 	spacePirate_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_SP_RunLeft_4"));
 	spacePirate_LeftRun->play();
+
+	bat_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_Bat_RunLeft_1"));
+	bat_LeftRun->addFrame(game_->getGraphics().getSprite("Enemy_Bat_RunLeft_2"));
+	bat_LeftRun->play();
+
+	bat_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_Bat_RunRight_1"));
+	bat_RightRun->addFrame(game_->getGraphics().getSprite("Enemy_Bat_RunRight_2"));
+	bat_LeftRun->play();
 
 	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_3"));
 	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_3"));
@@ -470,6 +499,16 @@ void GameScene::loadGameObject()
 	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
 	enemies.push_back(SpacePirate);
 
+	int batspawnx = 610;
+	for (int i = 0; i < 10; i++)
+	{
+		Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), batspawnx, 130);
+		enemies.push_back(Bat);
+		batspawnx += 20;
+	}
+
+
+
 	Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 940, 467);
 	enemies.push_back(SpacePirate2);
 
@@ -498,6 +537,12 @@ void GameScene::loadGameObject()
 			dynamic_cast<Enemy_SP*>(spe)->set_pAnim_LeftRun(spacePirate_LeftRun);
 			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_LeftIdle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"));
 			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_RightIdle(game_->getGraphics().getSprite("Enemy_SP_FaceRight"));
+		}
+		if (dynamic_cast<Enemy_Bat*>(spe))
+		{
+			dynamic_cast<Enemy_Bat*>(spe)->set_pAnim_RightRun(bat_RightRun);
+			dynamic_cast<Enemy_Bat*>(spe)->set_pAnim_LeftRun(bat_LeftRun);
+			dynamic_cast<Enemy_Bat*>(spe)->set_pSprite_Idle(game_->getGraphics().getSprite("Enemy_Bat_Idle"));
 		}
 	}
 }

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Enemy_Bat.cpp" />
     <ClCompile Include="Enemy_SP.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enemy_Bat.h" />
     <ClInclude Include="Enemy_SP.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

@@ -108,6 +108,9 @@
     <ClCompile Include="Enemy_SP.cpp">
       <Filter>Source Files\Entity\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_Bat.cpp">
+      <Filter>Source Files\Entity\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visualisation.h">
@@ -162,6 +165,9 @@
       <Filter>Header Files\Scene\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_SP.h">
+      <Filter>Header Files\Entity\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Bat.h">
       <Filter>Header Files\Entity\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

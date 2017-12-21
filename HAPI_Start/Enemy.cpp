@@ -50,8 +50,8 @@ void Enemy::isHit(int amount)
 void Enemy::Kill()
 {
 	e_isAlive = false;
-	setX(-100);
-	setY(-100);
+	setX(-1000);
+	setY(-1000);
 }
 
 void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect)
@@ -78,7 +78,6 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 
 			if (!ReachedEnd(platforms, camRect))
 			{
-
 				if (attack_range <= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 					setX(getX() + (2 * cos(angle)));
 

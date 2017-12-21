@@ -37,6 +37,9 @@ private:
 	SpriteAnimator* spacePirate_LeftRun = nullptr;
 	SpriteAnimator* spacePirate_RightRun = nullptr;
 
+	SpriteAnimator* bat_LeftRun = nullptr;
+	SpriteAnimator* bat_RightRun = nullptr;
+
 
 	int leftRunStartIndex = -1;
 	int rightRunStartIndex = -1;
