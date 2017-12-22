@@ -70,6 +70,7 @@ private:
 	bool CameraLocked = false;
 
 	bool BossActivated = false;
+	bool BossFight_Phase1 = false;
 
 public:
 	

@@ -30,7 +30,7 @@ void BossScene::update()
 
 	if (GameStarted)
 	{
-		std::cout << player->getX() << ", " << player->getY() << std::endl;
+		//std::cout << player->getX() << ", " << player->getY() << std::endl;
 		Rectangle* CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
 
@@ -113,6 +113,14 @@ void BossScene::update()
 		delete CamRect;
 	}
 
+	if (BossFight_Phase1)
+	{
+		//int distance = abs(Ship->getX() - player->getX());
+		std::cout << "Phase 1\n";
+		float speed = sqrt(pow((float)- player->getX(), 2) + pow((float)100 - 100, 2));
+		Ship->setX(Ship->getX() + (2 * cos(speed)));
+	}
+
 	if (BossActivated)
 	{
 		player->setTexture(playerSprites_RightIdle);
@@ -123,18 +131,21 @@ void BossScene::update()
 		}
 
 
+		if (!doorDestroyed)
+		{
+			float deltaX = (1000 - doorDestroy->getX());
+			float deltaY = (600 - doorDestroy->getY());
+			float delta = atan2(deltaY, deltaX);
 
-		float deltaX = (1000 - doorDestroy->getX());
-		float deltaY = (600 - doorDestroy->getY());
-		float delta = atan2(deltaY, deltaX);
-
-		doorDestroy->setX(doorDestroy->getX() + (5 * cos(delta)));
-		doorDestroy->setY(doorDestroy->getY() + (5 * sin(delta)));
+			doorDestroy->setX(doorDestroy->getX() + (5 * cos(delta)));
+			doorDestroy->setY(doorDestroy->getY() + (5 * sin(delta)));
+		}
 
 		if ((doorDestroy->getX() >= 1000) && (doorDestroy->getY() >= 600))
 		{
 			if (!doorDestroyed)
 			{
+				doorDestroy->setX(doorDestroy->getX() - 300);
 				loadLevel("Data/DemoLevel2-1.xml");
 				Sound::playSound("Shoot 2"); //explosion here
 				doorDestroyed = true;
@@ -144,6 +155,7 @@ void BossScene::update()
 
 		if ((Ship->getY() >= 100) && doorDestroyed)
 		{
+			BossFight_Phase1 = true;
 			BossActivated = false;
 		}
 	}
@@ -205,6 +217,7 @@ void BossScene::loadTextures()
 	game_->getGraphics().loadTexture("Ship_2", "Textures/AI/BossShip/Ship_02.png");
 	game_->getGraphics().loadTexture("Ship_3", "Textures/AI/BossShip/Ship_03.png");
 	game_->getGraphics().loadTexture("Ship_4", "Textures/AI/BossShip/Ship_04.png");
+	game_->getGraphics().loadTexture("Ship_Bomb", "Textures/AI/BossShip/Bomb.png");
 
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
@@ -312,7 +325,7 @@ void BossScene::loadGameObject()
 {
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	Ship = new Enemy(game_->getGraphics().getSprite("Ship_1"), Rectangle(game_->getGraphics().getSprite("Ship_1")->getWidth(), game_->getGraphics().getSprite("Ship_1")->getHeight()), 1350, -200);
-	doorDestroy = new GameObject(game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), 1350, -200);
+	doorDestroy = new GameObject(game_->getGraphics().getSprite("Ship_Bomb"), Rectangle(game_->getGraphics().getSprite("Ship_Bomb")->getWidth(), game_->getGraphics().getSprite("Ship_Bomb")->getHeight()), 1350, -200);
 	player = new Player(playerSprite, playerRect, 80, 593);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 
