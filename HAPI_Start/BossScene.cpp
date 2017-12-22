@@ -8,6 +8,7 @@ void BossScene::StartBoss()
 {
 	Sound::stopMusic("BGM 2");
 	Sound::playMusic("Boss");
+	Sound::playSound("Shoot 2");
 	CameraLocked = true;
 	BossActivated = true;
 }
@@ -17,6 +18,10 @@ void BossScene::update()
 	gameClock = HAPI.GetTime();
 	if (!BGMPlaying)
 	{
+		if (game_->p_SprintU_Get())
+			player->setSprintUpgrade();
+		if (game_->p_XRAYB_Get())
+			player->setXRAYUpgrade();
 		game_->setRoom("Boss");
 		Sound::playMusic("BGM 2");
 		BGMPlaying = true;
@@ -32,7 +37,8 @@ void BossScene::update()
 
 		player->PlayerCollision(platforms, *CamRect);
 
-		player->PlayerUpdate();
+		if(!BossActivated)
+			player->PlayerUpdate();
 
 		if (player->PlayerShoot(bulletObjects))
 		{
@@ -67,7 +73,7 @@ void BossScene::update()
 
 		if (!CameraLocked)
 		{
-			if (player->getX() >= 1440)
+			if (player->getX() >= 1440 && !doorDestroyed)
 				StartBoss();
 
 			int distancefromcameraX = abs((player->getX() + 48) - (game_->getScreenWidth() / 2));
@@ -109,9 +115,36 @@ void BossScene::update()
 
 	if (BossActivated)
 	{
+		player->setTexture(playerSprites_RightIdle);
+
 		if (Ship->getY() <= 100)
 		{
 			Ship->setY(Ship->getY() + 1);
+		}
+
+
+
+		float deltaX = (1000 - doorDestroy->getX());
+		float deltaY = (600 - doorDestroy->getY());
+		float delta = atan2(deltaY, deltaX);
+
+		doorDestroy->setX(doorDestroy->getX() + (5 * cos(delta)));
+		doorDestroy->setY(doorDestroy->getY() + (5 * sin(delta)));
+
+		if ((doorDestroy->getX() >= 1000) && (doorDestroy->getY() >= 600))
+		{
+			if (!doorDestroyed)
+			{
+				loadLevel("Data/DemoLevel2-1.xml");
+				Sound::playSound("Shoot 2"); //explosion here
+				doorDestroyed = true;
+
+			}
+		}
+
+		if ((Ship->getY() >= 100) && doorDestroyed)
+		{
+			BossActivated = false;
 		}
 	}
 
@@ -279,12 +312,13 @@ void BossScene::loadGameObject()
 {
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	Ship = new Enemy(game_->getGraphics().getSprite("Ship_1"), Rectangle(game_->getGraphics().getSprite("Ship_1")->getWidth(), game_->getGraphics().getSprite("Ship_1")->getHeight()), 1350, -200);
-	
+	doorDestroy = new GameObject(game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), 1350, -200);
 	player = new Player(playerSprite, playerRect, 80, 593);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 
 	enemies.push_back(Ship);
 	gameObjects.push_back(BG);
+	gameObjects.push_back(doorDestroy);
 	gameObjects.push_back(player);
 	gameUI.push_back(HUDBar);
 

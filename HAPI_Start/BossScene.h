@@ -35,6 +35,8 @@ private:
 	//Enemy
 
 	SpriteAnimator* ship_Idle = nullptr;
+	GameObject* doorDestroy = nullptr;
+	bool doorDestroyed = false;
 
 
 	SpriteAnimator* spacePirate_LeftRun = nullptr;
