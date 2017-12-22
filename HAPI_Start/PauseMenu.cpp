@@ -16,7 +16,10 @@ void PauseMenu::update()
 	{
 		justopened = true;
 		game_->setPauseLock(true);
-		game_->switchScene_Game();
+		if(game_->getRoom() == "Demo")
+			game_->switchScene_Game();
+		if (game_->getRoom() == "Boss")
+			game_->switchScene_Boss();
 	}
 
 	if (!game_->getKeyboard().scanCode[HK_ESCAPE])

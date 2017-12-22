@@ -20,6 +20,7 @@ void Game::Run()
 		screen = HAPI.GetScreenPointer();
 		screenRect = Rectangle(screenWidth, screenHeight);
 		game = GameScene(this);
+		boss = BossScene(this);
 		title = TitleScreen(this);
 		pause = PauseMenu(this);
 		gameover = GameOverScene(this);
@@ -34,17 +35,27 @@ void Game::Run()
 
 void Game::Update()
 {
+	//Setup Title
 	title.loadTextures();
 	title.loadGameObject();
 	title.loadSounds();
+	//Setup Level
 	game.loadTextures();
 	game.loadGameObject();
 	game.loadSounds();
 	game.loadLevel("Data/DemoLevel.xml");
+	//Setup GameOver
 	gameover.loadTextures();
 	gameover.loadSounds();
+	//Setup Pause Menu
 	pause.loadTextures();
 	pause.loadGameObject();
+	//Setup Boss Level
+	boss.loadTextures();
+	boss.loadGameObject();
+	boss.loadSounds();
+	boss.loadLevel("Data/DemoLevel2.xml");
+
 
 	double time = 0;
 	double deltaTime = 0;

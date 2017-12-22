@@ -40,6 +40,7 @@ GameScene::~GameScene()
 
 void GameScene::update()
 {
+
 	gameClock = HAPI.GetTime();
 	if (!Setup)
 	{
@@ -47,6 +48,7 @@ void GameScene::update()
 		GameStartWait = gameClock;
 		GameStartWait = gameClock + 7000;
 		Sound::playMusic("Appear");
+		game_->setRoom("Demo");
 		Setup = true;
 
 		for (auto p : pickups)
@@ -129,6 +131,13 @@ void GameScene::update()
 		{
 			Sound::stopMusic("BGM 1");
 			game_->switchScene_Death();
+		}
+
+		if (game_->getKeyboard().scanCode[HK_HOME])
+		{
+			//game_->setPlayer(player);
+			Sound::stopMusic("BGM 1");
+			game_->switchScene_Boss();
 		}
 
 		delete CamRect;
@@ -550,6 +559,7 @@ void GameScene::loadGameObject()
 void GameScene::loadSounds()
 {
 	Sound::addMusic("BGM 1", "Audio/BGM/Stage1.ogg");
+	Sound::addMusic("BGM 2", "Audio/BGM/Stage2.ogg");
 	Sound::addMusic("Appear", "Audio/SE/Appear.wav");
 	Sound::addSound("Shoot 1", "Audio/SE/laser1.wav");
 	Sound::addSound("Shoot 2", "Audio/SE/laser2.wav");

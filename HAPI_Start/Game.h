@@ -10,6 +10,7 @@
 #include "TitleScreen.h"
 #include "PauseMenu.h"
 #include "GameOverScene.h"
+#include "BossScene.h"
 #include "Sound.h"
 
 using namespace HAPISPACE;
@@ -30,10 +31,12 @@ private:
 	Rectangle screenRect;
 	Scene* current = nullptr;
 	GameScene game = nullptr;
+	BossScene boss = nullptr;
 	TitleScreen title = nullptr;
 	PauseMenu pause = nullptr;
 	GameOverScene gameover = nullptr;
 	bool pauseLock = false;
+	std::string room;
 
 	Texture icontexture = "Textures/Icon.png";
 	BYTE* Icon = icontexture.getSprite();
@@ -70,10 +73,14 @@ public:
 
 	void switchScene_Title() { current = &title; }
 	void switchScene_Game() { current = &game; }
+	void switchScene_Boss() { current = &boss; }
 	void switchScene_Pause() { current = &pause; }
 	void switchScene_Death() { current = &gameover; }
 	bool getPauseLock() { return pauseLock; }
 	void setPauseLock(bool yesno) { pauseLock = yesno; }
+	void setRoom(std::string level) {room = level;}
+	void setPlayer(Player* p) { boss.setPlayer(p); }
+	std::string getRoom() { return room; }
 
 	bool p_SprintU_Get() { return p_SprintU; }
 	bool p_SuperJump_Get() { return p_SuperJump; }
