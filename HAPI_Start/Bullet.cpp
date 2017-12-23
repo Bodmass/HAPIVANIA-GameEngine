@@ -11,6 +11,8 @@ void Bullet::Update()
 		setX(getX() - bulletspeed);
 	else if (dir == Facing::Up)
 		setY(getY() - bulletspeed);
+	else if (dir == Facing::Down)
+		setY(getY() + bulletspeed);
 }
 
 void Bullet::CheckCollision(std::vector<Rectangle> platforms)
@@ -40,13 +42,21 @@ void Bullet::Destroy()
 
 void Bullet::fire(std::string face)
 {
+	isUp = false;
 	if (face == "Right" || face == "right")
 		dir = Facing::Right;
 	else if (face == "Left" || face == "left")
 		dir = Facing::Left;
 	else if (face == "Up" || face == "up")
+	{
+		isUp = true;
 		dir = Facing::Up;
-
+	}
+	else if (face == "Down" || face == "down")
+	{
+		isUp = true;
+		dir = Facing::Down;
+	}
 	isActive = true;
 	bulletspeed = 7;
 }

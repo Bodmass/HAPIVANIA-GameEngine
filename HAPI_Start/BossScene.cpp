@@ -55,6 +55,9 @@ void BossScene::update()
 			player->setSprintUpgrade();
 		if (game_->p_XRAYB_Get())
 			player->setXRAYUpgrade();
+		if (game_->p_SuperJump_Get())
+			player->setJumpUpgrade();
+
 		game_->setCamera(0, 0);
 		game_->setRoom("Boss");
 		Sound::playMusic("BGM 2");
@@ -95,13 +98,36 @@ void BossScene::update()
 
 				if (!player->checkXRAYUpgrade())
 				{
+					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_1"))
+						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+
+					if (b->checkUp())
+					{
+						if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_1_Up"))
+							b->setTexture(game_->getGraphics().getSprite("Player_Bullet_1_Up"));
+					}
+
 					b->CheckCollision(platforms);
 				}
 				else
 				{
 					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
 						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+
+					if (b->checkUp())
+					{
+						if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2_Up"))
+							b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2_Up"));
+					}
 				}
+			}
+		}
+
+		for (auto b : bossBullets)
+		{
+			if (b->checkActive())
+			{
+				b->Update();
 			}
 		}
 
@@ -136,9 +162,23 @@ void BossScene::update()
 		{
 			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
-			//dynamic_cast<Enemy_Bat*>(e)->BatConflict(e);
+			if (dynamic_cast<Boss*>(e)->Shoot())
+			{
+				Sound::playSound("Shoot 2");
+				bossBullets.front()->setX(Ship->getX() + (Ship->getTexture()->getWidth() /2)/2);
+				bossBullets.front()->setY(Ship->getY() + Ship->getTexture()->getHeight());
+				bossBullets.front()->fire("down");
+				std::rotate(bossBullets.begin(), bossBullets.begin() + 1, bossBullets.end());
+				bossBullets.front()->setX(Ship->getX() + (Ship->getTexture()->getWidth() / 2) + ((Ship->getTexture()->getWidth() / 2) / 2));
+				bossBullets.front()->setY(Ship->getY() + Ship->getTexture()->getHeight());
+				bossBullets.front()->fire("down");
+				std::rotate(bossBullets.begin(), bossBullets.begin() + 1, bossBullets.end());
+			}
+
 
 		}
+
+
 
 
 
@@ -245,6 +285,7 @@ void BossScene::loadTextures()
 	game_->getGraphics().loadTexture("Ship_3", "Textures/AI/BossShip/Ship_03.png");
 	game_->getGraphics().loadTexture("Ship_4", "Textures/AI/BossShip/Ship_04.png");
 	game_->getGraphics().loadTexture("Ship_Bomb", "Textures/AI/BossShip/Bomb.png");
+	game_->getGraphics().loadTexture("Ship_Bullet1", "Textures/AI/BossShip/Ship_Bullet1.png");
 
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
@@ -368,6 +409,13 @@ void BossScene::loadGameObject()
 		Bullet* newbullet = new Bullet(game_->getGraphics().getSprite("Player_Bullet_1"), Rectangle(game_->getGraphics().getSprite("Player_Bullet_1")->getWidth(), game_->getGraphics().getSprite("Player_Bullet_1")->getHeight()), -100, -100);
 		gameObjects.push_back(newbullet);
 		bulletObjects.push_back(newbullet);
+	}
+
+	for (int i = 0; i < 14; i++)
+	{
+		Bullet* newbullet = new Bullet(game_->getGraphics().getSprite("Ship_Bullet1"), Rectangle(game_->getGraphics().getSprite("Ship_Bullet1")->getWidth(), game_->getGraphics().getSprite("Ship_Bullet1")->getHeight()), -100, -100);
+		gameObjects.push_back(newbullet);
+		bossBullets.push_back(newbullet);
 	}
 
 	player->set_pSprite(playerSprite);

@@ -16,11 +16,14 @@ public:
 	void CheckCollision(std::vector<Rectangle> platforms);
 	void Destroy();
 	Rectangle getRect() override { return BulletRect; }
+	bool isUp = false;
 	enum Facing {
 		Left,
 		Right,
-		Up
+		Up,
+		Down
 	};
+	bool checkUp() { return isUp; }
 	void fire(std::string face);
 	bool checkActive() { return isActive; }
 	~Bullet();

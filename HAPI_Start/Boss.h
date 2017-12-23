@@ -9,6 +9,7 @@ private:
 	int e_Damage_Max{ 20 };
 	int threshold = 100;
 
+
 	double e_Speed{ 2 };
 
 	int gameClock = 0;
@@ -39,5 +40,7 @@ public:
 	void Activate();
 	void set_pSprite_Idle(SpriteAnimator* sprite) { pSprite_Idle = sprite; }
 	bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect) override;
+	void checkHit(std::vector<Bullet*> b) override;
+	bool Shoot();
 };
 

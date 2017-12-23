@@ -4,7 +4,6 @@
 #include "Pickup.h"
 #include "Enemy.h"
 #include "Boss.h"
-
 #include "Bullet.h"
 
 class BossScene :
@@ -17,6 +16,7 @@ private:
 	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
 	std::vector<Bullet*> bulletObjects;
+	std::vector<Bullet*> bossBullets;
 	std::vector<GameObject*> gameUI;
 
 	GameObject* HUDBar;

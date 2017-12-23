@@ -82,6 +82,8 @@ void GameScene::update()
 			std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 		}
 
+
+
 		for (auto b : bulletObjects)
 		{
 			if (b->checkActive())
@@ -97,12 +99,27 @@ void GameScene::update()
 
 				if (!player->checkXRAYUpgrade())
 				{
+					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_1"))
+						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+
+					if (b->checkUp())
+					{
+						if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_1_Up"))
+							b->setTexture(game_->getGraphics().getSprite("Player_Bullet_1_Up"));
+					}
+
 					b->CheckCollision(platforms);
 				}
 				else
 				{
 					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
 						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+
+					if (b->checkUp())
+					{
+						if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2_Up"))
+							b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2_Up"));
+					}
 				}
 			}
 		}
@@ -138,6 +155,9 @@ void GameScene::update()
 			//game_->setPlayer(player);
 			Sound::stopMusic("BGM 1");
 			game_->switchScene_Boss();
+			game_->p_SprintU_Set(player->checkSprintUpgrade());
+			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
+			game_->p_SuperJump_Set(player->checkJumpUpgrade());
 		}
 
 		delete CamRect;
@@ -226,6 +246,9 @@ void GameScene::loadTextures()
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
 	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
+
+	game_->getGraphics().loadTexture("Player_Bullet_1_Up", "Textures/Player/Bullets/BasicBullet_Up.png"); //58
+	game_->getGraphics().loadTexture("Player_Bullet_2_Up", "Textures/Player/Bullets/XRAYBullet_Up.png"); //58
 
 	//PICKUPS
 	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
