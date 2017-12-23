@@ -2,6 +2,39 @@
 #include "Game.h"
 #include "CollisionDetection.h"
 
+BossScene::~BossScene()
+{
+
+	delete playerSprites_LeftRun;
+	delete playerSprites_RightRun;
+	delete playerSprites_LeftSprint;
+	delete playerSprites_RightSprint;
+	delete playerSprites_LeftJump;
+	delete playerSprites_RightJump;
+
+	delete spacePirate_LeftRun;
+	delete spacePirate_RightRun;
+
+	delete bat_LeftRun;
+	delete bat_RightRun;
+
+	delete ship_Idle;
+
+	for (auto* gameObject : gameObjects)
+	{
+		delete gameObject;
+	}
+
+	for (auto* UI : gameUI)
+	{
+		delete UI;
+	}
+
+	for (auto* enemy : enemies)
+	{
+		delete enemy;
+	}
+}
 
 
 void BossScene::StartBoss()
@@ -22,6 +55,7 @@ void BossScene::update()
 			player->setSprintUpgrade();
 		if (game_->p_XRAYB_Get())
 			player->setXRAYUpgrade();
+		game_->setCamera(0, 0);
 		game_->setRoom("Boss");
 		Sound::playMusic("BGM 2");
 		BGMPlaying = true;
@@ -113,14 +147,6 @@ void BossScene::update()
 		delete CamRect;
 	}
 
-	if (BossFight_Phase1)
-	{
-		//int distance = abs(Ship->getX() - player->getX());
-		std::cout << "Phase 1\n";
-		float speed = sqrt(pow((float)- player->getX(), 2) + pow((float)100 - 100, 2));
-		Ship->setX(Ship->getX() + (2 * cos(speed)));
-	}
-
 	if (BossActivated)
 	{
 		player->setTexture(playerSprites_RightIdle);
@@ -155,7 +181,8 @@ void BossScene::update()
 
 		if ((Ship->getY() >= 100) && doorDestroyed)
 		{
-			BossFight_Phase1 = true;
+			
+			Ship->Activate();
 			BossActivated = false;
 		}
 	}
@@ -310,6 +337,7 @@ void BossScene::loadTextures()
 	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_3"));
 	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_3"));
 
+
 	playerSprites_LeftIdle = game_->getGraphics().getSprite("Player_Left_Idle");
 	playerSprites_RightIdle = game_->getGraphics().getSprite("Player_Right_Idle");
 	playerSprites_RightIdle->setEntity();
@@ -324,7 +352,7 @@ void BossScene::loadTextures()
 void BossScene::loadGameObject()
 {
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
-	Ship = new Enemy(game_->getGraphics().getSprite("Ship_1"), Rectangle(game_->getGraphics().getSprite("Ship_1")->getWidth(), game_->getGraphics().getSprite("Ship_1")->getHeight()), 1350, -200);
+	Ship = new Boss(game_->getGraphics().getSprite("Ship_1"), Rectangle(game_->getGraphics().getSprite("Ship_1")->getWidth(), game_->getGraphics().getSprite("Ship_1")->getHeight()), 1350, -200);
 	doorDestroy = new GameObject(game_->getGraphics().getSprite("Ship_Bomb"), Rectangle(game_->getGraphics().getSprite("Ship_Bomb")->getWidth(), game_->getGraphics().getSprite("Ship_Bomb")->getHeight()), 1350, -200);
 	player = new Player(playerSprite, playerRect, 80, 593);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
@@ -353,6 +381,8 @@ void BossScene::loadGameObject()
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
+	Ship->set_pSprite_Idle(ship_Idle);
+
 }
 
 void BossScene::loadSounds()
@@ -406,8 +436,4 @@ void BossScene::loadLevel(std::string level)
 
 	}
 
-}
-
-BossScene::~BossScene()
-{
 }

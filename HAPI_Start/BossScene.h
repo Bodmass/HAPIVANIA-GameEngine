@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "Pickup.h"
 #include "Enemy.h"
+#include "Boss.h"
+
 #include "Bullet.h"
 
 class BossScene :
@@ -45,7 +47,7 @@ private:
 	SpriteAnimator* bat_LeftRun = nullptr;
 	SpriteAnimator* bat_RightRun = nullptr;
 
-	Enemy* Ship = nullptr;
+	Boss* Ship = nullptr;
 
 
 	int leftRunStartIndex = -1;

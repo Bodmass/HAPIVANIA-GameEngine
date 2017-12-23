@@ -8,10 +8,11 @@ private:
 	SpriteAnimator* pAnim_LeftRun = nullptr;
 	SpriteAnimator* pAnim_RightRun = nullptr;
 
+
 	int e_HP{ 40 };
 	int e_Damage_Min{ 1 };
 	int e_Damage_Max{ 4 };
-	int threshold = 200;
+	int threshold = 100;
 
 	double e_Speed{ 3 };
 

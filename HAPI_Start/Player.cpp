@@ -249,7 +249,7 @@ void Player::PlayerMovement()
 		}
 	}
 
-	if ((keyData.scanCode['W'] || keyData.scanCode[HK_SPACE]))
+	if (keyData.scanCode[HK_SPACE])
 	{
 		if (!p_isJumping && !p_isFalling)
 		{
@@ -347,7 +347,30 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 				//std::cout << "I've shot!\n";
 				p_isShooting = false;
 
-				if (FacingLeft())
+				if (keyData.scanCode['w'] || keyData.scanCode['W'])
+				{
+					std::cout << "Im shooting up";
+					if (checkXRAYUpgrade())
+					{
+						Sound::playSound("Shoot 2");
+						bullets.front()->setX(getX() + 10);
+						bullets.front()->setY(getY());
+						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
+						bullets.front()->fire("Up");
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+					else
+					{
+						Sound::playSound("Shoot 1");
+						bullets.front()->setX(getX() + 10);
+						bullets.front()->setY(getY());
+						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
+						bullets.front()->fire("Up");
+						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
+					}
+				}
+
+				else if (FacingLeft())
 				{
 					if (checkXRAYUpgrade())
 					{
@@ -355,7 +378,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						bullets.front()->setX(getX());
 						bullets.front()->setY(getY() + 10);
 						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
-						bullets.front()->fire(false);
+						bullets.front()->fire("Left");
 						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 					else
@@ -364,7 +387,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						bullets.front()->setX(getX());
 						bullets.front()->setY(getY() + 10);
 						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
-						bullets.front()->fire(false);
+						bullets.front()->fire("Left");
 						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 				}
@@ -376,7 +399,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						bullets.front()->setX(getX() + 48);
 						bullets.front()->setY(getY() + 10);
 						
-						bullets.front()->fire(true);
+						bullets.front()->fire("Right");
 						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 					else
@@ -385,7 +408,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						bullets.front()->setX(getX() + 48);
 						bullets.front()->setY(getY() + 10);
 						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
-						bullets.front()->fire(true);
+						bullets.front()->fire("Right");
 						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 				}

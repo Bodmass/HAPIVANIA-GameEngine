@@ -114,6 +114,9 @@
     <ClCompile Include="BossScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Source Files\Entity\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Visualisation.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="BossScene.h">
       <Filter>Header Files\Scene\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Header Files\Entity\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

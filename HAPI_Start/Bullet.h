@@ -7,7 +7,7 @@ class Bullet : public GameObject
 {
 private:
 	bool isActive{ false };
-	bool isRight_{ false };
+	int dir = 0;
 	int bulletspeed = 0;
 	Rectangle BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 public:
@@ -16,7 +16,12 @@ public:
 	void CheckCollision(std::vector<Rectangle> platforms);
 	void Destroy();
 	Rectangle getRect() override { return BulletRect; }
-	void fire(bool isRight);
+	enum Facing {
+		Left,
+		Right,
+		Up
+	};
+	void fire(std::string face);
 	bool checkActive() { return isActive; }
 	~Bullet();
 

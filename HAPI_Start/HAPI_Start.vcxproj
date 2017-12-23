@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="Visualisation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionDetection.h" />
@@ -71,7 +73,7 @@
     <ProjectGuid>{F3EB5DF9-8ECE-4E23-98C7-B8956A9D8315}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>HAPI_Start</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>AzEngine (HAPI GEC)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
