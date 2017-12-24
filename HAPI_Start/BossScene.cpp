@@ -51,11 +51,11 @@ void BossScene::update()
 	gameClock = HAPI.GetTime();
 	if (!BGMPlaying)
 	{
-		if (game_->p_SprintU_Get())
+		//if (game_->p_SprintU_Get())
 			player->setSprintUpgrade();
-		if (game_->p_XRAYB_Get())
+		//if (game_->p_XRAYB_Get())
 			player->setXRAYUpgrade();
-		if (game_->p_SuperJump_Get())
+		//if (game_->p_SuperJump_Get())
 			player->setJumpUpgrade();
 
 		game_->setCamera(0, 0);
@@ -148,6 +148,8 @@ void BossScene::update()
 			else
 				game_->setCamera(0, game_->getCameraY());
 		}
+		
+
 
 		if (!player->p_CheckAlive())
 		{
@@ -180,6 +182,22 @@ void BossScene::update()
 
 
 		delete CamRect;
+	}
+
+	if (Ship->checkDead())
+	{
+		Sound::stopMusic("Boss");
+		float deltaX = (1440 - Ship->getX());
+		float deltaY = (600 - Ship->getY());
+		float delta = atan2(deltaY, deltaX);
+
+		Ship->setX(Ship->getX() + (5 * cos(delta)));
+		Ship->setY(Ship->getY() + (5 * sin(delta)));
+
+		if ((Ship->getX() >= 1440) && (Ship->getY() >= 600))
+		{
+			game_->switchScene_End();			
+		}
 	}
 
 	if (BossActivated)

@@ -22,6 +22,7 @@
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="BossScene.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Enemy_Bat.cpp" />
     <ClCompile Include="Enemy_SP.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="BossScene.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisionDetection.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enemy_Bat.h" />
     <ClInclude Include="Enemy_SP.h" />

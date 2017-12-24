@@ -11,6 +11,7 @@
 #include "PauseMenu.h"
 #include "GameOverScene.h"
 #include "BossScene.h"
+#include "EndScene.h"
 #include "Sound.h"
 
 using namespace HAPISPACE;
@@ -35,6 +36,7 @@ private:
 	TitleScreen title = nullptr;
 	PauseMenu pause = nullptr;
 	GameOverScene gameover = nullptr;
+	EndScene end = nullptr;
 	bool pauseLock = false;
 	std::string room;
 
@@ -76,6 +78,7 @@ public:
 	void switchScene_Boss() { current = &boss; }
 	void switchScene_Pause() { current = &pause; }
 	void switchScene_Death() { current = &gameover; }
+	void switchScene_End() { current = &end; }
 	bool getPauseLock() { return pauseLock; }
 	void setPauseLock(bool yesno) { pauseLock = yesno; }
 	void setRoom(std::string level) {room = level;}

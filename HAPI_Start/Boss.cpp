@@ -279,10 +279,33 @@ bool Boss::Shoot(std::vector<Bullet*> b, Player* plyr)
 void Boss::Activate()
 {
 	e_HP = 2500;
+	//e_HP = 5;
 	isActive = true;
 }
 
 bool Boss::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 {
 	return false;
+}
+
+void Boss::isHit(int amount)
+{
+	e_HP -= amount;
+
+	if (e_HP <= 0)
+	{
+		Sound::playSound("Enemy Death");
+		isDead = true;
+		isActive = false;
+	}
+	else
+		Sound::playSound("Enemy Damaged 1");
+
+}
+
+void Boss::Kill()
+{
+	e_isAlive = false;
+	setX(-1000);
+	setY(-1000);
 }

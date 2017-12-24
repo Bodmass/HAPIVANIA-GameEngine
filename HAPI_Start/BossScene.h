@@ -66,6 +66,7 @@ private:
 
 	int gameClock;
 	int GameStartWait;
+	int GameEndWait;
 	bool Setup = false;
 	bool BGMPlaying = false;
 	bool GameStarted = false;

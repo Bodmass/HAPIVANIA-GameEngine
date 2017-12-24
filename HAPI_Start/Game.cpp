@@ -24,6 +24,7 @@ void Game::Run()
 		title = TitleScreen(this);
 		pause = PauseMenu(this);
 		gameover = GameOverScene(this);
+		end = EndScene(this);
 		current = &title;
 
 
@@ -35,6 +36,8 @@ void Game::Run()
 
 void Game::Update()
 {
+	end.loadTextures();
+	end.loadGameObject();
 	//Setup Title
 	title.loadTextures();
 	title.loadGameObject();

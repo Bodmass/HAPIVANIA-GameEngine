@@ -31,6 +31,7 @@ private:
 	int swapClock = 0; //Swaps Attacking Method
 	bool isSetup{ false };
 	bool isActive{ false };
+	bool isDead{ false };
 	int phase = 0;
 
 	int dir = 0;
@@ -50,5 +51,8 @@ public:
 	bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect) override;
 	void checkHit(std::vector<Bullet*> b) override;
 	bool Shoot(std::vector<Bullet*> b, Player* plyr);
+	void Boss::isHit(int amount);
+	void Kill();
+	bool checkDead() { return isDead; }
 };
 
