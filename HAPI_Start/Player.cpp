@@ -349,7 +349,6 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 
 				if (keyData.scanCode['w'] || keyData.scanCode['W'])
 				{
-					std::cout << "Im shooting up";
 					if (checkXRAYUpgrade())
 					{
 						Sound::playSound("Shoot 2");
@@ -423,6 +422,25 @@ void Player::MakeAnims()
 {
 }
 
+void Player::checkHit(std::vector<Bullet*> b, int dmg)
+{
+
+	for (auto bullet : b)
+	{
+
+		if (bullet->checkActive())
+		{
+			Rectangle bulletRect = Rectangle(bullet->getTexture()->getWidth(), bullet->getTexture()->getHeight());
+			bulletRect.Translate(bullet->getX(), bullet->getY());
+			if (CollisionDetection::CheckCollision(player3, bulletRect))
+			{
+				AttackedUC(dmg);
+				bullet->Destroy();
+			}
+		}
+	}
+}
+
 void Player::Attacked(int damage)
 {
 	if (!PlayerImmunityCheck())
@@ -441,3 +459,20 @@ void Player::Attacked(int damage)
 		}
 	}
 }
+
+void Player::AttackedUC(int damage)
+{
+	p_HP_cur -= damage;
+	if (p_HP_cur > 0)
+	{
+		Sound::playSound("Damaged 1");
+	}
+	else
+	{
+		p_HP_cur = 0;
+		Sound::playSound("Death");
+		p_isAlive = false;
+
+	}
+}
+

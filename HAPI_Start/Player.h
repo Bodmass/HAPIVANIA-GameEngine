@@ -111,7 +111,9 @@ public:
 	//ANIMATIONS
 	void MakeAnims();
 	
+	void checkHit(std::vector<Bullet*> b, int dmg);
 	void Attacked(int damage);
+	void AttackedUC(int damage);
 
 	void set_pSprite(Texture* sprite) { pSprite = sprite; }
 	void set_pSprite_LeftIdle(Texture* sprite) { pSprite_LeftIdle = sprite; }

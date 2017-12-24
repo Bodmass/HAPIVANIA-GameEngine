@@ -11,6 +11,8 @@ void Boss::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle cam
 
 	if (!isSetup)
 	{
+		atk = Moves::DoubleBeam;
+		swapClock = gameClock + 5000;
 		isSetup = true;
 		phase = Phase::Phase1;
 		dir = Direction::Right;
@@ -77,48 +79,141 @@ void Boss::checkHit(std::vector<Bullet*> b)
 	}
 }
 
-bool Boss::Shoot()
+bool Boss::Shoot(std::vector<Bullet*> b)
 {
 	if (isActive)
 	{
 		if (phase == Phase::Phase1)
 		{
+			if (gameClock > swapClock)
+			{
+				
+				//Randomly Select a Move
+				atk = static_cast<Moves>(rand() % Other);
+
+				if (atk == DoubleBeam)
+					swapClock = gameClock + 5000;
+				if (atk == HomingMissile)
+					swapClock = gameClock + 2500;
+				if (atk == Other)
+					swapClock = gameClock + 500;
+				
+			}
+
 			if (gameClock > attackClock)
 			{
-				attackClock = gameClock + 500;
 
-				//
+				if (atk == DoubleBeam)
+				{
+					attackClock = gameClock + 500;
 
-				//
-
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+				}
+				else if (atk == HomingMissile)
+				{
+					//std::cout << "The Boss is shooting missiles at you!\n";
+				}
+				else if (atk == Other)
+				{
+					//std::cout << "The Boss is shooting other things at you!\n";
+				}
 				return true;
 			}
 		}
 
 		else if (phase == Phase::Phase2)
 		{
+			if (gameClock > swapClock)
+			{
+
+				//Randomly Select a Move
+				atk = static_cast<Moves>(rand() % Other);
+
+				if (atk == DoubleBeam)
+					swapClock = gameClock + 5000;
+				if (atk == HomingMissile)
+					swapClock = gameClock + 2500;
+				if (atk == Other)
+					swapClock = gameClock + 500;
+
+			}
+
 			if (gameClock > attackClock)
 			{
-				attackClock = gameClock + 250;
 
-				//
+				if (atk == DoubleBeam)
+				{
+					attackClock = gameClock + 250;
 
-				//
-
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+				}
+				else if (atk == HomingMissile)
+				{
+					//std::cout << "The Boss is shooting missiles at you!\n";
+				}
+				else if (atk == Other)
+				{
+					//std::cout << "The Boss is shooting other things at you!\n";
+				}
 				return true;
 			}
 		}
 
 		else if (phase == Phase::Phase3)
 		{
+			if (gameClock > swapClock)
+			{
+
+				//Randomly Select a Move
+				atk = static_cast<Moves>(rand() % Other);
+
+				if (atk == DoubleBeam)
+					swapClock = gameClock + 5000;
+				if (atk == HomingMissile)
+					swapClock = gameClock + 2500;
+				if (atk == Other)
+					swapClock = gameClock + 500;
+
+			}
+
 			if (gameClock > attackClock)
 			{
-				attackClock = gameClock + 150;
 
-				//
+				if (atk == DoubleBeam)
+				{
+					attackClock = gameClock + 150;
 
-				//
-
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("down");
+				}
+				else if (atk == HomingMissile)
+				{
+					//std::cout << "The Boss is shooting missiles at you!\n";
+				}
+				else if (atk == Other)
+				{
+					//std::cout << "The Boss is shooting other things at you!\n";
+				}
 				return true;
 			}
 		}

@@ -71,7 +71,7 @@ void BossScene::update()
 		Rectangle* CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
 
-
+		player->checkHit(bossBullets, 5);
 		player->PlayerCollision(platforms, *CamRect);
 
 		if(!BossActivated)
@@ -123,11 +123,14 @@ void BossScene::update()
 			}
 		}
 
+		
+
 		for (auto b : bossBullets)
 		{
 			if (b->checkActive())
 			{
 				b->Update();
+				
 			}
 		}
 
@@ -162,17 +165,9 @@ void BossScene::update()
 		{
 			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
-			if (dynamic_cast<Boss*>(e)->Shoot())
+			if (dynamic_cast<Boss*>(e)->Shoot(bossBullets))
 			{
-				Sound::playSound("Shoot 2");
-				bossBullets.front()->setX(Ship->getX() + (Ship->getTexture()->getWidth() /2)/2);
-				bossBullets.front()->setY(Ship->getY() + Ship->getTexture()->getHeight());
-				bossBullets.front()->fire("down");
-				std::rotate(bossBullets.begin(), bossBullets.begin() + 1, bossBullets.end());
-				bossBullets.front()->setX(Ship->getX() + (Ship->getTexture()->getWidth() / 2) + ((Ship->getTexture()->getWidth() / 2) / 2));
-				bossBullets.front()->setY(Ship->getY() + Ship->getTexture()->getHeight());
-				bossBullets.front()->fire("down");
-				std::rotate(bossBullets.begin(), bossBullets.begin() + 1, bossBullets.end());
+				std::rotate(bossBullets.begin(), bossBullets.begin() + 2, bossBullets.end());
 			}
 
 

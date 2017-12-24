@@ -9,15 +9,6 @@ private:
 	int e_Damage_Max{ 20 };
 	int threshold = 100;
 
-
-	double e_Speed{ 2 };
-
-	int gameClock = 0;
-	int attackClock = 0;
-	bool isSetup{ false };
-	bool isActive{ false };
-	int phase = 0;
-	int dir = 0;
 	enum Direction {
 		Left,
 		Right
@@ -27,6 +18,23 @@ private:
 		Phase2,
 		Phase3
 	};
+	enum Moves {
+		DoubleBeam,
+		HomingMissile,
+		Other
+	};
+
+	double e_Speed{ 2 };
+
+	int gameClock = 0;
+	int attackClock = 0;
+	int swapClock = 0; //Swaps Attacking Method
+	bool isSetup{ false };
+	bool isActive{ false };
+	int phase = 0;
+
+	int dir = 0;
+	Moves atk = DoubleBeam;
 
 
 public:
@@ -41,6 +49,6 @@ public:
 	void set_pSprite_Idle(SpriteAnimator* sprite) { pSprite_Idle = sprite; }
 	bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect) override;
 	void checkHit(std::vector<Bullet*> b) override;
-	bool Shoot();
+	bool Shoot(std::vector<Bullet*> b);
 };
 
