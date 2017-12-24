@@ -352,7 +352,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 					if (checkXRAYUpgrade())
 					{
 						Sound::playSound("Shoot 2");
-						bullets.front()->setX(getX() + 10);
+						bullets.front()->setX(getX() + 13);
 						bullets.front()->setY(getY());
 						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 						bullets.front()->fire("Up");
@@ -361,7 +361,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 					else
 					{
 						Sound::playSound("Shoot 1");
-						bullets.front()->setX(getX() + 10);
+						bullets.front()->setX(getX() + 13);
 						bullets.front()->setY(getY());
 						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
 						bullets.front()->fire("Up");

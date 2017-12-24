@@ -129,7 +129,7 @@ void BossScene::update()
 		{
 			if (b->checkActive())
 			{
-				b->Update();
+				b->Update(player->getX(), player->getY());
 				
 			}
 		}
@@ -165,7 +165,7 @@ void BossScene::update()
 		{
 			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
-			if (dynamic_cast<Boss*>(e)->Shoot(bossBullets))
+			if (dynamic_cast<Boss*>(e)->Shoot(bossBullets, player))
 			{
 				std::rotate(bossBullets.begin(), bossBullets.begin() + 2, bossBullets.end());
 			}
@@ -281,6 +281,7 @@ void BossScene::loadTextures()
 	game_->getGraphics().loadTexture("Ship_4", "Textures/AI/BossShip/Ship_04.png");
 	game_->getGraphics().loadTexture("Ship_Bomb", "Textures/AI/BossShip/Bomb.png");
 	game_->getGraphics().loadTexture("Ship_Bullet1", "Textures/AI/BossShip/Ship_Bullet1.png");
+	game_->getGraphics().loadTexture("Ship_Missile", "Textures/AI/BossShip/Ship_Missile.png");
 
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();

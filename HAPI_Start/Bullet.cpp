@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-void Bullet::Update()
+void Bullet::Update(int pX, int pY)
 {
 	BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 	BulletRect.Translate(getX(), getY());
@@ -13,6 +13,16 @@ void Bullet::Update()
 		setY(getY() - bulletspeed);
 	else if (dir == Facing::Down)
 		setY(getY() + bulletspeed);
+	else if (dir == Facing::Homing)
+	{
+		float deltaX = (getX() - pX);
+		float deltaY = (getY() - pY);
+		float delta = atan2(deltaY, deltaX);
+
+		setX(getX() + (-5.25 * cos(delta)));
+		//setY(getY() + (bulletspeed * sin(-delta)));
+		setY(getY() + bulletspeed);
+	};
 }
 
 void Bullet::CheckCollision(std::vector<Rectangle> platforms)
@@ -42,6 +52,8 @@ void Bullet::Destroy()
 
 void Bullet::fire(std::string face)
 {
+	isActive = true;
+	bulletspeed = 7;
 	isUp = false;
 	if (face == "Right" || face == "right")
 		dir = Facing::Right;
@@ -57,8 +69,13 @@ void Bullet::fire(std::string face)
 		isUp = true;
 		dir = Facing::Down;
 	}
-	isActive = true;
-	bulletspeed = 7;
+	else if (face == "Homing" || face == "homing")
+	{
+		isUp = true;
+		//bulletspeed = 2;
+		dir = Facing::Homing;
+	}
+
 }
 
 Bullet::~Bullet()

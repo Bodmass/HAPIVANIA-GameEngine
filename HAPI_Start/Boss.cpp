@@ -79,7 +79,7 @@ void Boss::checkHit(std::vector<Bullet*> b)
 	}
 }
 
-bool Boss::Shoot(std::vector<Bullet*> b)
+bool Boss::Shoot(std::vector<Bullet*> b, Player* plyr)
 {
 	if (isActive)
 	{
@@ -94,9 +94,9 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				if (atk == DoubleBeam)
 					swapClock = gameClock + 5000;
 				if (atk == HomingMissile)
-					swapClock = gameClock + 2500;
+					swapClock = gameClock + 3500;
 				if (atk == Other)
-					swapClock = gameClock + 500;
+					swapClock = gameClock + 1500;
 				
 			}
 
@@ -118,7 +118,15 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				}
 				else if (atk == HomingMissile)
 				{
-					//std::cout << "The Boss is shooting missiles at you!\n";
+					attackClock = gameClock + 500;
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
 				}
 				else if (atk == Other)
 				{
@@ -139,9 +147,9 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				if (atk == DoubleBeam)
 					swapClock = gameClock + 5000;
 				if (atk == HomingMissile)
-					swapClock = gameClock + 2500;
+					swapClock = gameClock + 3500;
 				if (atk == Other)
-					swapClock = gameClock + 500;
+					swapClock = gameClock + 1500;
 
 			}
 
@@ -163,7 +171,15 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				}
 				else if (atk == HomingMissile)
 				{
-					//std::cout << "The Boss is shooting missiles at you!\n";
+					attackClock = gameClock + 250;
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
 				}
 				else if (atk == Other)
 				{
@@ -184,9 +200,9 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				if (atk == DoubleBeam)
 					swapClock = gameClock + 5000;
 				if (atk == HomingMissile)
-					swapClock = gameClock + 2500;
+					swapClock = gameClock + 3500;
 				if (atk == Other)
-					swapClock = gameClock + 500;
+					swapClock = gameClock + 1500;
 
 			}
 
@@ -208,11 +224,21 @@ bool Boss::Shoot(std::vector<Bullet*> b)
 				}
 				else if (atk == HomingMissile)
 				{
+					attackClock = gameClock + 150;
+					Sound::playSound("Shoot 2");
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) / 2);
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
+					std::rotate(b.begin(), b.begin() + 1, b.end());
+					b.front()->setX(this->getX() + (this->getTexture()->getWidth() / 2) + ((this->getTexture()->getWidth() / 2) / 2));
+					b.front()->setY(this->getY() + this->getTexture()->getHeight());
+					b.front()->fire("homing");
+
 					//std::cout << "The Boss is shooting missiles at you!\n";
 				}
 				else if (atk == Other)
 				{
-					//std::cout << "The Boss is shooting other things at you!\n";
+					//Boss Break
 				}
 				return true;
 			}

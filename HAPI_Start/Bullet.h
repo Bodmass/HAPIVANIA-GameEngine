@@ -12,7 +12,7 @@ private:
 	Rectangle BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 public:
 	Bullet(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
-	void Update();
+	void Update(int pX = 0, int pY = 0);
 	void CheckCollision(std::vector<Rectangle> platforms);
 	void Destroy();
 	Rectangle getRect() override { return BulletRect; }
@@ -21,7 +21,8 @@ public:
 		Left,
 		Right,
 		Up,
-		Down
+		Down,
+		Homing
 	};
 	bool checkUp() { return isUp; }
 	void fire(std::string face);

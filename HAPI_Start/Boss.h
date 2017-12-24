@@ -49,6 +49,6 @@ public:
 	void set_pSprite_Idle(SpriteAnimator* sprite) { pSprite_Idle = sprite; }
 	bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect) override;
 	void checkHit(std::vector<Bullet*> b) override;
-	bool Shoot(std::vector<Bullet*> b);
+	bool Shoot(std::vector<Bullet*> b, Player* plyr);
 };
 
