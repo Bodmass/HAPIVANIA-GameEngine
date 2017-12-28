@@ -10,6 +10,8 @@ GameScene::~GameScene()
 
 	delete playerSprites_LeftRun;
 	delete playerSprites_RightRun;
+	delete playerSprites_LeftUpRun;
+	delete playerSprites_RightUpRun;
 	delete playerSprites_LeftSprint;
 	delete playerSprites_RightSprint;
 	delete playerSprites_LeftJump;
@@ -335,25 +337,54 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Right_Sprint_10", "Textures/Player/Player_54.png"); //45
 	//LEFT JUMP
 	leftJumpStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Player_Left_Jump_1", "Textures/Player/Player_61.png"); //46
-	game_->getGraphics().loadTexture("Player_Left_Jump_2", "Textures/Player/Player_62.png"); //47
-	game_->getGraphics().loadTexture("Player_Left_Jump_3", "Textures/Player/Player_63.png"); //48
-	game_->getGraphics().loadTexture("Player_Left_Jump_4", "Textures/Player/Player_64.png"); //49
-	game_->getGraphics().loadTexture("Player_Left_Fall_1", "Textures/Player/Player_65.png"); //50
-	game_->getGraphics().loadTexture("Player_Left_Fall_2", "Textures/Player/Player_66.png"); //51
+	game_->getGraphics().loadTexture("Player_Left_Jump_1", "Textures/Player/Player_56.png"); //46
+	game_->getGraphics().loadTexture("Player_Left_Jump_2", "Textures/Player/Player_57.png"); //47
+	game_->getGraphics().loadTexture("Player_Left_Jump_3", "Textures/Player/Player_58.png"); //48
+	game_->getGraphics().loadTexture("Player_Left_Jump_4", "Textures/Player/Player_59.png"); //49
+	game_->getGraphics().loadTexture("Player_Left_Fall_1", "Textures/Player/Player_60.png"); //50
+	game_->getGraphics().loadTexture("Player_Left_Fall_2", "Textures/Player/Player_61.png"); //51
 	//RIGHT JUMP
 	rightJumpStartIndex = game_->getGraphics().spriteMapSize();
-	game_->getGraphics().loadTexture("Player_Right_Jump_1", "Textures/Player/Player_73.png"); //52
-	game_->getGraphics().loadTexture("Player_Right_Jump_2", "Textures/Player/Player_74.png"); //53
-	game_->getGraphics().loadTexture("Player_Right_Jump_3", "Textures/Player/Player_75.png"); //54
-	game_->getGraphics().loadTexture("Player_Right_Jump_4", "Textures/Player/Player_76.png"); //55
-	game_->getGraphics().loadTexture("Player_Right_Fall_1", "Textures/Player/Player_77.png"); //56
-	game_->getGraphics().loadTexture("Player_Right_Fall_2", "Textures/Player/Player_78.png"); //57
+	game_->getGraphics().loadTexture("Player_Right_Jump_1", "Textures/Player/Player_67.png"); //52
+	game_->getGraphics().loadTexture("Player_Right_Jump_2", "Textures/Player/Player_68.png"); //53
+	game_->getGraphics().loadTexture("Player_Right_Jump_3", "Textures/Player/Player_69.png"); //54
+	game_->getGraphics().loadTexture("Player_Right_Jump_4", "Textures/Player/Player_70.png"); //55
+	game_->getGraphics().loadTexture("Player_Right_Fall_1", "Textures/Player/Player_71.png"); //56
+	game_->getGraphics().loadTexture("Player_Right_Fall_2", "Textures/Player/Player_72.png"); //57
+
+	//FACE UP AND LEFT
+	
+	game_->getGraphics().loadTexture("Player_Left_Up_Idle", "Textures/Player/Player_78.png"); 
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_1", "Textures/Player/Player_79.png"); 
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_2", "Textures/Player/Player_80.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_3", "Textures/Player/Player_81.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_4", "Textures/Player/Player_82.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_5", "Textures/Player/Player_83.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_6", "Textures/Player/Player_84.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_7", "Textures/Player/Player_85.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_8", "Textures/Player/Player_86.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_9", "Textures/Player/Player_87.png");
+	game_->getGraphics().loadTexture("Player_Left_Up_Run_10", "Textures/Player/Player_88.png");
+	
+	//FACE UP AND RIGHT
+	game_->getGraphics().loadTexture("Player_Right_Up_Idle", "Textures/Player/Player_89.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_1", "Textures/Player/Player_90.png"); 
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_2", "Textures/Player/Player_91.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_3", "Textures/Player/Player_92.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_4", "Textures/Player/Player_93.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_5", "Textures/Player/Player_94.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_6", "Textures/Player/Player_95.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_7", "Textures/Player/Player_96.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_8", "Textures/Player/Player_97.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_9", "Textures/Player/Player_98.png");
+	game_->getGraphics().loadTexture("Player_Right_Up_Run_10", "Textures/Player/Player_99.png");
 	
 	//END OF PLAYER//
 	
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
+	playerSprites_LeftUpRun = new SpriteAnimator();
+	playerSprites_RightUpRun = new SpriteAnimator();
 	playerSprites_LeftSprint = new SpriteAnimator();
 	playerSprites_RightSprint = new SpriteAnimator();
 	playerSprites_LeftJump = new SpriteAnimator();
@@ -388,6 +419,30 @@ void GameScene::loadTextures()
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_9"));
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_10"));
 	playerSprites_RightRun->play();
+
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_1"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_2"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_3"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_4"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_5"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_6"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_7"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_8"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_9"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_10"));
+	playerSprites_RightUpRun->play();
+
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_1"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_2"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_3"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_4"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_5"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_6"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_7"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_8"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_9"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_10"));
+	playerSprites_LeftUpRun->play();
 
 	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_1"));
 	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_2"));
@@ -477,6 +532,8 @@ void GameScene::loadTextures()
 
 	playerSprites_LeftIdle = game_->getGraphics().getSprite("Player_Left_Idle");
 	playerSprites_RightIdle = game_->getGraphics().getSprite("Player_Right_Idle");
+	playerSprites_LeftUpIdle = game_->getGraphics().getSprite("Player_Left_Up_Idle");
+	playerSprites_RightUpIdle = game_->getGraphics().getSprite("Player_Right_Up_Idle");
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
 	playerSprite = game_->getGraphics().getSprite("Player_Idle");
@@ -551,10 +608,14 @@ void GameScene::loadGameObject()
 	player->set_pSprite(playerSprite);
 	player->set_pSprite_LeftIdle(playerSprites_LeftIdle);
 	player->set_pSprite_RightIdle(playerSprites_RightIdle);
+	player->set_pSprite_LeftUpIdle(playerSprites_LeftUpIdle);
+	player->set_pSprite_RightUpIdle(playerSprites_RightUpIdle);
 	player->set_pSprite_LeftFall(playerSprites_LeftFall);
 	player->set_pSprite_RightFall(playerSprites_RightFall);
 	player->set_pAnim_LeftRun(playerSprites_LeftRun);
 	player->set_pAnim_RightRun(playerSprites_RightRun);
+	player->set_pAnim_LeftUpRun(playerSprites_LeftUpRun);
+	player->set_pAnim_RightUpRun(playerSprites_RightUpRun);
 	player->set_pAnim_LeftJump(playerSprites_LeftJump);
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);

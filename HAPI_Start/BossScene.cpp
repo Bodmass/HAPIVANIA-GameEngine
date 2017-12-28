@@ -303,6 +303,8 @@ void BossScene::loadTextures()
 
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
+	playerSprites_LeftUpRun = new SpriteAnimator();
+	playerSprites_RightUpRun = new SpriteAnimator();
 	playerSprites_LeftSprint = new SpriteAnimator();
 	playerSprites_RightSprint = new SpriteAnimator();
 	playerSprites_LeftJump = new SpriteAnimator();
@@ -344,6 +346,30 @@ void BossScene::loadTextures()
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_9"));
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_10"));
 	playerSprites_RightRun->play();
+
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_1"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_2"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_3"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_4"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_5"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_6"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_7"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_8"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_9"));
+	playerSprites_RightUpRun->addFrame(game_->getGraphics().getSprite("Player_Right_Up_Run_10"));
+	playerSprites_RightUpRun->play();
+
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_1"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_2"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_3"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_4"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_5"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_6"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_7"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_8"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_9"));
+	playerSprites_LeftUpRun->addFrame(game_->getGraphics().getSprite("Player_Left_Up_Run_10"));
+	playerSprites_LeftUpRun->play();
 
 	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_1"));
 	playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite("Player_Right_Sprint_2"));
@@ -395,6 +421,8 @@ void BossScene::loadTextures()
 
 	playerSprites_LeftIdle = game_->getGraphics().getSprite("Player_Left_Idle");
 	playerSprites_RightIdle = game_->getGraphics().getSprite("Player_Right_Idle");
+	playerSprites_LeftUpIdle = game_->getGraphics().getSprite("Player_Left_Up_Idle");
+	playerSprites_RightUpIdle = game_->getGraphics().getSprite("Player_Right_Up_Idle");
 	playerSprites_RightIdle->setEntity();
 	playerSprites_LeftIdle->setEntity();
 	playerSprite = game_->getGraphics().getSprite("Player_Idle");
@@ -432,13 +460,18 @@ void BossScene::loadGameObject()
 		bossBullets.push_back(newbullet);
 	}
 
+
 	player->set_pSprite(playerSprite);
 	player->set_pSprite_LeftIdle(playerSprites_LeftIdle);
 	player->set_pSprite_RightIdle(playerSprites_RightIdle);
+	player->set_pSprite_LeftUpIdle(playerSprites_LeftUpIdle);
+	player->set_pSprite_RightUpIdle(playerSprites_RightUpIdle);
 	player->set_pSprite_LeftFall(playerSprites_LeftFall);
 	player->set_pSprite_RightFall(playerSprites_RightFall);
 	player->set_pAnim_LeftRun(playerSprites_LeftRun);
 	player->set_pAnim_RightRun(playerSprites_RightRun);
+	player->set_pAnim_LeftUpRun(playerSprites_LeftUpRun);
+	player->set_pAnim_RightUpRun(playerSprites_RightUpRun);
 	player->set_pAnim_LeftJump(playerSprites_LeftJump);
 	player->set_pAnim_RightJump(playerSprites_RightJump);
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);

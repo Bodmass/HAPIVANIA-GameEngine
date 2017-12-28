@@ -71,8 +71,12 @@ private:
 	Texture* pSprite = nullptr;
 	Texture* pSprite_LeftIdle = nullptr;
 	Texture* pSprite_RightIdle = nullptr;
+	Texture* pSprite_LeftUpIdle = nullptr;
+	Texture* pSprite_RightUpIdle = nullptr;
 	SpriteAnimator* pAnim_LeftRun = nullptr;
 	SpriteAnimator* pAnim_RightRun = nullptr;
+	SpriteAnimator* pAnim_LeftUpRun = nullptr;
+	SpriteAnimator* pAnim_RightUpRun = nullptr;
 	SpriteAnimator* pAnim_LeftSprint = nullptr;
 	SpriteAnimator* pAnim_RightSprint = nullptr;
 	SpriteAnimator* pAnim_LeftJump = nullptr;
@@ -118,11 +122,15 @@ public:
 	void set_pSprite(Texture* sprite) { pSprite = sprite; }
 	void set_pSprite_LeftIdle(Texture* sprite) { pSprite_LeftIdle = sprite; }
 	void set_pSprite_RightIdle(Texture* sprite) { pSprite_RightIdle = sprite; }
+	void set_pSprite_LeftUpIdle(Texture* sprite) { pSprite_LeftUpIdle = sprite; }
+	void set_pSprite_RightUpIdle(Texture* sprite) { pSprite_RightUpIdle = sprite; }
 	void set_pSprite_RightFall(Texture* sprite) { pSprite_RightFall = sprite; }
 	void set_pSprite_LeftFall(Texture* sprite) { pSprite_LeftFall = sprite; }
 	//
 	void set_pAnim_LeftRun(SpriteAnimator* anim) { pAnim_LeftRun = anim; }
 	void set_pAnim_RightRun(SpriteAnimator* anim) { pAnim_RightRun = anim; }
+	void set_pAnim_LeftUpRun(SpriteAnimator* anim) { pAnim_LeftUpRun = anim; }
+	void set_pAnim_RightUpRun(SpriteAnimator* anim) { pAnim_RightUpRun = anim; }
 	void set_pAnim_LeftSprint(SpriteAnimator* anim) { pAnim_LeftSprint = anim; }
 	void set_pAnim_RightSprint(SpriteAnimator* anim) { pAnim_RightSprint = anim; }
 	void set_pAnim_LeftJump(SpriteAnimator* anim) { pAnim_LeftJump = anim; }
@@ -131,10 +139,14 @@ public:
 	Texture* get_pSprite() { return pSprite; }
 	Texture* get_pSprite_LeftIdle() { return pSprite_LeftIdle; }
 	Texture* get_pSprite_RightIdle() { return pSprite_RightIdle; }
+	Texture* get_pSprite_LeftUpIdle() { return pSprite_LeftUpIdle; }
+	Texture* get_pSprite_RightUpIdle() { return pSprite_RightUpIdle; }
 	Texture* get_pSprite_RightFall() { return pSprite_RightFall; }
 	Texture* get_pSprite_LeftFall() { return pSprite_LeftFall; }
 	SpriteAnimator* get_pAnim_LeftRun() { return pAnim_LeftRun; }
 	SpriteAnimator* get_pAnim_RightRun() { return pAnim_RightRun; }
+	SpriteAnimator* get_pAnim_LeftUpRun() { return pAnim_LeftUpRun; }
+	SpriteAnimator* get_pAnim_RightUpRun() { return pAnim_RightUpRun; }
 	SpriteAnimator* get_pAnim_LeftSprint() { return pAnim_LeftSprint; }
 	SpriteAnimator* get_pAnim_RightSprint() { return pAnim_RightSprint; }
 	SpriteAnimator* get_pAnim_LeftJump() { return pAnim_LeftJump; }

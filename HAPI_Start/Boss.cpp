@@ -278,8 +278,8 @@ bool Boss::Shoot(std::vector<Bullet*> b, Player* plyr)
 
 void Boss::Activate()
 {
-	e_HP = 2500;
-	//e_HP = 5;
+	//e_HP = 2500;
+	e_HP = 5;
 	isActive = true;
 }
 

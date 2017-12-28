@@ -25,8 +25,14 @@ private:
 	//Animations
 	Texture* playerSprites_LeftIdle = nullptr;
 	Texture* playerSprites_RightIdle = nullptr;
+	Texture* playerSprites_LeftUpIdle = nullptr;
+	Texture* playerSprites_RightUpIdle = nullptr;
 	SpriteAnimator* playerSprites_LeftRun = nullptr;
 	SpriteAnimator* playerSprites_RightRun = nullptr;
+	//
+	SpriteAnimator* playerSprites_LeftUpRun = nullptr;
+	SpriteAnimator* playerSprites_RightUpRun = nullptr;
+	//
 	SpriteAnimator* playerSprites_LeftSprint = nullptr;
 	SpriteAnimator* playerSprites_RightSprint = nullptr;
 	SpriteAnimator* playerSprites_LeftJump = nullptr;

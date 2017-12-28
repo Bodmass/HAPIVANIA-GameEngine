@@ -159,10 +159,15 @@ void Player::PlayerMovement()
 		
 		if (!p_isJumping && !p_isFalling)
 		{
-			if (!p_isSprinting)
-				pSprite = pAnim_LeftRun;
+			if (keyData.scanCode['W'])
+				pSprite = pAnim_LeftUpRun;
 			else
-				pSprite = pAnim_LeftSprint;
+			{
+				if (!p_isSprinting)
+					pSprite = pAnim_LeftRun;
+				else
+					pSprite = pAnim_LeftSprint;
+			}
 		}
 		if (p_isJumping)
 		{
@@ -194,10 +199,15 @@ void Player::PlayerMovement()
 		
 		if (!p_isJumping)
 		{
-			if (!p_isSprinting)
-				pSprite = pAnim_RightRun;
+			if (keyData.scanCode['W'])
+				pSprite = pAnim_RightUpRun;
 			else
-				pSprite = pAnim_RightSprint;
+			{
+				if (!p_isSprinting)
+					pSprite = pAnim_RightRun;
+				else
+					pSprite = pAnim_RightSprint;
+			}
 		}
 		if (p_isJumping)
 		{
@@ -216,12 +226,18 @@ void Player::PlayerMovement()
 
 		if (!keyData.scanCode['A'] && p_isLeft && !p_isJumping)
 		{
-			pSprite = pSprite_LeftIdle;
+			if (keyData.scanCode['W'])
+				pSprite = pSprite_LeftUpIdle;
+			else
+				pSprite = pSprite_LeftIdle;
 		}
 
 		if (!keyData.scanCode['D']  && p_isRight && !p_isJumping)
 		{
-			pSprite = pSprite_RightIdle;
+			if (keyData.scanCode['W'])
+				pSprite = pSprite_RightUpIdle;
+			else
+				pSprite = pSprite_RightIdle;
 		}
 	
 
@@ -240,12 +256,18 @@ void Player::PlayerMovement()
 	{
 		if (p_isLeft)
 		{
-			pSprite = pSprite_LeftIdle;
+			if (keyData.scanCode['W'])
+				pSprite = pSprite_LeftUpIdle;
+			else
+				pSprite = pSprite_LeftIdle;
 		}
 			
 		if (p_isRight)
 		{
-			pSprite = pSprite_RightIdle;
+			if (keyData.scanCode['W'])
+				pSprite = pSprite_RightUpIdle;
+			else
+				pSprite = pSprite_RightIdle;
 		}
 	}
 
