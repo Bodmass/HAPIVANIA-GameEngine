@@ -6,6 +6,8 @@ BossScene::~BossScene()
 {
 
 	delete playerSprites_LeftRun;
+	delete playerSprites_LeftUpRun;
+	delete playerSprites_RightUpRun;
 	delete playerSprites_RightRun;
 	delete playerSprites_LeftSprint;
 	delete playerSprites_RightSprint;
@@ -154,7 +156,7 @@ void BossScene::update()
 
 		if (!player->p_CheckAlive())
 		{
-			Sound::stopMusic("BGM 1");
+			Sound::stopMusic("Boss");
 			game_->switchScene_Death();
 		}
 

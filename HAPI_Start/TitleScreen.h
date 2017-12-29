@@ -5,6 +5,7 @@ class TitleScreen : public Scene
 {
 private:
 	bool BGMPlaying = false;
+	bool dSwitchLock = false;
 	Texture* BG = nullptr;
 
 public:

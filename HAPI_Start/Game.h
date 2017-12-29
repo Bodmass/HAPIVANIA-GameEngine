@@ -40,6 +40,7 @@ private:
 	EndScene end = nullptr;
 	bool pauseLock = false;
 	std::string room;
+	std::string difficulty = "Easy"; //Easy, Hard
 
 	Texture icontexture = "Textures/Icon.png";
 	BYTE* Icon = icontexture.getSprite();
@@ -93,7 +94,9 @@ public:
 	void p_XRAYB_Set(bool yesno) { p_XRAYB = yesno; }
 	void p_SprintU_Set(bool yesno) { p_SprintU = yesno; }
 	void p_SuperJump_Set(bool yesno) { p_SuperJump = yesno; }
-	
+	std::string getDifficulty() { return difficulty; }
+	void setHardMode() { difficulty = "Hard"; }
+	void setEasyMode() { difficulty = "Easy"; }
 
 
 };

@@ -16,13 +16,29 @@ GameScene::~GameScene()
 	delete playerSprites_RightSprint;
 	delete playerSprites_LeftJump;
 	delete playerSprites_RightJump;
+	delete spacePirate_LeftRun;
+	delete spacePirate_RightRun;
+	delete bat_LeftRun;
+	delete bat_RightRun;
+
+	/*
+
+	delete playerSprites_LeftRun;
+	delete playerSprites_RightRun;
+	delete playerSprites_LeftUpRun;
+	delete playerSprites_RightUpRun;
+	delete playerSprites_LeftSprint;
+	delete playerSprites_RightSprint;
+	delete playerSprites_LeftJump;
+	delete playerSprites_RightJump;
 
 	delete spacePirate_LeftRun;
 	delete spacePirate_RightRun;
 
 	delete bat_LeftRun;
 	delete bat_RightRun;
-
+	
+*/
 	delete CamRect;
 
 	for (auto* gameObject : gameObjects)
@@ -80,6 +96,8 @@ void GameScene::update()
 		player->PlayerCollision(platforms, *CamRect);
 
 		player->PlayerUpdate();
+
+		//std::cout << player->getX() << ", " << player->getY() << std::endl;
 
 		if (player->PlayerShoot(bulletObjects))
 		{
@@ -168,24 +186,6 @@ void GameScene::update()
 			game_->switchScene_Death();
 		}
 
-		if (game_->getKeyboard().scanCode[HK_HOME])
-		{
-			//game_->setPlayer(player);
-			Sound::stopMusic("BGM 1");
-			game_->setCamera(0, 0);
-			game_->switchScene_Boss();
-			game_->p_SprintU_Set(player->checkSprintUpgrade());
-			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
-			game_->p_SuperJump_Set(player->checkJumpUpgrade());
-		}
-
-		if (game_->getKeyboard().scanCode[HK_END])
-		{
-			player->setSprintUpgrade();
-			player->setJumpUpgrade();
-		}
-
-		
 	}
 
 
@@ -268,18 +268,19 @@ void GameScene::render()
 
 void GameScene::loadTextures()
 {
-	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false); //0 - BG -
-	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png", false); //HUD Bar
+	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false);
+	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png", false);
 	//BULLETS
-	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); //58
-	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); //58
+	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); 
+	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); 
 
-	game_->getGraphics().loadTexture("Player_Bullet_1_Up", "Textures/Player/Bullets/BasicBullet_Up.png"); //58
-	game_->getGraphics().loadTexture("Player_Bullet_2_Up", "Textures/Player/Bullets/XRAYBullet_Up.png"); //58
+	game_->getGraphics().loadTexture("Player_Bullet_1_Up", "Textures/Player/Bullets/BasicBullet_Up.png"); 
+	game_->getGraphics().loadTexture("Player_Bullet_2_Up", "Textures/Player/Bullets/XRAYBullet_Up.png"); 
 
 	//PICKUPS
-	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); //58
-	game_->getGraphics().loadTexture("Pickup_XRAY_1", "Textures/Pickups/Xray/XRAY_0.png"); //58
+	game_->getGraphics().loadTexture("Pickup_Sprint_1", "Textures/Pickups/Sprint/Sprint_0.png"); 
+	game_->getGraphics().loadTexture("Pickup_Jump_1", "Textures/Pickups/Sprint/Sprint_1.png"); 
+	game_->getGraphics().loadTexture("Pickup_XRAY_1", "Textures/Pickups/Xray/XRAY_0.png"); 
 
 	//ENEMIES
 
@@ -544,6 +545,7 @@ void GameScene::loadGameObject()
 	player = new Player(playerSprite, playerRect, 60, 560);
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 484);
+	Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), 5768, 371);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 	CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 
@@ -551,15 +553,19 @@ void GameScene::loadGameObject()
 	gameObjects.push_back(player);
 	gameObjects.push_back(Sprint_PU);
 	gameObjects.push_back(XRAY_PU);
+	gameObjects.push_back(JUMP_PU);
 	gameUI.push_back(HUDBar);
+	
 
 	pickups.push_back(Sprint_PU);
 	pickups.push_back(XRAY_PU);
+	pickups.push_back(JUMP_PU);
 
 	platforms.push_back(Sprint_PU->getRect());
 
 	player->getRect().Translate(player->getX(), player->getY());
 	
+	JUMP_PU->getRect().Translate(JUMP_PU->getX(), JUMP_PU->getY());
 	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
 	XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
 
@@ -697,24 +703,31 @@ void GameScene::loadLevel(std::string level)
 		std::string t_name = attr3.AsString();
 
 
-		 
-		
-
-		GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
-
-		gameObjects.push_back(newtile);
-		if (!dontcollide)
-		{
-			platforms.push_back(newtile->getRect());
-			platforms.back().Translate(newtile->getX(), newtile->getY());
-		}
-
 		if (isBossDoor)
+		
 		{
 			Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+			gameObjects.push_back(newwarp);
 			warps.push_back(newwarp);
 			warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
 		}
+
+
+		else
+		{
+
+
+			GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+
+			gameObjects.push_back(newtile);
+			if (!dontcollide)
+			{
+				platforms.push_back(newtile->getRect());
+				platforms.back().Translate(newtile->getX(), newtile->getY());
+			}
+		}
+
+
 
 	}
 
