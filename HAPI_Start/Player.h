@@ -32,6 +32,8 @@ private:
 	bool p_isRight{ false };
 	bool p_isAlive{ true };
 
+	bool LookingUp = false;
+
 	bool p_Immunity{ false };
 	int p_Immunity_Delay = 1;
 
@@ -43,6 +45,7 @@ private:
 
 	//MISC
 	const HAPI_TKeyboardData &keyData = HAPI.GetKeyboardData();
+	const HAPI_TControllerData &controllerData = HAPI.GetControllerData(0);
 	int gameClock;
 	int p_jumpingtime = 0;
 	int p_shootingtime = 0;

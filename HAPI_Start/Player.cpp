@@ -104,20 +104,55 @@ bool Player::PlayerImmunityCheck()
 
 void Player::PlayerMovement()
 {
-	if (keyData.scanCode[HK_NUMPAD1])
+	//Buttons Pressed
+	bool RightPressed = false;
+	bool LeftPressed = false;
+	LookingUp = false;
+	bool PressedJump = false;
+	bool SprintPressed = false;
+
+	if (controllerData.isAttached)
 	{
-		upgrade_SPRINT = true;
+		int leftstickX = controllerData.analogueButtons[2];
+		int leftstickY = controllerData.analogueButtons[3];
+
+		if (leftstickX > HK_GAMEPAD_LEFT_THUMB_DEADZONE)
+		{
+			RightPressed = true;
+		}
+
+		if (leftstickX < -HK_GAMEPAD_LEFT_THUMB_DEADZONE)
+		{
+			LeftPressed = true;
+		}
+
+		if (leftstickY > HK_GAMEPAD_LEFT_THUMB_DEADZONE)
+		{
+			LookingUp = true;
+		}
+
+		if (controllerData.digitalButtons[HK_DIGITAL_A])
+		{
+			PressedJump = true;
+		}
+
+		if (controllerData.digitalButtons[HK_DIGITAL_LEFT_THUMB])
+		{
+			SprintPressed = true;
+		}
 	}
 
-	if (keyData.scanCode[HK_NUMPAD2])
-	{
-		upgrade_SUPER_JUMP = true;
-	}
+	if (keyData.scanCode['W'])
+		LookingUp = true;
+
 	//SPRINTING
 	//Checks whether the Left Shift key is being pressed. If its unlocked, If it is and the Player is not in the middle of falling or jumping, change the speed;
 	if (upgrade_SPRINT)
 	{
-		if (keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
+		if (keyData.scanCode[HK_LSHIFT])
+			SprintPressed = true;
+
+		if (SprintPressed && !p_isFalling && !p_isJumping)
 		{
 			if (upgrade_SUPER_JUMP)
 			{
@@ -126,7 +161,7 @@ void Player::PlayerMovement()
 			p_isSprinting = true;
 			p_speed = 4;
 		}
-		if (!keyData.scanCode[HK_LSHIFT] && !p_isFalling && !p_isJumping)
+		if (!SprintPressed && !p_isFalling && !p_isJumping)
 			p_isSprinting = false;
 
 		if (!p_isSprinting)
@@ -151,6 +186,9 @@ void Player::PlayerMovement()
 	bool p_isMoving = false;
 
 	if (keyData.scanCode['A'])
+		LeftPressed = true;
+
+	if (LeftPressed)
 	{
 		p_isMoving = true;
 		p_isLeft = true;
@@ -159,7 +197,7 @@ void Player::PlayerMovement()
 		
 		if (!p_isJumping && !p_isFalling)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pAnim_LeftUpRun;
 			else
 			{
@@ -190,7 +228,12 @@ void Player::PlayerMovement()
 
 	}
 
+
+
 	if (keyData.scanCode['D'])
+		RightPressed = true;
+
+	if (RightPressed)
 	{
 		p_isMoving = true;
 		p_isLeft = false;
@@ -199,7 +242,7 @@ void Player::PlayerMovement()
 		
 		if (!p_isJumping)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pAnim_RightUpRun;
 			else
 			{
@@ -224,17 +267,17 @@ void Player::PlayerMovement()
 		}
 	}
 
-		if (!keyData.scanCode['A'] && p_isLeft && !p_isJumping)
+		if (!LeftPressed && p_isLeft && !p_isJumping)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pSprite_LeftUpIdle;
 			else
 				pSprite = pSprite_LeftIdle;
 		}
 
-		if (!keyData.scanCode['D']  && p_isRight && !p_isJumping)
+		if (!RightPressed  && p_isRight && !p_isJumping)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pSprite_RightUpIdle;
 			else
 				pSprite = pSprite_RightIdle;
@@ -256,7 +299,7 @@ void Player::PlayerMovement()
 	{
 		if (p_isLeft)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pSprite_LeftUpIdle;
 			else
 				pSprite = pSprite_LeftIdle;
@@ -264,7 +307,7 @@ void Player::PlayerMovement()
 			
 		if (p_isRight)
 		{
-			if (keyData.scanCode['W'])
+			if (LookingUp)
 				pSprite = pSprite_RightUpIdle;
 			else
 				pSprite = pSprite_RightIdle;
@@ -272,6 +315,9 @@ void Player::PlayerMovement()
 	}
 
 	if (keyData.scanCode[HK_SPACE])
+		PressedJump = true;
+
+	if(PressedJump)
 	{
 		if (!p_isJumping && !p_isFalling)
 		{
@@ -353,7 +399,8 @@ void Player::PlayerUpdate()
 
 bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 {
-	if (keyData.scanCode['n'] || keyData.scanCode['N'])
+
+	if (controllerData.digitalButtons[HK_DIGITAL_X] || keyData.scanCode['N'])
 	{
 		if (!p_isShooting)
 		{
@@ -369,7 +416,7 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 				//std::cout << "I've shot!\n";
 				p_isShooting = false;
 
-				if (keyData.scanCode['w'] || keyData.scanCode['W'])
+				if (LookingUp)
 				{
 					if (checkXRAYUpgrade())
 					{

@@ -68,6 +68,8 @@ private:
 	Player* player;
 	Pickup* Sprint_PU;
 
+	Rectangle* CamRect = nullptr;
+
 	Rectangle playerRect = Rectangle(48, 48);
 
 	int gameClock;

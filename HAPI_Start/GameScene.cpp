@@ -23,6 +23,8 @@ GameScene::~GameScene()
 	delete bat_LeftRun;
 	delete bat_RightRun;
 
+	delete CamRect;
+
 	for (auto* gameObject : gameObjects)
 	{
 		delete gameObject;
@@ -71,7 +73,8 @@ void GameScene::update()
 
 	if (GameStarted)
 	{
-		Rectangle* CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
+		//Setup outside V
+		
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
 
 		player->PlayerCollision(platforms, *CamRect);
@@ -134,6 +137,19 @@ void GameScene::update()
 
 		//Enemy Update
 
+		for (auto w : warps)
+		{
+			w->Update(&player->getPlayerRect());
+			
+			if (w->getID() == 1 && w->Entered())
+			{
+				Sound::stopMusic("BGM 1");
+				game_->switchScene_Boss();
+				game_->p_SprintU_Set(player->checkSprintUpgrade());
+				game_->p_XRAYB_Set(player->checkXRAYUpgrade());
+				game_->p_SuperJump_Set(player->checkJumpUpgrade());
+			}
+		}
 		
 		for (auto e : enemies)
 		{
@@ -156,13 +172,20 @@ void GameScene::update()
 		{
 			//game_->setPlayer(player);
 			Sound::stopMusic("BGM 1");
+			game_->setCamera(0, 0);
 			game_->switchScene_Boss();
 			game_->p_SprintU_Set(player->checkSprintUpgrade());
 			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
 			game_->p_SuperJump_Set(player->checkJumpUpgrade());
 		}
 
-		delete CamRect;
+		if (game_->getKeyboard().scanCode[HK_END])
+		{
+			player->setSprintUpgrade();
+			player->setJumpUpgrade();
+		}
+
+		
 	}
 
 
@@ -190,22 +213,24 @@ void GameScene::update()
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
-			//Sprint_PU->getRect().Move(Sprint_PU->getX(), Sprint_PU->getY());
 		}
 		
+		bool PauseHit = false;
 
+		if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
+			PauseHit = true;
 
-		if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
+		if (PauseHit && !game_->getPauseLock())
 		{
 			game_->setPauseLock(true);
 			game_->switchScene_Pause();
-			//TEMP HERE
+
 			game_->p_SprintU_Set(player->checkSprintUpgrade());
 			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
 			game_->p_SuperJump_Set(player->checkJumpUpgrade());
 		}
 
-		if (!game_->getKeyboard().scanCode[HK_ESCAPE])
+		if (!PauseHit)
 		{
 			game_->setPauseLock(false);
 		}
@@ -394,7 +419,6 @@ void GameScene::loadTextures()
 	bat_LeftRun = new SpriteAnimator();
 	bat_RightRun = new SpriteAnimator();
 
-	//TEMP (Push sprites through a spritesheet instead and fix this?)
 
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_1"));
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_2"));
@@ -407,6 +431,7 @@ void GameScene::loadTextures()
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_9"));
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_10"));
 	playerSprites_LeftRun->play();
+	
 
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_1"));
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_2"));
@@ -491,44 +516,6 @@ void GameScene::loadTextures()
 	playerSprites_RightJump->addFrame(game_->getGraphics().getSprite("Player_Right_Jump_3"));
 	playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite("Player_Left_Jump_3"));
 
-	//playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(3));
-	/*
-	for (int i = 0; i < 10; i++)
-	{
-		playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite(leftRunStartIndex + i));
-	}
-	playerSprites_LeftRun->play();
-
-	for (int i = 0; i < 10; i++)
-	{
-		playerSprites_RightRun->addFrame(game_->getGraphics().getSprite(rightRunStartIndex + i));
-	}
-	playerSprites_RightRun->play();
-
-	for (int i = 0; i < 10; i++)
-	{
-		playerSprites_RightSprint->addFrame(game_->getGraphics().getSprite(rightSprintStartIndex + i));
-	}
-	playerSprites_RightSprint->play();
-
-	for (int i = 0; i < 10; i++)
-	{
-		playerSprites_LeftSprint->addFrame(game_->getGraphics().getSprite(leftSprintStartIndex + i));
-	}
-	playerSprites_LeftSprint->play();
-
-	for (int i = 0; i < 4; i++)
-	{
-		playerSprites_RightJump->addFrame(game_->getGraphics().getSprite(rightJumpStartIndex + i));
-	}
-	playerSprites_RightJump->play();
-
-	for (int i = 0; i < 4; i++)
-	{
-		playerSprites_LeftJump->addFrame(game_->getGraphics().getSprite(leftJumpStartIndex + i));
-	}
-	*/
-	//playerSprites_LeftJump->play();
 
 	playerSprites_LeftIdle = game_->getGraphics().getSprite("Player_Left_Idle");
 	playerSprites_RightIdle = game_->getGraphics().getSprite("Player_Right_Idle");
@@ -558,7 +545,7 @@ void GameScene::loadGameObject()
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 484);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
-
+	CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
@@ -696,9 +683,15 @@ void GameScene::loadLevel(std::string level)
 
 		bool dontcollide = false;
 
-		if (attr3.AsString() == "Cave/Cave_21.png" || attr3.AsString() == "Cave/Cave_20.png" || attr3.AsString() == "Cave/Cave_18.png" || attr3.AsString() == "Cave/Cave_17.png" || attr3.AsString() == "Cave/Cave_08.png" || attr3.AsString() == "Cave/Cave_09.png" || attr3.AsString() == "Cave/Cave_10.png")
+		if (attr3.AsString() == "Cave/Cave_23.png" || attr3.AsString() == "Cave/Cave_24.png" ||  attr3.AsString() == "Cave/Cave_25.png" || attr3.AsString() == "Cave/Cave_26.png" || attr3.AsString() == "Cave/Cave_27.png" || attr3.AsString() == "Cave/Cave_28.png" || attr3.AsString() == "Cave/Cave_21.png" || attr3.AsString() == "Cave/Cave_20.png" || attr3.AsString() == "Cave/Cave_18.png" || attr3.AsString() == "Cave/Cave_17.png" || attr3.AsString() == "Cave/Cave_08.png" || attr3.AsString() == "Cave/Cave_09.png" || attr3.AsString() == "Cave/Cave_10.png")
 		{
 			dontcollide = true;
+		}
+
+		bool isBossDoor = false;
+		if (attr3.AsString() == "Cave/Cave_27.png" || attr3.AsString() == "Cave/Cave_28.png")
+		{
+			isBossDoor = true;
 		}
 
 		std::string t_name = attr3.AsString();
@@ -714,6 +707,13 @@ void GameScene::loadLevel(std::string level)
 		{
 			platforms.push_back(newtile->getRect());
 			platforms.back().Translate(newtile->getX(), newtile->getY());
+		}
+
+		if (isBossDoor)
+		{
+			Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+			warps.push_back(newwarp);
+			warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
 		}
 
 	}

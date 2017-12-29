@@ -18,7 +18,7 @@ void TitleScreen::update()
 		BGMPlaying = true;
 	}
 
-	if (game_->getKeyboard().scanCode[HK_RETURN])
+	if (game_->getKeyboard().scanCode[HK_RETURN] || game_->getController().digitalButtons[HK_DIGITAL_START])
 	{
 		Sound::stopMusic("Title");
 		game_->switchScene_Game();

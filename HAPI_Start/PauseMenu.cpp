@@ -11,8 +11,13 @@ PauseMenu::~PauseMenu()
 
 void PauseMenu::update()
 {
+	bool PauseHit = false;
 
-	if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
+	if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
+		PauseHit = true;
+
+
+	if (PauseHit && !game_->getPauseLock())
 	{
 		justopened = true;
 		game_->setPauseLock(true);
@@ -22,7 +27,7 @@ void PauseMenu::update()
 			game_->switchScene_Boss();
 	}
 
-	if (!game_->getKeyboard().scanCode[HK_ESCAPE])
+	if (!PauseHit)
 	{
 		game_->setPauseLock(false);
 	}

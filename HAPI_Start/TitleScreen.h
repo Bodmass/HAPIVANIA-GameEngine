@@ -6,6 +6,7 @@ class TitleScreen : public Scene
 private:
 	bool BGMPlaying = false;
 	Texture* BG = nullptr;
+
 public:
 	TitleScreen(Game* game) : Scene(game) {};
 

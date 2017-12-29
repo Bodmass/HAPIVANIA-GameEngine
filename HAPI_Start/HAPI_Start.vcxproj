@@ -45,6 +45,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
     <ClCompile Include="Visualisation.cpp" />
+    <ClCompile Include="Warp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TitleScreen.h" />
     <ClInclude Include="Visualisation.h" />
+    <ClInclude Include="Warp.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

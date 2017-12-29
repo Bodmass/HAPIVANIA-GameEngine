@@ -5,6 +5,7 @@
 #include "Pickup.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Warp.h"
 
 class GameScene : public Scene
 {
@@ -16,8 +17,10 @@ private:
 	std::vector<GameObject*> gameObjects;
 	std::vector<Bullet*> bulletObjects;
 	std::vector<GameObject*> gameUI;
+	std::vector<Warp*> warps;
 
 	GameObject* HUDBar;
+	Rectangle* CamRect = nullptr;
 
 	Texture* playerSprite = nullptr;
 	//Animations

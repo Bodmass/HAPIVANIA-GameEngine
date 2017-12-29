@@ -20,6 +20,8 @@ BossScene::~BossScene()
 
 	delete ship_Idle;
 
+	delete CamRect;
+
 	for (auto* gameObject : gameObjects)
 	{
 		delete gameObject;
@@ -68,7 +70,6 @@ void BossScene::update()
 	if (GameStarted)
 	{
 		//std::cout << player->getX() << ", " << player->getY() << std::endl;
-		Rectangle* CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
 
 		player->checkHit(bossBullets, 5);
@@ -176,12 +177,6 @@ void BossScene::update()
 		}
 
 
-
-
-
-
-
-		delete CamRect;
 	}
 
 	if (Ship->checkDead())
@@ -240,7 +235,13 @@ void BossScene::update()
 		}
 	}
 
-	if (game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getPauseLock())
+	bool PauseHit = false; 
+
+	if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
+		PauseHit = true;
+
+
+	if (PauseHit && !game_->getPauseLock())
 	{
 		game_->setRoom("Boss");
 		game_->setPauseLock(true);
@@ -439,6 +440,7 @@ void BossScene::loadGameObject()
 	doorDestroy = new GameObject(game_->getGraphics().getSprite("Ship_Bomb"), Rectangle(game_->getGraphics().getSprite("Ship_Bomb")->getWidth(), game_->getGraphics().getSprite("Ship_Bomb")->getHeight()), 1350, -200);
 	player = new Player(playerSprite, playerRect, 80, 593);
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
+	CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 
 	enemies.push_back(Ship);
 	gameObjects.push_back(BG);
