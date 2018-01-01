@@ -9,6 +9,7 @@ private:
 	bool isActive{ false };
 	int dir = 0;
 	int bulletspeed = 0;
+	int bulletDamage = 20;
 	Rectangle BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 public:
 	Bullet(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
@@ -25,6 +26,8 @@ public:
 		Homing
 	};
 	bool checkUp() { return isUp; }
+	int getDamage() { return bulletDamage = 20; }
+	void setDamage(int damage) { bulletDamage = damage; }
 	void fire(std::string face);
 	bool checkActive() { return isActive; }
 	~Bullet();

@@ -8,10 +8,6 @@ private:
 	Texture* pSprite_RightIdle = nullptr;
 	SpriteAnimator* pAnim_LeftRun = nullptr;
 	SpriteAnimator* pAnim_RightRun = nullptr;
-
-	int e_HP{ 100 };
-	int e_Damage_Min{ 3 };
-	int e_Damage_Max{ 10 };
 	int threshold = 300;
 
 
@@ -20,6 +16,7 @@ public:
 	~Enemy_SP();
 
 	void Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect) override;
+	void Setup() override;
 
 	Texture* get_pSprite_LeftIdle() { return pSprite_LeftIdle; }
 	Texture* get_pSprite_RightIdle() { return pSprite_RightIdle; }
@@ -31,5 +28,6 @@ public:
 	void set_pSprite_RightIdle(Texture* sprite) { pSprite_RightIdle = sprite; }
 	void set_pAnim_LeftRun(SpriteAnimator* anim) { pAnim_LeftRun = anim; }
 	void set_pAnim_RightRun(SpriteAnimator* anim) { pAnim_RightRun = anim; }
+
 };
 

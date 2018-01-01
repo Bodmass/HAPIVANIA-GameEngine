@@ -26,9 +26,9 @@ void Boss::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle cam
 		if (getX() <= 1100)
 			dir = Direction::Right;
 
-		if (e_HP < 1750 && e_HP > 500)
+		if (e_HP < phase2HP && e_HP > phase3HP)
 			phase = Phase::Phase2;
-		if (e_HP < 750 && e_HP > 1)
+		if (e_HP < phase3HP && e_HP > 1)
 			phase = Phase::Phase3;
 
 		if (phase == Phase::Phase1)
@@ -71,7 +71,7 @@ void Boss::checkHit(std::vector<Bullet*> b)
 				bulletRect.Translate(bullet->getX(), bullet->getY());
 				if (CollisionDetection::CheckCollision(enemyRect, bulletRect))
 				{
-					isHit(20);
+					isHit(bullet->getDamage());
 					bullet->Destroy();
 				}
 			}
@@ -278,7 +278,26 @@ bool Boss::Shoot(std::vector<Bullet*> b, Player* plyr)
 
 void Boss::Activate()
 {
-	e_HP = 2500;
+	if (isHardMode)
+	{
+		e_Damage_Min = 10;
+		e_Damage_Max = 20;
+		e_HP = 2500;
+		phase2HP = 1750;
+		phase3HP = 750;
+	}
+	else
+	{
+		e_Damage_Min = 5;
+		e_Damage_Max = 7;
+		e_HP = 1250;
+		phase2HP = 750;
+		phase3HP = 250;
+	}
+
+
+
+
 	isActive = true;
 }
 

@@ -22,7 +22,7 @@ void Pickup::Update(Player* plyr)
 
 void Pickup::PickedUp(Player* plyr)
 {
-	std::cout << "Something Picked Up" << std::endl;
+	//std::cout << "Something Picked Up" << std::endl;
 	Collected = true;
 	if (p_ID == 0)
 	{

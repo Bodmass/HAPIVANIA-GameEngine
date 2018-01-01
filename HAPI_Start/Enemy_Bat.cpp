@@ -10,6 +10,7 @@ void Enemy_Bat::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangl
 	if (e_isAlive)
 	{
 		gameClock = HAPI.GetTime();
+
 		if (state == State::Idle)
 		{
 			attackClock = gameClock + 600;
@@ -88,6 +89,22 @@ void Enemy_Bat::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangl
 				}
 			}
 		}
+	}
+}
+
+void Enemy_Bat::Setup()
+{
+	if (isHardMode)
+	{
+		e_HP = 40;
+		e_Damage_Min = 3;
+		e_Damage_Max = 4;
+	}
+	else
+	{
+		e_HP = 20;
+		e_Damage_Min = 1;
+		e_Damage_Max = 2;
 	}
 }
 

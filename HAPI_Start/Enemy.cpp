@@ -18,12 +18,19 @@ void Enemy::checkHit(std::vector<Bullet*> b)
 		{
 			Rectangle bulletRect = Rectangle(bullet->getTexture()->getWidth(), bullet->getTexture()->getHeight());
 			bulletRect.Translate(bullet->getX(), bullet->getY());
-			if (CollisionDetection::CheckCollision(enemyRect, bulletRect))
+
+			int Distance = abs(bulletRect.getLeft() - enemyRect.getLeft());
+
+			if (Distance <= 60)
 			{
-				isHit(20);
-				bullet->Destroy();
+				if (CollisionDetection::CheckCollision(enemyRect, bulletRect))
+				{
+					isHit(bullet->getDamage());
+					bullet->Destroy();
+				}
 			}
 		}
+		
 	}
 }
 
@@ -144,13 +151,13 @@ bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 		{
 			if (CollisionDetection::CheckCollision(enemyfeetLeft, platforms[i]))
 			{
-				std::cout << "Left Down\n";
+				//std::cout << "Left Down\n";
 				leftdown = true;
 			}
 			if (CollisionDetection::CheckCollision(enemyfeetRight, platforms[i]))
 			{
 				rightdown = true;
-				std::cout << "Right Down\n";
+				//std::cout << "Right Down\n";
 			}
 		}
 	}
@@ -162,4 +169,23 @@ bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 
 
 	return true;
+}
+
+void Enemy::Setup()
+{
+
+	/*
+	if (isHardMode)
+	{
+		e_HP = 200;
+		e_Damage_Min = 6;
+		e_Damage_Max = 12;
+	}
+	else
+	{
+		e_HP = 100;
+		e_Damage_Min = 3;
+		e_Damage_Max = 10;
+	}
+	*/
 }

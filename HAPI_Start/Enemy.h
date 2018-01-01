@@ -7,7 +7,7 @@ class Enemy :
 protected:
 
 	//Enemy Stats
-	int e_HP{ 100 };
+	int e_HP{ 20 };
 	int e_Damage_Min{ 3 };
 	int e_Damage_Max{ 10 };
 	bool e_isAlive{ true };
@@ -16,6 +16,8 @@ protected:
 
 	int origin_x = getX();
 	int origin_y = getY();
+
+	bool isHardMode{ false };
 
 	
 	//Enemy Settings
@@ -28,6 +30,7 @@ protected:
 public:
 	Enemy(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	~Enemy();
+	virtual void setHardMode() { isHardMode = true; }
 	virtual void checkHit(std::vector<Bullet*> b);
 	virtual void isHit(int amount);
 	virtual void Kill();
@@ -35,5 +38,6 @@ public:
 	virtual float CheckDistance(int x1, int y1, int x2, int y2);
 	virtual float AngleToTarget(int x1, int y1, int x2, int y2);
 	virtual bool ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect);
+	virtual void Setup();
 };
 

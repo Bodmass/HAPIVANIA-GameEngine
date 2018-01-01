@@ -75,6 +75,8 @@ void GameScene::update()
 		{
 			p->Update(player);
 		}
+
+
 	}
 
 	if (!BGMPlaying)
@@ -84,6 +86,14 @@ void GameScene::update()
 			Sound::playMusic("BGM 1");
 			BGMPlaying = true;
 			GameStarted = true;
+
+			for (auto e : enemies)
+			{
+				if (game_->isHardMode())
+					e->setHardMode();
+
+				e->Setup();
+			}
 		}
 	}
 
@@ -91,7 +101,9 @@ void GameScene::update()
 	{
 		//Setup outside V
 		
+		
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
+
 
 		player->PlayerCollision(platforms, *CamRect);
 
@@ -105,13 +117,18 @@ void GameScene::update()
 			std::rotate(bulletObjects.begin(), bulletObjects.begin() + 1, bulletObjects.end());
 		}
 
-
-
+		
+		
 		for (auto b : bulletObjects)
 		{
 			if (b->checkActive())
 			{
+				if(player->checkXRAYUpgrade())
+					b->setDamage(40);
+
 				b->Update();
+
+				
 				
 
 				if (!CamRect->rOutside(b->getRect()))
@@ -135,6 +152,7 @@ void GameScene::update()
 				}
 				else
 				{
+					
 					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
 						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 
@@ -146,12 +164,13 @@ void GameScene::update()
 				}
 			}
 		}
-
+		
 		for (auto p : pickups)
 		{
 			if(CamRect->rOutside(p->getRect()))
 				p->Update(player);
 		}
+		
 
 		//Enemy Update
 
@@ -176,6 +195,7 @@ void GameScene::update()
 			dynamic_cast<Enemy_Bat*>(e)->BatConflict(e);
 			
 		}
+		
 
 		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
 			player->Attacked(99); //Instant Death
@@ -184,6 +204,28 @@ void GameScene::update()
 		{
 			Sound::stopMusic("BGM 1");
 			game_->switchScene_Death();
+		}
+
+		
+
+		bool PauseHit = false;
+
+		if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
+			PauseHit = true;
+
+		if (PauseHit && !game_->getPauseLock())
+		{
+			game_->setPauseLock(true);
+			game_->switchScene_Pause();
+
+			game_->p_SprintU_Set(player->checkSprintUpgrade());
+			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
+			game_->p_SuperJump_Set(player->checkJumpUpgrade());
+		}
+
+		if (!PauseHit)
+		{
+			game_->setPauseLock(false);
 		}
 
 	}
@@ -209,31 +251,14 @@ void GameScene::update()
 
 		//END CAMERA
 
-		
+		/*
 		if (player && platforms.size() >= 2)
 		{
 			player->getRect().Move(player->getX(), player->getY());
 		}
+		*/
 		
-		bool PauseHit = false;
 
-		if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
-			PauseHit = true;
-
-		if (PauseHit && !game_->getPauseLock())
-		{
-			game_->setPauseLock(true);
-			game_->switchScene_Pause();
-
-			game_->p_SprintU_Set(player->checkSprintUpgrade());
-			game_->p_XRAYB_Set(player->checkXRAYUpgrade());
-			game_->p_SuperJump_Set(player->checkJumpUpgrade());
-		}
-
-		if (!PauseHit)
-		{
-			game_->setPauseLock(false);
-		}
 
 }
 
@@ -586,13 +611,36 @@ void GameScene::loadGameObject()
 	{
 		Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), batspawnx, 130);
 		enemies.push_back(Bat);
-		batspawnx += 20;
+		batspawnx += 35;
 	}
 
+	int spspawn = 1124;
+	for (int i = 0; i < 10; i++)
+	{
 
+		Enemy_SP* SpacePirates = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 209);
+		enemies.push_back(SpacePirates);
+		spspawn += 100;
+	}
 
-	Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 940, 467);
-	enemies.push_back(SpacePirate2);
+	spspawn = 940;
+	for (int i = 0; i < 9; i++)
+	{
+		
+		Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 467);
+		enemies.push_back(SpacePirate2);
+		spspawn += 450;
+	}
+
+	spspawn = 4144;
+	for (int i = 0; i < 4; i++)
+	{
+
+		Enemy_SP* SpacePirate3 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 179);
+		enemies.push_back(SpacePirate3);
+		spspawn += 450;
+	}
+
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
 	//Sprint_PU->setTexture(game_->getGraphics().getSprite(58));
@@ -631,6 +679,8 @@ void GameScene::loadGameObject()
 			dynamic_cast<Enemy_Bat*>(spe)->set_pSprite_Idle(game_->getGraphics().getSprite("Enemy_Bat_Idle"));
 		}
 	}
+
+
 }
 
 void GameScene::loadSounds()

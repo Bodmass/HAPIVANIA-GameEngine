@@ -20,9 +20,14 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect
 	p_rightCol = false;
 	p_Col = false;
 
+	
+
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (camRect.rOutside(platforms[i]))
+		//if (platforms[i].getLeft() > player3.getLeft())
+		int Distance = abs(platforms[i].getLeft() - player3.getLeft());
+		
+		if (Distance <= 100)
 		{
 			if (CollisionDetection::CheckCollision(playerfeet, platforms[i]))
 			{
@@ -40,12 +45,17 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (camRect.rOutside(platforms[i]))
+		int Distance = abs(platforms[i].getLeft() - player3.getLeft());
+
+		if (Distance <= 100)
 		{
-			if (CollisionDetection::CheckCollision(playerright, platforms[i]))
+			if (camRect.rOutside(platforms[i]))
 			{
-				p_rightCol = true;
-				break;
+				if (CollisionDetection::CheckCollision(playerright, platforms[i]))
+				{
+					p_rightCol = true;
+					break;
+				}
 			}
 		}
 
@@ -54,7 +64,9 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (camRect.rOutside(platforms[i]))
+		int Distance = abs(platforms[i].getLeft() - player3.getLeft());
+
+		if (Distance <= 100)
 		{
 			if (CollisionDetection::CheckCollision(playerleft, platforms[i]))
 			{
@@ -67,7 +79,9 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (camRect.rOutside(platforms[i]))
+		int Distance = abs(platforms[i].getLeft() - player3.getLeft());
+
+		if (Distance <= 100)
 		{
 			if (CollisionDetection::CheckCollision(player3, platforms[i]))
 			{

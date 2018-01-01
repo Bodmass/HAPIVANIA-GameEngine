@@ -32,9 +32,14 @@ void Bullet::CheckCollision(std::vector<Rectangle> platforms)
 
 	for (auto col : platforms)
 	{
-		if (CollisionDetection::CheckCollision(col, BulletRect))
+		int Distance = abs(col.getLeft() - BulletRect.getLeft());
+
+		if (Distance <= 60)
 		{
-			Destroy();
+			if (CollisionDetection::CheckCollision(col, BulletRect))
+			{
+				Destroy();
+			}
 		}
 	}
 }

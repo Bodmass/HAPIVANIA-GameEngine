@@ -43,6 +43,7 @@ BossScene::~BossScene()
 
 void BossScene::StartBoss()
 {
+	player->setY(593);
 	Sound::stopMusic("BGM 2");
 	Sound::playMusic("Boss");
 	Sound::playSound("Shoot 2");
@@ -67,6 +68,12 @@ void BossScene::update()
 		Sound::playMusic("BGM 2");
 		BGMPlaying = true;
 		GameStarted = true;
+
+		for (auto e : enemies)
+		{
+			if (game_->isHardMode())
+				e->setHardMode();
+		}
 	}
 
 	if (GameStarted)
@@ -114,6 +121,7 @@ void BossScene::update()
 				}
 				else
 				{
+					b->setDamage(40);
 					if (b->getTexture() != game_->getGraphics().getSprite("Player_Bullet_2"))
 						b->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 

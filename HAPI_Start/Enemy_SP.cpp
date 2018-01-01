@@ -86,3 +86,21 @@ void Enemy_SP::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle
 		}
 	}
 }
+
+void Enemy_SP::Setup()
+{
+
+
+	if (isHardMode)
+	{
+		e_HP = 100;
+		e_Damage_Min = 6;
+		e_Damage_Max = 9;
+	}
+	else
+	{
+		e_HP = 50;
+		e_Damage_Min = 3;
+		e_Damage_Max = 6;
+	}
+}

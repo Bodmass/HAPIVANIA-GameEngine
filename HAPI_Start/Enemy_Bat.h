@@ -8,12 +8,6 @@ private:
 	SpriteAnimator* pAnim_LeftRun = nullptr;
 	SpriteAnimator* pAnim_RightRun = nullptr;
 
-
-	int e_HP{ 40 };
-	int e_Damage_Min{ 1 };
-	int e_Damage_Max{ 4 };
-	int threshold = 100;
-
 	double e_Speed{ 3 };
 
 	int gameClock = 0;
@@ -25,6 +19,7 @@ public:
 	~Enemy_Bat();
 
 	void Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle camRect) override;
+	void Setup() override;
 
 	Texture* get_pSprite_Idle() { return pSprite_Idle; }
 	SpriteAnimator* get_pAnim_LeftRun() { return pAnim_LeftRun; }

@@ -97,6 +97,7 @@ public:
 	std::string getDifficulty() { return difficulty; }
 	void setHardMode() { difficulty = "Hard"; }
 	void setEasyMode() { difficulty = "Easy"; }
+	bool isHardMode() { if (difficulty == "Hard") return true; return false; }
 
 
 };

@@ -5,8 +5,8 @@ class Boss : public Enemy
 private:
 	SpriteAnimator * pSprite_Idle = nullptr;
 	
-	int e_Damage_Min{ 10 };
-	int e_Damage_Max{ 20 };
+	int phase2HP = 750;
+	int phase3HP = 250;
 	int threshold = 100;
 
 	enum Direction {
