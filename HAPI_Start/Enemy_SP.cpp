@@ -46,7 +46,7 @@ void Enemy_SP::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle
 				if (attack_range <= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 				{
 					//std::cout << "Speed: " << (2 * cos(angle)) << std::endl;
-					setX(getX() + (2 * cos(angle)));
+					setX(getX() + (int)(2 * cos(angle)));
 				}
 			}
 			else
@@ -71,7 +71,7 @@ void Enemy_SP::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle
 			else
 			{
 				float angle = AngleToTarget(getX(), getY(), origin_x, origin_y);
-				setX(getX() + (2 * cos(angle)));
+				setX(getX() + (int)(2 * cos(angle)));
 
 				if (angle > 0)
 					setTexture(pAnim_LeftRun);

@@ -45,8 +45,8 @@ void Enemy_Bat::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangl
 
 				//std::cout <<(origin_x - getX()) << std::endl;
 				//std::cout << "Speed: " << (2 * cos(angle)) << std::endl;
-				setY(getY() + (e_Speed * sin(angle)));
-				setX(getX() + (e_Speed * cos(angle)));
+				setY(getY() + (int)(e_Speed * sin(angle)));
+				setX(getX() + (int)(e_Speed * cos(angle)));
 				if (attack_range >= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 				{
 					int e_Damage = rand() % (e_Damage_Max - e_Damage_Min + 1) + e_Damage_Min;
@@ -75,8 +75,8 @@ void Enemy_Bat::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangl
 			else
 			{
 				float angle = AngleToTarget(getX(), getY(), origin_x, origin_y);
-				setY(getY() + (e_Speed * sin(angle)));
-				setX(getX() + (e_Speed * cos(angle)));
+				setY(getY() + (int)(e_Speed * sin(angle)));
+				setX(getX() + (int)(e_Speed * cos(angle)));
 
 				if (angle > 0)
 					setTexture(pAnim_LeftRun);

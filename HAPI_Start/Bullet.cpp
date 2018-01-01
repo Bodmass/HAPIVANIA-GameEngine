@@ -15,11 +15,11 @@ void Bullet::Update(int pX, int pY)
 		setY(getY() + bulletspeed);
 	else if (dir == Facing::Homing)
 	{
-		float deltaX = (getX() - pX);
-		float deltaY = (getY() - pY);
+		float deltaX = (float)(getX() - pX);
+		float deltaY = (float)(getY() - pY);
 		float delta = atan2(deltaY, deltaX);
 
-		setX(getX() + (-5.25 * cos(delta)));
+		setX(getX() + (int)(-5.25 * cos(delta)));
 		//setY(getY() + (bulletspeed * sin(-delta)));
 		setY(getY() + bulletspeed);
 	};

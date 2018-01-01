@@ -86,7 +86,7 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 			if (!ReachedEnd(platforms, camRect))
 			{
 				if (attack_range <= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
-					setX(getX() + (2 * cos(angle)));
+					setX(getX() + (int)(2 * cos(angle)));
 
 			}
 			else
@@ -111,7 +111,7 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 			else
 			{
 				float angle = AngleToTarget(getX(), getY(), origin_x, origin_y);
-				setX(getX() + (2 * cos(angle)));
+				setX(getX() + (int)(2 * cos(angle)));
 
 				if (threshold / 4 > CheckDistance(getX(), getY(), plyr->getX(), plyr->getY()))
 				{
@@ -129,8 +129,8 @@ float Enemy::CheckDistance(int x1, int y1, int x2, int y2)
 
 float Enemy::AngleToTarget(int x1, int y1, int x2, int y2)
 {
-	float deltaX = (x2 - x1);
-	float deltaY = (y2 - y1);
+	float deltaX = (float)(x2 - x1);
+	float deltaY = (float)(y2 - y1);
 	return atan2(deltaY, deltaX);
 }
 
@@ -138,16 +138,21 @@ bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 {
 	Rectangle enemyfeetLeft = Rectangle(2, 4);
 	Rectangle enemyfeetRight = Rectangle(2, 4);
+	Rectangle enemyfeet = Rectangle(this->getTexture()->getWidth(), 4);
 
 	enemyfeetLeft.Translate(getX() - 2, getY() + 44);
 	enemyfeetRight.Translate(getX() + this->getTexture()->getWidth() + 2, getY() + 44);
+	enemyfeet.Translate(getX(), getY() + 44);
 
 	bool leftdown{ false };
 	bool rightdown{ false };
 
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		if (camRect.rOutside(platforms[i]))
+
+		int Distance = abs(platforms[i].getLeft() - enemyfeet.getLeft());
+
+		if (Distance <= 60)
 		{
 			if (CollisionDetection::CheckCollision(enemyfeetLeft, platforms[i]))
 			{
@@ -174,18 +179,4 @@ bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 void Enemy::Setup()
 {
 
-	/*
-	if (isHardMode)
-	{
-		e_HP = 200;
-		e_Damage_Min = 6;
-		e_Damage_Max = 12;
-	}
-	else
-	{
-		e_HP = 100;
-		e_Damage_Min = 3;
-		e_Damage_Max = 10;
-	}
-	*/
 }

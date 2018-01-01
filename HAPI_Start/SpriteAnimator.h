@@ -16,7 +16,7 @@ public:
 	SpriteAnimator();
 	~SpriteAnimator();
 	void addFrame(Texture* texture) { frames.push_back(texture); }
-	void play() { startTime = HAPI.GetTime(); }
+	void play() { startTime = (float)HAPI.GetTime(); }
 	HAPISPACE::BYTE* getSprite() override;
 	bool getAlpha() { return getTexture()->getAlpha(); };
 	int getWidth() { return getTexture()->getWidth(); };

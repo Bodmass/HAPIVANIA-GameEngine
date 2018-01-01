@@ -79,7 +79,7 @@ private:
 	bool BGMPlaying = false;
 	bool GameStarted = false;
 	bool CameraLocked = false;
-
+	bool musicstopped = false;
 	bool BossActivated = false;
 	bool BossFight_Phase1 = false;
 

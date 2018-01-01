@@ -191,16 +191,22 @@ void BossScene::update()
 
 	if (Ship->checkDead())
 	{
-		Sound::stopMusic("Boss");
-		float deltaX = (1440 - Ship->getX());
-		float deltaY = (600 - Ship->getY());
+		if (!musicstopped)
+		{
+			Sound::stopMusic("Boss");
+			musicstopped = true;
+		}
+
+		float deltaX = (float)(1440 - Ship->getX());
+		float deltaY = (float)(600 - Ship->getY());
 		float delta = atan2(deltaY, deltaX);
 
-		Ship->setX(Ship->getX() + (5 * cos(delta)));
-		Ship->setY(Ship->getY() + (5 * sin(delta)));
+		Ship->setX(Ship->getX() + (int)(5 * cos(delta)));
+		Ship->setY(Ship->getY() + (int)(5 * sin(delta)));
 
 		if ((Ship->getX() >= 1440) && (Ship->getY() >= 600))
 		{
+			
 			game_->switchScene_End();			
 		}
 	}
@@ -217,12 +223,12 @@ void BossScene::update()
 
 		if (!doorDestroyed)
 		{
-			float deltaX = (1000 - doorDestroy->getX());
-			float deltaY = (600 - doorDestroy->getY());
+			float deltaX = (float)(1000 - doorDestroy->getX());
+			float deltaY = (float)(600 - doorDestroy->getY());
 			float delta = atan2(deltaY, deltaX);
 
-			doorDestroy->setX(doorDestroy->getX() + (5 * cos(delta)));
-			doorDestroy->setY(doorDestroy->getY() + (5 * sin(delta)));
+			doorDestroy->setX(doorDestroy->getX() + (int)(5 * cos(delta)));
+			doorDestroy->setY(doorDestroy->getY() + (int)(5 * sin(delta)));
 		}
 
 		if ((doorDestroy->getX() >= 1000) && (doorDestroy->getY() >= 600))

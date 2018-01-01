@@ -337,7 +337,7 @@ void GameScene::loadTextures()
 	//LEFT IDLE
 	game_->getGraphics().loadTexture("Player_Left_Idle", "Textures/Player/Player_12.png"); //4
 	//LEFT RUN
-	leftRunStartIndex = game_->getGraphics().spriteMapSize();
+	leftRunStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Left_Run_1", "Textures/Player/Player_13.png"); //5
 	game_->getGraphics().loadTexture("Player_Left_Run_2", "Textures/Player/Player_14.png"); //6
 	game_->getGraphics().loadTexture("Player_Left_Run_3", "Textures/Player/Player_15.png"); //7
@@ -351,7 +351,7 @@ void GameScene::loadTextures()
 	//RIGHT IDLE
 	game_->getGraphics().loadTexture("Player_Right_Idle", "Textures/Player/Player_23.png"); //15
 	//RIGHT RUN
-	rightRunStartIndex = game_->getGraphics().spriteMapSize();
+	rightRunStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Right_Run_1", "Textures/Player/Player_24.png"); //16
 	game_->getGraphics().loadTexture("Player_Right_Run_2", "Textures/Player/Player_25.png"); //17
 	game_->getGraphics().loadTexture("Player_Right_Run_3", "Textures/Player/Player_26.png"); //18
@@ -363,7 +363,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Right_Run_9", "Textures/Player/Player_32.png"); //24
 	game_->getGraphics().loadTexture("Player_Right_Run_10", "Textures/Player/Player_33.png"); //25
 	//LEFT SPRINT
-	leftSprintStartIndex = game_->getGraphics().spriteMapSize();
+	leftSprintStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Left_Sprint_1", "Textures/Player/Player_34.png"); //26
 	game_->getGraphics().loadTexture("Player_Left_Sprint_2", "Textures/Player/Player_35.png"); //27
 	game_->getGraphics().loadTexture("Player_Left_Sprint_3", "Textures/Player/Player_36.png"); //28
@@ -375,7 +375,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Left_Sprint_9", "Textures/Player/Player_42.png"); //34
 	game_->getGraphics().loadTexture("Player_Left_Sprint_10", "Textures/Player/Player_43.png"); //35
 	//RIGHT SPRINT
-	rightSprintStartIndex = game_->getGraphics().spriteMapSize();
+	rightSprintStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Right_Sprint_1", "Textures/Player/Player_45.png"); //36
 	game_->getGraphics().loadTexture("Player_Right_Sprint_2", "Textures/Player/Player_46.png"); //37
 	game_->getGraphics().loadTexture("Player_Right_Sprint_3", "Textures/Player/Player_47.png"); //38
@@ -387,7 +387,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Right_Sprint_9", "Textures/Player/Player_53.png"); //44
 	game_->getGraphics().loadTexture("Player_Right_Sprint_10", "Textures/Player/Player_54.png"); //45
 	//LEFT JUMP
-	leftJumpStartIndex = game_->getGraphics().spriteMapSize();
+	leftJumpStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Left_Jump_1", "Textures/Player/Player_56.png"); //46
 	game_->getGraphics().loadTexture("Player_Left_Jump_2", "Textures/Player/Player_57.png"); //47
 	game_->getGraphics().loadTexture("Player_Left_Jump_3", "Textures/Player/Player_58.png"); //48
@@ -395,7 +395,7 @@ void GameScene::loadTextures()
 	game_->getGraphics().loadTexture("Player_Left_Fall_1", "Textures/Player/Player_60.png"); //50
 	game_->getGraphics().loadTexture("Player_Left_Fall_2", "Textures/Player/Player_61.png"); //51
 	//RIGHT JUMP
-	rightJumpStartIndex = game_->getGraphics().spriteMapSize();
+	rightJumpStartIndex = (int)game_->getGraphics().spriteMapSize();
 	game_->getGraphics().loadTexture("Player_Right_Jump_1", "Textures/Player/Player_67.png"); //52
 	game_->getGraphics().loadTexture("Player_Right_Jump_2", "Textures/Player/Player_68.png"); //53
 	game_->getGraphics().loadTexture("Player_Right_Jump_3", "Textures/Player/Player_69.png"); //54
@@ -691,7 +691,6 @@ void GameScene::loadSounds()
 	Sound::addSound("Shoot 1", "Audio/SE/laser1.wav");
 	Sound::addSound("Shoot 2", "Audio/SE/laser2.wav");
 	Sound::addSound("Upgrade", "Audio/SE/ItemRecieved.wav");
-	Sound::addSound("Steps", "Audio/SE/steps.wav");
 	Sound::addSound("Damaged 1", "Audio/SE/player_damaged1.wav");
 	Sound::addSound("Damaged 2", "Audio/SE/player_damaged2.wav");
 	Sound::addSound("Death", "Audio/SE/player_death.wav");
