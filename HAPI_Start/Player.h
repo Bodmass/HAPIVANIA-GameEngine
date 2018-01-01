@@ -88,10 +88,10 @@ private:
 	Texture* pSprite_LeftFall = nullptr;
 
 public:
-	//void PlayerMove(HAPI_TKeyboardData &keyCode);
+
 	Player(Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) {};
 	~Player();
-	//Player player;
+	
 
 	void PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect);
 	void PlayerPickup(Rectangle pickup);

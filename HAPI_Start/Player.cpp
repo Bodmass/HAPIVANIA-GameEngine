@@ -21,10 +21,11 @@ void Player::PlayerCollision(std::vector<Rectangle> platforms, Rectangle camRect
 	p_Col = false;
 
 	
-
+	//Loops between all the Rectangles of the Player between the Platforms around it.
+	//If the Distance between the Rectangle and the Platform is greater than 100, the Collision wouldn't be checked.
 	for (int i = 0; i < platforms.size(); i++)
 	{
-		//if (platforms[i].getLeft() > player3.getLeft())
+		
 		int Distance = abs(platforms[i].getLeft() - player3.getLeft());
 		
 		if (Distance <= 100)
@@ -193,7 +194,6 @@ void Player::PlayerMovement()
 	if (!p_isJumping && !p_groundunder)
 	{
 		setY(getY() + p_jumpspeed);
-		//playerGrounded = true;
 	}
 
 	//MOVE PLAYER
@@ -427,7 +427,6 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 		{
 			if (gameClock > p_shootingtime)
 			{
-				//std::cout << "I've shot!\n";
 				p_isShooting = false;
 
 				if (LookingUp)
@@ -437,18 +436,14 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						Sound::playSound("Shoot 2");
 						bullets.front()->setX(getX() + 13);
 						bullets.front()->setY(getY());
-						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 						bullets.front()->fire("Up");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 					else
 					{
 						Sound::playSound("Shoot 1");
 						bullets.front()->setX(getX() + 13);
 						bullets.front()->setY(getY());
-						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
 						bullets.front()->fire("Up");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 				}
 
@@ -459,18 +454,14 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						Sound::playSound("Shoot 2");
 						bullets.front()->setX(getX());
 						bullets.front()->setY(getY() + 10);
-						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_2"));
 						bullets.front()->fire("Left");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 					else
 					{
 						Sound::playSound("Shoot 1");
 						bullets.front()->setX(getX());
 						bullets.front()->setY(getY() + 10);
-						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
 						bullets.front()->fire("Left");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 				}
 				else if (FacingRight())
@@ -480,18 +471,14 @@ bool Player::PlayerShoot(std::vector<Bullet*> bullets)
 						Sound::playSound("Shoot 2");
 						bullets.front()->setX(getX() + 48);
 						bullets.front()->setY(getY() + 10);
-						
 						bullets.front()->fire("Right");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 					else
 					{
 						Sound::playSound("Shoot 1");
 						bullets.front()->setX(getX() + 48);
 						bullets.front()->setY(getY() + 10);
-						//bulletObjects.front()->setTexture(game_->getGraphics().getSprite("Player_Bullet_1"));
 						bullets.front()->fire("Right");
-						//std::rotate(bullets.begin(), bullets.begin() + 1, bullets.end());
 					}
 				}
 				return true;

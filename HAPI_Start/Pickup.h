@@ -22,9 +22,8 @@ public:
 };
 
 //p_ID
-//0 - Health
+//0 - ???
 //1 - Sprint Upgrade
 //2 - Jump Upgrade
 //3 - Xray Beam
-//4 - ???
 

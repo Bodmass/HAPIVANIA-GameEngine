@@ -11,40 +11,54 @@ class BossScene :
 {
 private:
 
+	//ALL ENTITY VECTORS
 	std::vector<Enemy*> enemies;
 	std::vector<Rectangle> platforms;
 	std::vector<Pickup*> pickups;
 	std::vector<GameObject*> gameObjects;
 	std::vector<Bullet*> bulletObjects;
 	std::vector<Bullet*> bossBullets;
-	std::vector<GameObject*> gameUI;
 
+
+	//UI
+	std::vector<GameObject*> gameUI;
 	GameObject* HUDBar;
 
+
+	//////////////////////////////////////////////////////////
+	//Player Textures
 	Texture* playerSprite = nullptr;
-	//Animations
 	Texture* playerSprites_LeftIdle = nullptr;
 	Texture* playerSprites_RightIdle = nullptr;
 	Texture* playerSprites_LeftUpIdle = nullptr;
 	Texture* playerSprites_RightUpIdle = nullptr;
+	Texture* playerSprites_RightFall = nullptr;
+	Texture* playerSprites_LeftFall = nullptr;
+	//Player Animations
 	SpriteAnimator* playerSprites_LeftRun = nullptr;
 	SpriteAnimator* playerSprites_RightRun = nullptr;
-	//
 	SpriteAnimator* playerSprites_LeftUpRun = nullptr;
 	SpriteAnimator* playerSprites_RightUpRun = nullptr;
-	//
 	SpriteAnimator* playerSprites_LeftSprint = nullptr;
 	SpriteAnimator* playerSprites_RightSprint = nullptr;
 	SpriteAnimator* playerSprites_LeftJump = nullptr;
 	SpriteAnimator* playerSprites_RightJump = nullptr;
-	Texture* playerSprites_RightFall = nullptr;
-	Texture* playerSprites_LeftFall = nullptr;
+	//Misc
+	int leftRunStartIndex = -1;
+	int rightRunStartIndex = -1;
+	int leftSprintStartIndex = -1;
+	int rightSprintStartIndex = -1;
+	int leftJumpStartIndex = -1;
+	int rightJumpStartIndex = -1;
+	//////////////////////////////////////////////////////////
 
-	//Enemy
+
+	//////////////////////////////////////////////////////////
+	//Enemies Animation
 
 	SpriteAnimator* ship_Idle = nullptr;
 	GameObject* doorDestroy = nullptr;
-	bool doorDestroyed = false;
+
 
 
 	SpriteAnimator* spacePirate_LeftRun = nullptr;
@@ -53,20 +67,20 @@ private:
 	SpriteAnimator* bat_LeftRun = nullptr;
 	SpriteAnimator* bat_RightRun = nullptr;
 
-	Boss* Ship = nullptr;
+
+	//////////////////////////////////////////////////////////
+
+	bool doorDestroyed = false;
 
 
-	int leftRunStartIndex = -1;
-	int rightRunStartIndex = -1;
-	int leftSprintStartIndex = -1;
-	int rightSprintStartIndex = -1;
-	int leftJumpStartIndex = -1;
-	int rightJumpStartIndex = -1;
 
-
+	//////////////////////////////////////////////////////////
+	//Entities
 	GameObject* BG;
 	Player* player;
 	Pickup* Sprint_PU;
+	Boss* Ship = nullptr;
+	//////////////////////////////////////////////////////////
 
 	Rectangle* CamRect = nullptr;
 
@@ -75,6 +89,8 @@ private:
 	int gameClock;
 	int GameStartWait;
 	int GameEndWait;
+
+	//Game Switches
 	bool Setup = false;
 	bool BGMPlaying = false;
 	bool GameStarted = false;
@@ -97,6 +113,5 @@ public:
 	void loadLevel(std::string level);
 	BossScene(Game* game) : Scene(game) {};
 	~BossScene();
-	//virtual Game* getGame() { return game_; }
 };
 

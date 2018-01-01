@@ -12,10 +12,11 @@ private:
 	std::vector<Texture*> frames;
 	Texture* getTexture();
 public:
-	//SpriteAnimator(int framerate_) { framerate = framerate_; }
 	SpriteAnimator();
 	~SpriteAnimator();
+	//Add a Frame to the Animation
 	void addFrame(Texture* texture) { frames.push_back(texture); }
+	//Play the Animation
 	void play() { startTime = (float)HAPI.GetTime(); }
 	HAPISPACE::BYTE* getSprite() override;
 	bool getAlpha() { return getTexture()->getAlpha(); };

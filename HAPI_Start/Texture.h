@@ -15,9 +15,9 @@ private:
 	bool isEntity_{ false };
 public:
 	Texture() {};
-	/*textures(const textures& other);*/
 	Texture(std::string filename, bool hasAlpha = true);
 	virtual ~Texture();
+	//Returns the BYTE* of the Sprite
 	virtual BYTE* getSprite();
 	virtual bool getAlpha() { return hasAlpha_; };
 	virtual int getWidth() { return t_Width; };

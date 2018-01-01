@@ -5,6 +5,7 @@ void Bullet::Update(int pX, int pY)
 	BulletRect = Rectangle(this->getTexture()->getWidth(), this->getTexture()->getHeight());
 	BulletRect.Translate(getX(), getY());
 
+	//Change Bullet Direction on Update depending on the Direction set.
 	if (dir == Facing::Right)
 		setX(getX() + bulletspeed);
 	else if (dir == Facing::Left)
@@ -20,7 +21,6 @@ void Bullet::Update(int pX, int pY)
 		float delta = atan2(deltaY, deltaX);
 
 		setX(getX() + (int)(-5.25 * cos(delta)));
-		//setY(getY() + (bulletspeed * sin(-delta)));
 		setY(getY() + bulletspeed);
 	};
 }
@@ -28,7 +28,7 @@ void Bullet::Update(int pX, int pY)
 void Bullet::CheckCollision(std::vector<Rectangle> platforms)
 {
 	
-	//BulletRect.Translate(getX(), getY());
+	//Check if the bullet has hit a platform
 
 	for (auto col : platforms)
 	{
@@ -48,7 +48,7 @@ void Bullet::CheckCollision(std::vector<Rectangle> platforms)
 
 void Bullet::Destroy()
 {
-	//TEMP
+	//Deactivate the Bullet and Hide it off Screen
 	isActive = false;
 	bulletspeed = 0;
 	this->setX(-100);
@@ -77,7 +77,6 @@ void Bullet::fire(std::string face)
 	else if (face == "Homing" || face == "homing")
 	{
 		isUp = true;
-		//bulletspeed = 2;
 		dir = Facing::Homing;
 	}
 

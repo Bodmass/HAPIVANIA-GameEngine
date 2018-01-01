@@ -44,6 +44,7 @@ void TitleScreen::update()
 		}
 	}
 
+	//Waits Until Select (Controller) or the Escape Key is released, for the Switch to be possible again
 	if (!game_->getKeyboard().scanCode[HK_ESCAPE] && !game_->getController().digitalButtons[HK_DIGITAL_SELECT])
 	{
 		dSwitchLock = false;

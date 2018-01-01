@@ -21,24 +21,6 @@ GameScene::~GameScene()
 	delete bat_LeftRun;
 	delete bat_RightRun;
 
-	/*
-
-	delete playerSprites_LeftRun;
-	delete playerSprites_RightRun;
-	delete playerSprites_LeftUpRun;
-	delete playerSprites_RightUpRun;
-	delete playerSprites_LeftSprint;
-	delete playerSprites_RightSprint;
-	delete playerSprites_LeftJump;
-	delete playerSprites_RightJump;
-
-	delete spacePirate_LeftRun;
-	delete spacePirate_RightRun;
-
-	delete bat_LeftRun;
-	delete bat_RightRun;
-	
-*/
 	delete CamRect;
 
 	for (auto* gameObject : gameObjects)
@@ -99,17 +81,16 @@ void GameScene::update()
 
 	if (GameStarted)
 	{
-		//Setup outside V
-		
+
+		//Translate the CamRect to the position of the Camera X and Y
 		
 		CamRect->Translate(-game_->getCameraX(), -game_->getCameraY());
 
-
+		//Player Updates
 		player->PlayerCollision(platforms, *CamRect);
 
 		player->PlayerUpdate();
 
-		//std::cout << player->getX() << ", " << player->getY() << std::endl;
 
 		if (player->PlayerShoot(bulletObjects))
 		{
@@ -167,13 +148,14 @@ void GameScene::update()
 		
 		for (auto p : pickups)
 		{
+			//If the pickout is outside the Camera View, Don't update.
 			if(CamRect->rOutside(p->getRect()))
 				p->Update(player);
 		}
 		
 
-		//Enemy Update
-
+		
+		//Warp Check and if the player is inside of it.
 		for (auto w : warps)
 		{
 			w->Update(&player->getPlayerRect());
@@ -188,18 +170,22 @@ void GameScene::update()
 			}
 		}
 		
+		//Enemy Update
+
 		for (auto e : enemies)
 		{
 			e->checkHit(bulletObjects);
 			e->Update(player, platforms, *CamRect);
-			dynamic_cast<Enemy_Bat*>(e)->BatConflict(e);
+			dynamic_cast<Enemy_Bat*>(e)->BatConflict(e); //Bats Only
 			
 		}
 		
-
+		//If the player falls under the map
 		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
 			player->Attacked(99); //Instant Death
 
+
+		//If the player's health is depleted
 		if (!player->p_CheckAlive())
 		{
 			Sound::stopMusic("BGM 1");
@@ -207,7 +193,7 @@ void GameScene::update()
 		}
 
 		
-
+		/////PAUSE/////
 		bool PauseHit = false;
 
 		if (game_->getController().digitalButtons[HK_DIGITAL_SELECT] || game_->getKeyboard().scanCode[HK_ESCAPE])
@@ -227,7 +213,7 @@ void GameScene::update()
 		{
 			game_->setPauseLock(false);
 		}
-
+		/////PAUSE/////
 	}
 
 
@@ -248,15 +234,6 @@ void GameScene::update()
 		{
 			game_->setCamera(game_->getCameraX(), distancefromcameraY);
 		}
-
-		//END CAMERA
-
-		/*
-		if (player && platforms.size() >= 2)
-		{
-			player->getRect().Move(player->getX(), player->getY());
-		}
-		*/
 		
 
 

@@ -9,18 +9,10 @@ void Boss::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle cam
 {
 	gameClock = HAPI.GetTime();
 
-	if (!isSetup)
-	{
-		atk = Moves::DoubleBeam;
-		swapClock = gameClock + 5000;
-		isSetup = true;
-		phase = Phase::Phase1;
-		dir = Direction::Right;
-		setTexture(pSprite_Idle);
-	}
-	
 	if (isActive)
 	{
+
+		//Move the Boss Left and Right
 		if (getX() >= 1900 - getTexture()->getWidth())
 			dir = Direction::Left;
 		if (getX() <= 1100)
@@ -31,6 +23,7 @@ void Boss::Update(Player * plyr, std::vector<Rectangle> platforms, Rectangle cam
 		if (e_HP < phase3HP && e_HP > 1)
 			phase = Phase::Phase3;
 
+		//Increase the Speed of the Ship per Phase
 		if (phase == Phase::Phase1)
 		{
 			if (dir == Direction::Right)
@@ -244,33 +237,7 @@ bool Boss::Shoot(std::vector<Bullet*> b, Player* plyr)
 			}
 		}
 		
-		/*
-		if (phase == Phase::Phase1)
-		{
-			if (b->getX() < 100)
-			{
-				b->setX(getX() + this->getTexture()->getWidth() / 2);
-				b->setY(getY() + this->getTexture()->getHeight());
-			}
 
-			if (b->getY() > 650)
-			{
-				float deltaX = (b->getX() - pX);
-				float deltaY = (b->getY() - pY);
-				float delta = atan2(deltaY, deltaX);
-
-				b->setX(b->getX() + (5 * cos(delta)));
-				b->setY(b->getY() + (5 * sin(delta)));
-				
-				
-			}
-			else
-			{
-				b->setX(getX() + this->getTexture()->getWidth() / 2);
-				b->setY(getY() + this->getTexture()->getHeight());
-			}
-		}
-		*/
 	}
 	
 	return false;
@@ -295,7 +262,12 @@ void Boss::Activate()
 		phase3HP = 250;
 	}
 
-
+	atk = Moves::DoubleBeam;
+	swapClock = gameClock + 5000;
+	isSetup = true;
+	phase = Phase::Phase1;
+	dir = Direction::Right;
+	setTexture(pSprite_Idle);
 
 
 	isActive = true;

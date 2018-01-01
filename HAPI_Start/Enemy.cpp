@@ -68,7 +68,7 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 		if (state == State::Idle)
 		{
 
-			//std::cout << "I'm Idle, and you're " << CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()) << " pixels from me." << std::endl;
+			//Get the Distance and if within the Threshold, start following
 			if (threshold >= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 			{
 				state = State::Follow;
@@ -77,14 +77,14 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 
 		else if (state == State::Follow)
 		{
-			//std::cout << "I'm Following" << std::endl;
+			//Get the Angle between the this and the Player
 			float angle = AngleToTarget(getX(), getY(), plyr->getX(), plyr->getY());
 
-			//if (threshold < CheckDistance(getX(), getY(), plyr->getX(), plyr->getY()))
-				//state = State::Return;
-
+			
+			//If the enemy isnt off the side of a platform keep following, else Return to Origin
 			if (!ReachedEnd(platforms, camRect))
 			{
+				//Keep following until the distance left between the enemy and player is the attack range
 				if (attack_range <= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 					setX(getX() + (int)(2 * cos(angle)));
 
@@ -94,6 +94,7 @@ void Enemy::Update(Player* plyr, std::vector<Rectangle> platforms, Rectangle cam
 				state = State::Return;
 			}
 
+			//If inside the attack range, deal damage
 			if (attack_range >= CheckDistance(plyr->getX(), plyr->getY(), getX(), getY()))
 			{
 				int e_Damage = rand() % (e_Damage_Max - e_Damage_Min + 1) + e_Damage_Min;
@@ -156,13 +157,11 @@ bool Enemy::ReachedEnd(std::vector<Rectangle> platforms, Rectangle camRect)
 		{
 			if (CollisionDetection::CheckCollision(enemyfeetLeft, platforms[i]))
 			{
-				//std::cout << "Left Down\n";
 				leftdown = true;
 			}
 			if (CollisionDetection::CheckCollision(enemyfeetRight, platforms[i]))
 			{
 				rightdown = true;
-				//std::cout << "Right Down\n";
 			}
 		}
 	}
