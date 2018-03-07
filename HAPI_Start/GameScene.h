@@ -82,6 +82,7 @@ public:
 	virtual void loadTextures() override;
 	virtual void loadGameObject() override;
 	virtual void loadSounds() override;
+	void Reset();
 	void loadLevel(std::string level);
 	GameScene(Game* game) : Scene(game) {};
 	~GameScene();

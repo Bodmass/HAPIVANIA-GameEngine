@@ -69,6 +69,13 @@ void Game::Update()
 	{
 		deltaTime = HAPI.GetTime() - time;
 		time = HAPI.GetTime();
+		if (CheckReset())
+		{
+			game = GameScene(this);
+			game.loadGameObject();
+			game.loadLevel("Data/DemoLevel.xml");
+			SetReset(false);
+		}
 		while(timesincelasttick > timebetweenticks) //lock refresh rate
 		{
 

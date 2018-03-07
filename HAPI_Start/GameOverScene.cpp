@@ -26,6 +26,12 @@ void GameOverScene::update()
 		}
 	}
 
+	if (game_->getKeyboard().scanCode['R'])
+	{
+		Sound::stopMusic("GameOver");
+		game_->SetReset(true);
+		game_->switchScene_Title();
+	}
 }
 
 void GameOverScene::render()

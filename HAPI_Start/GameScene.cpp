@@ -44,12 +44,19 @@ void GameScene::update()
 {
 
 	gameClock = HAPI.GetTime();
+
+	if (game_->CheckReset())
+	{
+		//Reset();
+
+	}
+
 	if (!Setup)
 	{
 		player->PlayerUpdate();
 		GameStartWait = gameClock;
-		GameStartWait = gameClock + 7000;
-		Sound::playMusic("Appear");
+		//GameStartWait = gameClock + 7000;
+		//Sound::playMusic("Appear");
 		game_->setRoom("Demo");
 		Setup = true;
 
@@ -409,6 +416,19 @@ void GameScene::loadTextures()
 	
 	//END OF PLAYER//
 	
+
+
+	//END OF PLAYER
+
+
+
+	
+
+}
+
+void GameScene::loadGameObject()
+{
+	/*PLAYER*/
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
 	playerSprites_LeftUpRun = new SpriteAnimator();
@@ -434,7 +454,7 @@ void GameScene::loadTextures()
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_9"));
 	playerSprites_LeftRun->addFrame(game_->getGraphics().getSprite("Player_Left_Run_10"));
 	playerSprites_LeftRun->play();
-	
+
 
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_1"));
 	playerSprites_RightRun->addFrame(game_->getGraphics().getSprite("Player_Right_Run_2"));
@@ -532,17 +552,7 @@ void GameScene::loadTextures()
 	playerSprites_RightFall = game_->getGraphics().getSprite("Player_Right_Fall_2");
 	playerSprites_RightFall->setEntity();
 
-	//END OF PLAYER
-
-
-
-	
-
-}
-
-void GameScene::loadGameObject()
-{
-
+	/*END OF PLAYER*/
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	player = new Player(playerSprite, playerRect, 60, 560);
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
@@ -675,6 +685,57 @@ void GameScene::loadSounds()
 	Sound::addSound("Enemy Death", "Audio/SE/enemy_death.wav");
 }
 
+void GameScene::Reset()
+{
+	//DELETE OLD
+	for (auto* enemy : enemies)
+	{
+		delete enemy;
+	}
+	//
+	game_->SetReset(false);
+
+
+	//RESPAWN NEW
+	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
+	enemies.push_back(SpacePirate);
+
+	int batspawnx = 610;
+	for (int i = 0; i < 10; i++)
+	{
+		Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), batspawnx, 130);
+		enemies.push_back(Bat);
+		batspawnx += 35;
+	}
+
+	int spspawn = 1124;
+	for (int i = 0; i < 10; i++)
+	{
+
+		Enemy_SP* SpacePirates = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 209);
+		enemies.push_back(SpacePirates);
+		spspawn += 100;
+	}
+
+	spspawn = 940;
+	for (int i = 0; i < 9; i++)
+	{
+
+		Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 467);
+		enemies.push_back(SpacePirate2);
+		spspawn += 450;
+	}
+
+	spspawn = 4144;
+	for (int i = 0; i < 4; i++)
+	{
+
+		Enemy_SP* SpacePirate3 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 179);
+		enemies.push_back(SpacePirate3);
+		spspawn += 450;
+	}
+}
+
 void GameScene::loadLevel(std::string level)
 {
 
@@ -683,15 +744,20 @@ void GameScene::loadLevel(std::string level)
 	//std::cout << "Setting Up Level Sprites: " << level << std::endl;
 	std::vector<CHapiXMLNode*> tilesused = levelxml.GetAllNodesWithName("sprite");
 
-	for (auto sprite : tilesused)
+	if (!game_->Check_GameScene_TilesLoaded())
 	{
-		CHapiXMLAttribute attr;
-		if (!sprite->GetAttributeWithName("location", attr))
-			return; //temp
-		std::string tilename = attr.AsString();
-		std::string tilelocation = "Textures/Level/Tiles/" + tilename;
-		//std::cout << "Sprite Name: " + tilename << " and Location: " + tilelocation << std::endl;
-		game_->getGraphics().loadTexture(tilename, tilelocation, false);
+		for (auto sprite : tilesused)
+		{
+			CHapiXMLAttribute attr;
+			if (!sprite->GetAttributeWithName("location", attr))
+				return; //temp
+			std::string tilename = attr.AsString();
+			std::string tilelocation = "Textures/Level/Tiles/" + tilename;
+			//std::cout << "Sprite Name: " + tilename << " and Location: " + tilelocation << std::endl;
+
+			game_->getGraphics().loadTexture(tilename, tilelocation, false);
+		}
+		game_->Set_GameScene_TilesLoaded(true);
 	}
 
 	//std::cout << "Setting Up Level Tiles: " << level << std::endl;

@@ -49,6 +49,8 @@ private:
 	bool p_SprintU = false;
 	bool p_SuperJump = false;
 	bool p_XRAYB = false;
+	bool hasReset = false;
+	bool GameScene_TilesLoaded = false;
 	
 public:
 	Game();
@@ -79,6 +81,15 @@ public:
 	void switchScene_Death() { current = &gameover; }
 	void switchScene_End() { current = &end; }
 	//--//
+
+	//Reset Level-//
+	void SetReset(bool yesno) { hasReset = yesno; }
+	bool CheckReset() { return hasReset; }
+
+	//Tiles
+	void Set_GameScene_TilesLoaded(bool yesno) { GameScene_TilesLoaded = yesno; }
+	bool Check_GameScene_TilesLoaded() { return GameScene_TilesLoaded; }
+	//-//
 
 	//Pause Screen-//
 	bool getPauseLock() { return pauseLock; }
