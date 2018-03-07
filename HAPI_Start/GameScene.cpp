@@ -55,8 +55,6 @@ void GameScene::update()
 	{
 		player->PlayerUpdate();
 		GameStartWait = gameClock;
-		//GameStartWait = gameClock + 7000;
-		//Sound::playMusic("Appear");
 		game_->setRoom("Demo");
 		Setup = true;
 
@@ -64,6 +62,7 @@ void GameScene::update()
 		{
 			p->Update(player);
 		}
+
 
 
 	}
@@ -83,6 +82,10 @@ void GameScene::update()
 
 				e->Setup();
 			}
+
+			player->setX(playerspawnx);
+			player->setY(playerspawny);
+
 		}
 	}
 
@@ -248,31 +251,34 @@ void GameScene::update()
 
 void GameScene::render()
 {
-	for (auto* gameObject : gameObjects)
+	if (GameStarted)
 	{
+		for (auto* gameObject : gameObjects)
+		{
 
-		if (gameObject->getTexture()->getAlpha())
-			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
-		else
-			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+			if (gameObject->getTexture()->getAlpha())
+				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+			else
+				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+
+		for (auto* enemy : enemies)
+		{
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+
+		for (auto* UI : gameUI)
+		{
+			if (UI->getTexture()->getAlpha())
+				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
+			else
+				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+		HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
 	}
-
-
-	for (auto* enemy : enemies)
-	{
-		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
-	}
-
-
-	for (auto* UI : gameUI)
-	{
-		if (UI->getTexture()->getAlpha())
-			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
-		else
-			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
-	}
-
-	HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
 }
 
 void GameScene::loadTextures()
@@ -554,7 +560,7 @@ void GameScene::loadGameObject()
 
 	/*END OF PLAYER*/
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
-	player = new Player(playerSprite, playerRect, 60, 560);
+	player = new Player(playerSprite, playerRect, playerspawnx, playerspawny);
 	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 484);
 	Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), 5768, 371);
@@ -589,6 +595,7 @@ void GameScene::loadGameObject()
 		bulletObjects.push_back(newbullet);
 	}
 
+	/*
 	//Enemy (Temp here, move into new function)
 	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
 	enemies.push_back(SpacePirate);
@@ -627,6 +634,7 @@ void GameScene::loadGameObject()
 		enemies.push_back(SpacePirate3);
 		spspawn += 450;
 	}
+	*/
 
 
 	HUDBar->getRect().Translate(HUDBar->getX(), game_->getScreenHeight() - HUDBar->getRect().getHeight());
@@ -649,7 +657,7 @@ void GameScene::loadGameObject()
 	player->set_pAnim_LeftSprint(playerSprites_LeftSprint);
 	player->set_pAnim_RightSprint(playerSprites_RightSprint);
 
-
+	/*/
 	for (auto spe : enemies)
 	{
 		if (dynamic_cast<Enemy_SP*>(spe))
@@ -666,6 +674,7 @@ void GameScene::loadGameObject()
 			dynamic_cast<Enemy_Bat*>(spe)->set_pSprite_Idle(game_->getGraphics().getSprite("Enemy_Bat_Idle"));
 		}
 	}
+	*/
 
 
 }
@@ -687,53 +696,7 @@ void GameScene::loadSounds()
 
 void GameScene::Reset()
 {
-	//DELETE OLD
-	for (auto* enemy : enemies)
-	{
-		delete enemy;
-	}
-	//
-	game_->SetReset(false);
 
-
-	//RESPAWN NEW
-	Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), 610, 467);
-	enemies.push_back(SpacePirate);
-
-	int batspawnx = 610;
-	for (int i = 0; i < 10; i++)
-	{
-		Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), batspawnx, 130);
-		enemies.push_back(Bat);
-		batspawnx += 35;
-	}
-
-	int spspawn = 1124;
-	for (int i = 0; i < 10; i++)
-	{
-
-		Enemy_SP* SpacePirates = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 209);
-		enemies.push_back(SpacePirates);
-		spspawn += 100;
-	}
-
-	spspawn = 940;
-	for (int i = 0; i < 9; i++)
-	{
-
-		Enemy_SP* SpacePirate2 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 467);
-		enemies.push_back(SpacePirate2);
-		spspawn += 450;
-	}
-
-	spspawn = 4144;
-	for (int i = 0; i < 4; i++)
-	{
-
-		Enemy_SP* SpacePirate3 = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), spspawn, 179);
-		enemies.push_back(SpacePirate3);
-		spspawn += 450;
-	}
 }
 
 void GameScene::loadLevel(std::string level)
@@ -794,33 +757,68 @@ void GameScene::loadLevel(std::string level)
 
 		std::string t_name = attr3.AsString();
 
-
-		if (isBossDoor)
-		
+		if (attr3.AsString() == "Misc/images/SpecialTiles_01.png" || attr3.AsString() == "Misc/images/SpecialTiles_02.png" || attr3.AsString() == "Misc/images/SpecialTiles_03.png" || attr3.AsString() == "Misc/images/SpecialTiles_04.png" || attr3.AsString() == "Misc/images/SpecialTiles_05.png" || attr3.AsString() == "Misc/images/SpecialTiles_06.png" || attr3.AsString() == "Misc/images/SpecialTiles_07.png")
 		{
-			Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
-			gameObjects.push_back(newwarp);
-			warps.push_back(newwarp);
-			warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
+			if (attr3.AsString() == "Misc/images/SpecialTiles_01.png")
+			{
+				playerspawnx = attr1.AsInt();
+				playerspawny = attr2.AsInt() - (64 + 18);
+
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_02.png")
+			{
+				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64 + 12));
+				enemies.push_back(SpacePirate);
+
+			}
 		}
-
-
 		else
 		{
+			if (isBossDoor)
 
-
-			GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
-
-			gameObjects.push_back(newtile);
-			if (!dontcollide)
 			{
-				platforms.push_back(newtile->getRect());
-				platforms.back().Translate(newtile->getX(), newtile->getY());
+				Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+				gameObjects.push_back(newwarp);
+				warps.push_back(newwarp);
+				warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
+			}
+
+
+			else
+			{
+
+
+				GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+
+				gameObjects.push_back(newtile);
+				if (!dontcollide)
+				{
+					platforms.push_back(newtile->getRect());
+					platforms.back().Translate(newtile->getX(), newtile->getY());
+				}
 			}
 		}
 
 
 
+	}
+
+	for (auto spe : enemies)
+	{
+		if (dynamic_cast<Enemy_SP*>(spe))
+		{
+			dynamic_cast<Enemy_SP*>(spe)->set_pAnim_RightRun(spacePirate_RightRun);
+			dynamic_cast<Enemy_SP*>(spe)->set_pAnim_LeftRun(spacePirate_LeftRun);
+			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_LeftIdle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"));
+			dynamic_cast<Enemy_SP*>(spe)->set_pSprite_RightIdle(game_->getGraphics().getSprite("Enemy_SP_FaceRight"));
+		}
+		if (dynamic_cast<Enemy_Bat*>(spe))
+		{
+			dynamic_cast<Enemy_Bat*>(spe)->set_pAnim_RightRun(bat_RightRun);
+			dynamic_cast<Enemy_Bat*>(spe)->set_pAnim_LeftRun(bat_LeftRun);
+			dynamic_cast<Enemy_Bat*>(spe)->set_pSprite_Idle(game_->getGraphics().getSprite("Enemy_Bat_Idle"));
+		}
 	}
 
 

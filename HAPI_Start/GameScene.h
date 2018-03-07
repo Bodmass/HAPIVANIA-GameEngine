@@ -48,6 +48,9 @@ private:
 	int rightSprintStartIndex = -1;
 	int leftJumpStartIndex = -1;
 	int rightJumpStartIndex = -1;
+
+	int playerspawnx = 0;
+	int playerspawny = 0;
 	//////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////
