@@ -281,31 +281,38 @@ void BossScene::update()
 
 void BossScene::render()
 {
-	for (auto* gameObject : gameObjects)
+	if (GameStarted)
 	{
+		for (auto* gameObject : gameObjects)
+		{
 
-		if (gameObject->getTexture()->getAlpha())
-			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
-		else
-			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+			if (gameObject->getTexture()->getAlpha())
+				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+			else
+				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), gameObject->getTexture(), gameObject->getX(), gameObject->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+
+		for (auto* enemy : enemies)
+		{
+			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+
+		for (auto* UI : gameUI)
+		{
+			if (UI->getTexture()->getAlpha())
+				game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
+			else
+				game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
+		}
+
+		HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
 	}
-
-
-	for (auto* enemy : enemies)
+	else
 	{
-		game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), enemy->getTexture(), enemy->getX(), enemy->getY(), game_->getCameraX(), game_->getCameraY());
+		HAPI.RenderText(game_->getScreenWidth()/2 - 50, game_->getScreenHeight() / 2, HAPI_TColour::WHITE,"LOADING", 100);
 	}
-
-
-	for (auto* UI : gameUI)
-	{
-		if (UI->getTexture()->getAlpha())
-			game_->getGraphics().BlitAlpha(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
-		else
-			game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), UI->getTexture(), UI->getX(), UI->getY(), game_->getCameraX(), game_->getCameraY());
-	}
-
-	HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
 }
 
 void BossScene::loadTextures()
@@ -317,6 +324,13 @@ void BossScene::loadTextures()
 	game_->getGraphics().loadTexture("Ship_Bomb", "Textures/AI/BossShip/Bomb.png");
 	game_->getGraphics().loadTexture("Ship_Bullet1", "Textures/AI/BossShip/Ship_Bullet1.png");
 	game_->getGraphics().loadTexture("Ship_Missile", "Textures/AI/BossShip/Ship_Missile.png");
+
+
+
+}
+
+void BossScene::loadGameObject()
+{
 
 	playerSprites_LeftRun = new SpriteAnimator();
 	playerSprites_RightRun = new SpriteAnimator();
@@ -331,6 +345,9 @@ void BossScene::loadTextures()
 	bat_LeftRun = new SpriteAnimator();
 	bat_RightRun = new SpriteAnimator();
 	ship_Idle = new SpriteAnimator();
+
+
+
 
 
 	ship_Idle->addFrame(game_->getGraphics().getSprite("Ship_1"));
@@ -447,10 +464,7 @@ void BossScene::loadTextures()
 	playerSprites_LeftFall->setEntity();
 	playerSprites_RightFall = game_->getGraphics().getSprite("Player_Right_Fall_2");
 	playerSprites_RightFall->setEntity();
-}
-
-void BossScene::loadGameObject()
-{
+	//////
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	Ship = new Boss(game_->getGraphics().getSprite("Ship_1"), Rectangle(game_->getGraphics().getSprite("Ship_1")->getWidth(), game_->getGraphics().getSprite("Ship_1")->getHeight()), 1350, -200);
 	doorDestroy = new GameObject(game_->getGraphics().getSprite("Ship_Bomb"), Rectangle(game_->getGraphics().getSprite("Ship_Bomb")->getWidth(), game_->getGraphics().getSprite("Ship_Bomb")->getHeight()), 1350, -200);

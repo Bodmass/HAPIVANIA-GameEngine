@@ -74,6 +74,10 @@ void Game::Update()
 			game = GameScene(this);
 			game.loadGameObject();
 			game.loadLevel("Data/DemoLevel.xml");
+
+			boss = BossScene(this);
+			boss.loadGameObject();
+			boss.loadLevel("Data/DemoLevel2.xml");
 			SetReset(false);
 		}
 		while(timesincelasttick > timebetweenticks) //lock refresh rate

@@ -248,9 +248,12 @@ void GameScene::update()
 		}
 		else
 		{
-			if (player->getY() < distancefrombottom)
+			if (levelheight > game_->getScreenHeight())
 			{
-				game_->setCamera(game_->getCameraX(), -distancefromcameraY);
+				if (player->getY() < distancefrombottom)
+				{
+					game_->setCamera(game_->getCameraX(), -distancefromcameraY);
+				}
 			}
 		}
 		
@@ -287,6 +290,10 @@ void GameScene::render()
 		}
 
 		HAPI.RenderText(10, 10, HAPI_TColour::WHITE, std::to_string(player->p_getcurHP()), 34);
+	}
+	else
+	{
+		HAPI.RenderText(game_->getScreenWidth() / 2 - 200, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "LOADING", 100);
 	}
 }
 
@@ -774,27 +781,27 @@ void GameScene::loadLevel(std::string level)
 			if (attr3.AsString() == "Misc/images/SpecialTiles_01.png")
 			{
 				playerspawnx = attr1.AsInt();
-				playerspawny = attr2.AsInt() - (64 + 18);
+				playerspawny = attr2.AsInt() - (32 + 18);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_02.png")
 			{
-				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64 + 12));
+				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32 + 12));
 				enemies.push_back(SpacePirate);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_03.png")
 			{
-				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
 				enemies.push_back(Bat);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_05.png")
 			{
-				Pickup* Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				Pickup* Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
 				gameObjects.push_back(Sprint_PU);
 				pickups.push_back(Sprint_PU);
 				Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
@@ -803,7 +810,7 @@ void GameScene::loadLevel(std::string level)
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_07.png")
 			{
-				Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
 				gameObjects.push_back(XRAY_PU);
 				pickups.push_back(XRAY_PU);
 				XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
@@ -811,7 +818,7 @@ void GameScene::loadLevel(std::string level)
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_06.png")
 			{
-				Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
 				gameObjects.push_back(JUMP_PU);
 				pickups.push_back(JUMP_PU);
 				JUMP_PU->getRect().Translate(JUMP_PU->getX(), JUMP_PU->getY());
@@ -822,7 +829,7 @@ void GameScene::loadLevel(std::string level)
 			if (isBossDoor)
 
 			{
-				Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+				Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 32);
 				gameObjects.push_back(newwarp);
 				warps.push_back(newwarp);
 				warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
@@ -833,7 +840,7 @@ void GameScene::loadLevel(std::string level)
 			{
 
 
-				GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 64);
+				GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 32);
 
 				gameObjects.push_back(newtile);
 				if (!dontcollide)
