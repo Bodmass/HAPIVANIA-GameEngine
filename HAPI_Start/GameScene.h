@@ -51,6 +51,8 @@ private:
 
 	int playerspawnx = 0;
 	int playerspawny = 0;
+
+	int levelheight = 3200;
 	//////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////
@@ -66,7 +68,7 @@ private:
 	//Entities
 	GameObject* BG;
 	Player* player;
-	Pickup* Sprint_PU;
+	//Pickup* Sprint_PU;
 
 	Rectangle playerRect = Rectangle(48, 48);
 

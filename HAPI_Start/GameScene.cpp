@@ -191,7 +191,7 @@ void GameScene::update()
 		}
 		
 		//If the player falls under the map
-		if (player->getY() > (game_->getCameraY() + game_->getScreenHeight()))
+		if (player->getY() > (game_->getCameraY() + levelheight))
 			player->Attacked(99); //Instant Death
 
 
@@ -232,6 +232,7 @@ void GameScene::update()
 
 		int distancefromcameraX = abs((player->getX() + 48) - (game_->getScreenWidth() / 2));
 		int distancefromcameraY = abs(player->getY() - (game_->getScreenHeight() / 2));
+		int distancefrombottom = abs(player->getY() - (levelheight));
 		
 		if (player->getX() + 48 > (game_->getScreenWidth() / 2))
 		{
@@ -240,9 +241,17 @@ void GameScene::update()
 		else
 			game_->setCamera(0, game_->getCameraY());
 
+
 		if (player->getY() < (game_->getScreenHeight() / 2))
 		{
 			game_->setCamera(game_->getCameraX(), distancefromcameraY);
+		}
+		else
+		{
+			if (player->getY() < distancefrombottom)
+			{
+				game_->setCamera(game_->getCameraX(), -distancefromcameraY);
+			}
 		}
 		
 
@@ -561,31 +570,24 @@ void GameScene::loadGameObject()
 	/*END OF PLAYER*/
 	BG = new GameObject(game_->getGraphics().getSprite("Background"), Rectangle(game_->getGraphics().getSprite("Background")->getWidth(), game_->getGraphics().getSprite("Background")->getHeight()), 0, 0, true);
 	player = new Player(playerSprite, playerRect, playerspawnx, playerspawny);
-	Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
+	/*Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), 2600, 200);
 	Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), 2600, 484);
-	Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), 5768, 371);
+	Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), 5768, 371);*/
 	HUDBar = new GameObject(game_->getGraphics().getSprite("HUDBar"), Rectangle(game_->getGraphics().getSprite("HUDBar")->getWidth(), game_->getGraphics().getSprite("HUDBar")->getHeight()), 0, 0, true);
 	CamRect = new Rectangle(game_->getScreenWidth(), game_->getScreenHeight());
 
 	gameObjects.push_back(BG);
 	gameObjects.push_back(player);
-	gameObjects.push_back(Sprint_PU);
-	gameObjects.push_back(XRAY_PU);
-	gameObjects.push_back(JUMP_PU);
+
 	gameUI.push_back(HUDBar);
 	
 
-	pickups.push_back(Sprint_PU);
-	pickups.push_back(XRAY_PU);
-	pickups.push_back(JUMP_PU);
 
-	platforms.push_back(Sprint_PU->getRect());
+	//platforms.push_back(Sprint_PU->getRect());
 
 	player->getRect().Translate(player->getX(), player->getY());
 	
-	JUMP_PU->getRect().Translate(JUMP_PU->getX(), JUMP_PU->getY());
-	Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
-	XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
+
 
 	//Offscreen Bullets
 	for (int i = 0; i < 14; i++)
@@ -706,6 +708,16 @@ void GameScene::loadLevel(std::string level)
 	CHapiXML levelxml = level;
 	//std::cout << "Setting Up Level Sprites: " << level << std::endl;
 	std::vector<CHapiXMLNode*> tilesused = levelxml.GetAllNodesWithName("sprite");
+	std::vector<CHapiXMLNode*> levelinfo = levelxml.GetAllNodesWithName("info");
+
+	CHapiXMLAttribute heightattr;
+
+	for (auto info : levelinfo)
+	{
+		if (!info->GetAttributeWithName("height", heightattr))
+			return;
+		levelheight = heightattr.AsInt();
+	}
 
 	if (!game_->Check_GameScene_TilesLoaded())
 	{
@@ -771,6 +783,38 @@ void GameScene::loadLevel(std::string level)
 				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64 + 12));
 				enemies.push_back(SpacePirate);
 
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_03.png")
+			{
+				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				enemies.push_back(Bat);
+
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_05.png")
+			{
+				Pickup* Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				gameObjects.push_back(Sprint_PU);
+				pickups.push_back(Sprint_PU);
+				Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
+				
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_07.png")
+			{
+				Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				gameObjects.push_back(XRAY_PU);
+				pickups.push_back(XRAY_PU);
+				XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_06.png")
+			{
+				Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (64));
+				gameObjects.push_back(JUMP_PU);
+				pickups.push_back(JUMP_PU);
+				JUMP_PU->getRect().Translate(JUMP_PU->getX(), JUMP_PU->getY());
 			}
 		}
 		else
