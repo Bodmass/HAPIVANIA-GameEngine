@@ -294,7 +294,7 @@ void GameScene::render()
 void GameScene::loadTextures()
 {
 	game_->getGraphics().loadTexture("Background","Textures/Level/BGs/BG1.tga", false);
-	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png", false);
+	game_->getGraphics().loadTexture("HUDBar", "Textures/UI/HUD/HUDBar.png");
 	//BULLETS
 	game_->getGraphics().loadTexture("Player_Bullet_1", "Textures/Player/Bullets/BasicBullet.png"); 
 	game_->getGraphics().loadTexture("Player_Bullet_2", "Textures/Player/Bullets/XRAYBullet.png"); 
