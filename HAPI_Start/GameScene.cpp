@@ -191,7 +191,7 @@ void GameScene::update()
 		}
 		
 		//If the player falls under the map
-		if (player->getY() > (game_->getCameraY() + levelheight))
+		if (player->getY() > levelheight)
 			player->Attacked(99); //Instant Death
 
 
@@ -229,10 +229,12 @@ void GameScene::update()
 
 
 		//SET CAMERA
+		
 
 		int distancefromcameraX = abs((player->getX() + 48) - (game_->getScreenWidth() / 2));
-		int distancefromcameraY = abs(player->getY() - (game_->getScreenHeight() / 2));
+		int distancefromcameraY = player->getY() - (game_->getScreenHeight() / 2);
 		int distancefrombottom = abs(player->getY() - (levelheight));
+		int CameraFromBottom = levelheight - (game_->getScreenHeight() / 2);
 		
 		if (player->getX() + 48 > (game_->getScreenWidth() / 2))
 		{
@@ -241,21 +243,16 @@ void GameScene::update()
 		else
 			game_->setCamera(0, game_->getCameraY());
 
-
-		if (player->getY() < (game_->getScreenHeight() / 2))
+		if (levelheight > game_->getScreenHeight())
 		{
-			game_->setCamera(game_->getCameraX(), distancefromcameraY);
-		}
-		else
-		{
-			if (levelheight > game_->getScreenHeight())
+			if (player->getY() < CameraFromBottom)
 			{
-				if (player->getY() < distancefrombottom)
-				{
-					game_->setCamera(game_->getCameraX(), -distancefromcameraY);
-				}
+				game_->setCamera(game_->getCameraX(), -distancefromcameraY);
 			}
 		}
+		else
+			game_->setCamera(game_->getCameraX(), game_->getScreenHeight() - levelheight);
+
 		
 
 
@@ -293,7 +290,7 @@ void GameScene::render()
 	}
 	else
 	{
-		HAPI.RenderText(game_->getScreenWidth() / 2 - 200, game_->getScreenHeight() / 2, HAPI_TColour::WHITE, "LOADING", 100);
+		game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), game_->getGraphics().getSprite("LoadingScreen"), 0,0, 0, 0);
 	}
 }
 
@@ -781,27 +778,27 @@ void GameScene::loadLevel(std::string level)
 			if (attr3.AsString() == "Misc/images/SpecialTiles_01.png")
 			{
 				playerspawnx = attr1.AsInt();
-				playerspawny = attr2.AsInt() - (32 + 18);
+				playerspawny = attr2.AsInt() - (0 + 18);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_02.png")
 			{
-				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32 + 12));
+				Enemy_SP* SpacePirate = new Enemy_SP(game_->getGraphics().getSprite("Enemy_SP_FaceLeft"), Rectangle(game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getWidth(), game_->getGraphics().getSprite("Enemy_SP_FaceLeft")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0 + 12));
 				enemies.push_back(SpacePirate);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_03.png")
 			{
-				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
+				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0));
 				enemies.push_back(Bat);
 
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_05.png")
 			{
-				Pickup* Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
+				Pickup* Sprint_PU = new Pickup(1, game_->getGraphics().getSprite("Pickup_Sprint_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Sprint_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Sprint_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0));
 				gameObjects.push_back(Sprint_PU);
 				pickups.push_back(Sprint_PU);
 				Sprint_PU->getRect().Translate(Sprint_PU->getX(), Sprint_PU->getY());
@@ -810,7 +807,7 @@ void GameScene::loadLevel(std::string level)
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_07.png")
 			{
-				Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
+				Pickup* XRAY_PU = new Pickup(3, game_->getGraphics().getSprite("Pickup_XRAY_1"), Rectangle(game_->getGraphics().getSprite("Pickup_XRAY_1")->getWidth(), game_->getGraphics().getSprite("Pickup_XRAY_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0));
 				gameObjects.push_back(XRAY_PU);
 				pickups.push_back(XRAY_PU);
 				XRAY_PU->getRect().Translate(XRAY_PU->getX(), XRAY_PU->getY());
@@ -818,7 +815,7 @@ void GameScene::loadLevel(std::string level)
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_06.png")
 			{
-				Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (32));
+				Pickup* JUMP_PU = new Pickup(2, game_->getGraphics().getSprite("Pickup_Jump_1"), Rectangle(game_->getGraphics().getSprite("Pickup_Jump_1")->getWidth(), game_->getGraphics().getSprite("Pickup_Jump_1")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0));
 				gameObjects.push_back(JUMP_PU);
 				pickups.push_back(JUMP_PU);
 				JUMP_PU->getRect().Translate(JUMP_PU->getX(), JUMP_PU->getY());
@@ -829,7 +826,7 @@ void GameScene::loadLevel(std::string level)
 			if (isBossDoor)
 
 			{
-				Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 32);
+				Warp* newwarp = new Warp(1, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 0);
 				gameObjects.push_back(newwarp);
 				warps.push_back(newwarp);
 				warps.back()->getRect().Translate(newwarp->getX(), newwarp->getY());
@@ -840,7 +837,7 @@ void GameScene::loadLevel(std::string level)
 			{
 
 
-				GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 32);
+				GameObject* newtile = new GameObject(game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 0);
 
 				gameObjects.push_back(newtile);
 				if (!dontcollide)

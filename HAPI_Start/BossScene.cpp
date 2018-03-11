@@ -311,7 +311,7 @@ void BossScene::render()
 	}
 	else
 	{
-		HAPI.RenderText(game_->getScreenWidth()/2 - 50, game_->getScreenHeight() / 2, HAPI_TColour::WHITE,"LOADING", 100);
+		game_->getGraphics().Blit(game_->getScreen(), game_->getScreenRect(), game_->getGraphics().getSprite("LoadingScreen"), 0, 0, 0, 0);
 	}
 }
 

@@ -76,6 +76,7 @@ void TitleScreen::render()
 void TitleScreen::loadTextures()
 {
 	BG = new Texture("Textures/TitleScreen/Logo.tga");
+	game_->getGraphics().loadTexture("LoadingScreen", "Textures/UI/Pause/LoadingBG.png", false);
 }
 
 void TitleScreen::loadGameObject()

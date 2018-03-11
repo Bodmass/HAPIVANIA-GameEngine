@@ -3,7 +3,7 @@
 
 Game::Game()
 {
-	if (!HAPI.Initialise(screenWidth, screenHeight, "GEC HAPIvania Engine - Aziz Arar s6053935"))
+	if (!HAPI.Initialise(screenWidth, screenHeight, "AzEngine: HAPIVANIA"))
 		return;
 	
 }
