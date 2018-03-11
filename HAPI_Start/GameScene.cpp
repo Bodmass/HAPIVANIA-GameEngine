@@ -243,15 +243,12 @@ void GameScene::update()
 		else
 			game_->setCamera(0, game_->getCameraY());
 
-		if (levelheight > game_->getScreenHeight())
+
+		if (player->getY() < CameraFromBottom)
 		{
-			if (player->getY() < CameraFromBottom)
-			{
-				game_->setCamera(game_->getCameraX(), -distancefromcameraY);
-			}
+			game_->setCamera(game_->getCameraX(), -distancefromcameraY);
 		}
-		else
-			game_->setCamera(game_->getCameraX(), game_->getScreenHeight() - levelheight);
+		
 
 		
 
