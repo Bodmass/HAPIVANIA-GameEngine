@@ -23,6 +23,8 @@ void PauseMenu::update()
 		game_->setPauseLock(true);
 		if(game_->getRoom() == "Demo")
 			game_->switchScene_Game();
+		if (game_->getRoom() == "Demo2")
+			game_->switchScene_Game2();
 		if (game_->getRoom() == "Boss")
 			game_->switchScene_Boss();
 	}

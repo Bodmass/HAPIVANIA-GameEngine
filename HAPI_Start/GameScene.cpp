@@ -55,7 +55,7 @@ void GameScene::update()
 	{
 		player->PlayerUpdate();
 		GameStartWait = gameClock;
-		game_->setRoom("Demo");
+		//game_->setRoom("Demo");
 		Setup = true;
 
 		for (auto p : pickups)
@@ -63,6 +63,13 @@ void GameScene::update()
 			p->Update(player);
 		}
 
+
+		if (game_->p_SprintU_Get())
+			player->setSprintUpgrade();
+		if (game_->p_XRAYB_Get())
+			player->setXRAYUpgrade();
+		if (game_->p_SuperJump_Get())
+			player->setJumpUpgrade();
 
 
 	}
@@ -174,10 +181,31 @@ void GameScene::update()
 			{
 				Sound::stopMusic("BGM 1");
 				game_->switchScene_Boss();
-				game_->p_SprintU_Set(player->checkSprintUpgrade());
-				game_->p_XRAYB_Set(player->checkXRAYUpgrade());
-				game_->p_SuperJump_Set(player->checkJumpUpgrade());
+				if (player->checkJumpUpgrade())
+					game_->p_SuperJump_Set(true);
+				if (player->checkSprintUpgrade())
+					game_->p_SprintU_Set(true);
+				if (player->checkXRAYUpgrade())
+					game_->p_XRAYB_Set(true);
 			}
+
+			if (w->getID() == 2 && w->Entered())
+			{
+				game_->setRoom("Demo2");
+				Sound::stopMusic("BGM 1");
+				game_->switchScene_Game2();
+
+				if (player->checkJumpUpgrade())
+					game_->p_SuperJump_Set(true);
+				if (player->checkSprintUpgrade())
+					game_->p_SprintU_Set(true);
+				if (player->checkXRAYUpgrade())
+					game_->p_XRAYB_Set(true);
+			}
+
+
+
+
 		}
 		
 		//Enemy Update
@@ -791,6 +819,14 @@ void GameScene::loadLevel(std::string level)
 				Enemy_Bat* Bat = new Enemy_Bat(game_->getGraphics().getSprite("Enemy_Bat_Idle"), Rectangle(game_->getGraphics().getSprite("Enemy_Bat_Idle")->getWidth(), game_->getGraphics().getSprite("Enemy_Bat_Idle")->getHeight()), attr1.AsInt(), attr2.AsInt() - (0));
 				enemies.push_back(Bat);
 
+			}
+
+			if (attr3.AsString() == "Misc/images/SpecialTiles_04.png")
+			{
+				Warp* WarpTile = new Warp(2, game_->getGraphics().getSprite(t_name), Rectangle(game_->getGraphics().getSprite(t_name)->getWidth(), game_->getGraphics().getSprite(t_name)->getHeight()), attr1.AsInt(), attr2.AsInt() - 0);
+				//gameObjects.push_back(newwarp);
+				warps.push_back(WarpTile);
+				warps.back()->getRect().Translate(WarpTile->getX(), WarpTile->getY());
 			}
 
 			if (attr3.AsString() == "Misc/images/SpecialTiles_05.png")

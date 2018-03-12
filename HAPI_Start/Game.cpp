@@ -20,6 +20,7 @@ void Game::Run()
 		screen = HAPI.GetScreenPointer();
 		screenRect = Rectangle(screenWidth, screenHeight);
 		game = GameScene(this);
+		game2 = GameScene(this);
 		boss = BossScene(this);
 		title = TitleScreen(this);
 		pause = PauseMenu(this);
@@ -46,7 +47,10 @@ void Game::Update()
 	game.loadTextures();
 	game.loadGameObject();
 	game.loadSounds();
-	game.loadLevel("Data/DemoLevel.xml");
+	game.loadLevel("Data/Level1.xml");
+
+	game2.loadGameObject();
+	game2.loadLevel("Data/Level2.xml");
 	//Setup GameOver
 	gameover.loadTextures();
 	gameover.loadSounds();
@@ -71,9 +75,19 @@ void Game::Update()
 		time = HAPI.GetTime();
 		if (CheckReset())
 		{
+			p_SuperJump_Set(false);
+			p_SprintU_Set(false);
+			p_XRAYB_Set(false);
+
+			setRoom("Demo");
+
 			game = GameScene(this);
 			game.loadGameObject();
-			game.loadLevel("Data/DemoLevel.xml");
+			game.loadLevel("Data/Level1.xml");
+
+			game2 = GameScene(this);
+			game2.loadGameObject();
+			game2.loadLevel("Data/Level2.xml");
 
 			boss = BossScene(this);
 			boss.loadGameObject();

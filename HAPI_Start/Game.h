@@ -33,13 +33,14 @@ private:
 	Rectangle screenRect;
 	Scene* current = nullptr; //Scene that is always played and just swaps what it's pointing to.
 	GameScene game = nullptr; //Stage 1 Scene
-	BossScene boss = nullptr; //Stage 2 Scene
+	GameScene game2 = nullptr; //Stage 2 Scene
+	BossScene boss = nullptr; //Boss Scene
 	TitleScreen title = nullptr; //Title Scene
 	PauseMenu pause = nullptr; //Pause Scene
 	GameOverScene gameover = nullptr; //Death Scene
 	EndScene end = nullptr; //Credits
 	bool pauseLock = false;
-	std::string room; //Contains name of the Scene
+	std::string room = "Demo"; //Contains name of the Scene
 	std::string difficulty = "Easy"; //Easy, Hard Modes
 
 	Texture icontexture = "Textures/Icon.png"; //Game Icon
@@ -51,6 +52,7 @@ private:
 	bool p_XRAYB = false;
 	bool hasReset = false;
 	bool GameScene_TilesLoaded = false;
+
 	
 public:
 	Game();
@@ -76,6 +78,7 @@ public:
 	//-Swap Scenes-//
 	void switchScene_Title() { current = &title; }
 	void switchScene_Game() { current = &game; }
+	void switchScene_Game2() { current = &game2; }
 	void switchScene_Boss() { current = &boss; }
 	void switchScene_Pause() { current = &pause; }
 	void switchScene_Death() { current = &gameover; }
@@ -114,6 +117,5 @@ public:
 	void setHardMode() { difficulty = "Hard"; }
 	void setEasyMode() { difficulty = "Easy"; }
 	bool isHardMode() { if (difficulty == "Hard") return true; return false; }
-	//--//
 
 };

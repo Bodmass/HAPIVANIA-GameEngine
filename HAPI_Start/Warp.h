@@ -4,7 +4,7 @@ class Warp :
 	public GameObject
 {
 private:
-	int WarpID;
+	int WarpID = 0;
 	bool hasEntered = false;
 public:
 	Warp(int WarpID_, Texture* texture, Rectangle rectangle, int posX, int posY) : GameObject(texture, rectangle, posX, posY) { WarpID = WarpID_; };
@@ -12,6 +12,6 @@ public:
 
 	void Update(Rectangle* plyrRect);
 	bool Entered() { return hasEntered; }
-	bool getID() { return WarpID; }
+	int getID() { return WarpID; }
 };
 
