@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<level columns="2" rows="10">
+  <sprites>
+    <sprite doc="Textures/Level/Tiles/Cave_01.png">
+  </sprites>
+  <tiles>
+    <tile sprite="0" posX = "0" posY = "352">
+    <tile sprite="0" posX = "32" posY = "352">
+    <tile sprite="0" posX = "0" posY = "384">
+    <tile sprite="0" posX = "32" posY = "384">
+  </tiles>
+</level>

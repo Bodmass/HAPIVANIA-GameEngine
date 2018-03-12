@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<level>
+  <sprites>
+    <sprite location="Cave/Cave_00.png" />
+    <sprite location="Cave/Cave_01.png" />
+    <sprite location="Cave/Cave_02.png" />
+    <sprite location="Cave/Cave_03.png" />
+    <sprite location="Cave/Cave_04.png" />
+    <sprite location="Cave/Cave_05.png" />
+    <sprite location="Cave/Cave_07.png" />
+    <sprite location="Cave/Cave_08.png" />
+    <sprite location="Cave/Cave_09.png" />
+    <sprite location="Cave/Cave_10.png" />
+    <sprite location="Cave/Cave_11.png" />
+    <sprite location="Cave/Cave_12.png" />
+    <sprite location="Cave/Cave_13.png" />
+    <sprite location="Cave/Cave_14.png" />
+    <sprite location="Cave/Cave_15.png" />
+    <sprite location="Cave/Cave_16.png" />
+    <sprite location="Cave/Cave_17.png" />
+    <sprite location="Cave/Cave_18.png" />
+    <sprite location="Cave/Cave_20.png" />
+    <sprite location="Cave/Cave_21.png" />
+  </sprites>
+  <tiles>
+    <tile x="0" y="512" look="Cave/Cave_09.png" />
+    <tile x="32" y="512" look="Cave/Cave_09.png" />
+    <tile x="64" y="512" look="Cave/Cave_09.png" />
+    <tile x="96" y="512" look="Cave/Cave_09.png" />
+    <tile x="128" y="512" look="Cave/Cave_09.png" />
+    <tile x="160" y="512" look="Cave/Cave_09.png" />
+    <tile x="192" y="512" look="Cave/Cave_09.png" />
+    <tile x="224" y="512" look="Cave/Cave_09.png" />
+    <tile x="256" y="512" look="Cave/Cave_09.png" />
+    <tile x="288" y="512" look="Cave/Cave_09.png" />
+    <tile x="320" y="512" look="Cave/Cave_09.png" />
+    <tile x="352" y="512" look="Cave/Cave_09.png" />
+    <tile x="384" y="512" look="Cave/Cave_09.png" />
+    <tile x="416" y="512" look="Cave/Cave_09.png" />
+    <tile x="448" y="512" look="Cave/Cave_09.png" />
+    <tile x="480" y="512" look="Cave/Cave_09.png" />
+    <tile x="512" y="512" look="Cave/Cave_09.png" />
+    <tile x="544" y="512" look="Cave/Cave_09.png" />
+    <tile x="576" y="512" look="Cave/Cave_09.png" />
+    <tile x="608" y="512" look="Cave/Cave_09.png" />
+    <tile x="640" y="512" look="Cave/Cave_09.png" />
+    <tile x="672" y="512" look="Cave/Cave_09.png" />
+    <tile x="704" y="512" look="Cave/Cave_09.png" />
+    <tile x="736" y="512" look="Cave/Cave_09.png" />
+    <tile x="768" y="512" look="Cave/Cave_09.png" />
+    <tile x="800" y="512" look="Cave/Cave_09.png" />
+    <tile x="832" y="512" look="Cave/Cave_09.png" />
+    <tile x="864" y="512" look="Cave/Cave_09.png" />
+    <tile x="896" y="512" look="Cave/Cave_09.png" />
+    <tile x="928" y="512" look="Cave/Cave_09.png" />
+    <tile x="960" y="512" look="Cave/Cave_09.png" />
+    <tile x="992" y="512" look="Cave/Cave_11.png" />
+    <tile x="0" y="544" look="Cave/Cave_09.png" />
+    <tile x="32" y="544" look="Cave/Cave_09.png" />
+    <tile x="64" y="544" look="Cave/Cave_09.png" />
+    <tile x="96" y="544" look="Cave/Cave_09.png" />
+    <tile x="128" y="544" look="Cave/Cave_09.png" />
+    <tile x="160" y="544" look="Cave/Cave_09.png" />
+    <tile x="192" y="544" look="Cave/Cave_09.png" />
+    <tile x="224" y="544" look="Cave/Cave_09.png" />
+    <tile x="256" y="544" look="Cave/Cave_09.png" />
+    <tile x="288" y="544" look="Cave/Cave_09.png" />
+    <tile x="320" y="544" look="Cave/Cave_09.png" />
+    <tile x="352" y="544" look="Cave/Cave_09.png" />
+    <tile x="384" y="544" look="Cave/Cave_09.png" />
+    <tile x="416" y="544" look="Cave/Cave_09.png" />
+    <tile x="448" y="544" look="Cave/Cave_09.png" />
+    <tile x="480" y="544" look="Cave/Cave_09.png" />
+    <tile x="512" y="544" look="Cave/Cave_09.png" />
+    <tile x="544" y="544" look="Cave/Cave_09.png" />
+    <tile x="576" y="544" look="Cave/Cave_09.png" />
+    <tile x="608" y="544" look="Cave/Cave_09.png" />
+    <tile x="640" y="544" look="Cave/Cave_09.png" />
+    <tile x="672" y="544" look="Cave/Cave_09.png" />
+    <tile x="704" y="544" look="Cave/Cave_09.png" />
+    <tile x="736" y="544" look="Cave/Cave_09.png" />
+    <tile x="768" y="544" look="Cave/Cave_09.png" />
+    <tile x="800" y="544" look="Cave/Cave_09.png" />
+    <tile x="832" y="544" look="Cave/Cave_09.png" />
+    <tile x="864" y="544" look="Cave/Cave_09.png" />
+    <tile x="896" y="544" look="Cave/Cave_09.png" />
+    <tile x="928" y="544" look="Cave/Cave_09.png" />
+    <tile x="960" y="544" look="Cave/Cave_09.png" />
+    <tile x="992" y="544" look="Cave/Cave_11.png" />
+    <tile x="0" y="576" look="Cave/Cave_09.png" />
+    <tile x="32" y="576" look="Cave/Cave_09.png" />
+    <tile x="64" y="576" look="Cave/Cave_09.png" />
+    <tile x="96" y="576" look="Cave/Cave_09.png" />
+    <tile x="128" y="576" look="Cave/Cave_09.png" />
+    <tile x="160" y="576" look="Cave/Cave_09.png" />
+    <tile x="192" y="576" look="Cave/Cave_09.png" />
+    <tile x="224" y="576" look="Cave/Cave_09.png" />
+    <tile x="256" y="576" look="Cave/Cave_09.png" />
+    <tile x="288" y="576" look="Cave/Cave_09.png" />
+    <tile x="320" y="576" look="Cave/Cave_09.png" />
+    <tile x="352" y="576" look="Cave/Cave_09.png" />
+    <tile x="384" y="576" look="Cave/Cave_09.png" />
+    <tile x="416" y="576" look="Cave/Cave_09.png" />
+    <tile x="448" y="576" look="Cave/Cave_09.png" />
+    <tile x="480" y="576" look="Cave/Cave_09.png" />
+    <tile x="512" y="576" look="Cave/Cave_09.png" />
+    <tile x="544" y="576" look="Cave/Cave_09.png" />
+    <tile x="576" y="576" look="Cave/Cave_09.png" />
+    <tile x="608" y="576" look="Cave/Cave_09.png" />
+    <tile x="640" y="576" look="Cave/Cave_09.png" />
+    <tile x="672" y="576" look="Cave/Cave_09.png" />
+    <tile x="704" y="576" look="Cave/Cave_09.png" />
+    <tile x="736" y="576" look="Cave/Cave_09.png" />
+    <tile x="768" y="576" look="Cave/Cave_09.png" />
+    <tile x="800" y="576" look="Cave/Cave_09.png" />
+    <tile x="832" y="576" look="Cave/Cave_09.png" />
+    <tile x="864" y="576" look="Cave/Cave_09.png" />
+    <tile x="896" y="576" look="Cave/Cave_09.png" />
+    <tile x="928" y="576" look="Cave/Cave_09.png" />
+    <tile x="960" y="576" look="Cave/Cave_09.png" />
+    <tile x="992" y="576" look="Cave/Cave_11.png" />
+    <tile x="0" y="608" look="Cave/Cave_09.png" />
+    <tile x="32" y="608" look="Cave/Cave_09.png" />
+    <tile x="64" y="608" look="Cave/Cave_09.png" />
+    <tile x="96" y="608" look="Cave/Cave_09.png" />
+    <tile x="128" y="608" look="Cave/Cave_09.png" />
+    <tile x="160" y="608" look="Cave/Cave_09.png" />
+    <tile x="192" y="608" look="Cave/Cave_09.png" />
+    <tile x="224" y="608" look="Cave/Cave_09.png" />
+    <tile x="256" y="608" look="Cave/Cave_09.png" />
+    <tile x="288" y="608" look="Cave/Cave_09.png" />
+    <tile x="320" y="608" look="Cave/Cave_09.png" />
+    <tile x="352" y="608" look="Cave/Cave_09.png" />
+    <tile x="384" y="608" look="Cave/Cave_09.png" />
+    <tile x="416" y="608" look="Cave/Cave_09.png" />
+    <tile x="448" y="608" look="Cave/Cave_09.png" />
+    <tile x="480" y="608" look="Cave/Cave_09.png" />
+    <tile x="512" y="608" look="Cave/Cave_09.png" />
+    <tile x="544" y="608" look="Cave/Cave_09.png" />
+    <tile x="576" y="608" look="Cave/Cave_09.png" />
+    <tile x="608" y="608" look="Cave/Cave_09.png" />
+    <tile x="640" y="608" look="Cave/Cave_09.png" />
+    <tile x="672" y="608" look="Cave/Cave_09.png" />
+    <tile x="704" y="608" look="Cave/Cave_09.png" />
+    <tile x="736" y="608" look="Cave/Cave_09.png" />
+    <tile x="768" y="608" look="Cave/Cave_09.png" />
+    <tile x="800" y="608" look="Cave/Cave_09.png" />
+    <tile x="832" y="608" look="Cave/Cave_09.png" />
+    <tile x="864" y="608" look="Cave/Cave_09.png" />
+    <tile x="896" y="608" look="Cave/Cave_09.png" />
+    <tile x="928" y="608" look="Cave/Cave_09.png" />
+    <tile x="960" y="608" look="Cave/Cave_09.png" />
+    <tile x="992" y="608" look="Cave/Cave_11.png" />
+    <tile x="0" y="640" look="Cave/Cave_09.png" />
+    <tile x="32" y="640" look="Cave/Cave_09.png" />
+    <tile x="64" y="640" look="Cave/Cave_09.png" />
+    <tile x="96" y="640" look="Cave/Cave_09.png" />
+    <tile x="128" y="640" look="Cave/Cave_09.png" />
+    <tile x="160" y="640" look="Cave/Cave_09.png" />
+    <tile x="192" y="640" look="Cave/Cave_09.png" />
+    <tile x="224" y="640" look="Cave/Cave_09.png" />
+    <tile x="256" y="640" look="Cave/Cave_09.png" />
+    <tile x="288" y="640" look="Cave/Cave_09.png" />
+    <tile x="320" y="640" look="Cave/Cave_09.png" />
+    <tile x="352" y="640" look="Cave/Cave_09.png" />
+    <tile x="384" y="640" look="Cave/Cave_09.png" />
+    <tile x="416" y="640" look="Cave/Cave_09.png" />
+    <tile x="448" y="640" look="Cave/Cave_09.png" />
+    <tile x="480" y="640" look="Cave/Cave_09.png" />
+    <tile x="512" y="640" look="Cave/Cave_09.png" />
+    <tile x="544" y="640" look="Cave/Cave_09.png" />
+    <tile x="576" y="640" look="Cave/Cave_09.png" />
+    <tile x="608" y="640" look="Cave/Cave_09.png" />
+    <tile x="640" y="640" look="Cave/Cave_09.png" />
+    <tile x="672" y="640" look="Cave/Cave_09.png" />
+    <tile x="704" y="640" look="Cave/Cave_09.png" />
+    <tile x="736" y="640" look="Cave/Cave_09.png" />
+    <tile x="768" y="640" look="Cave/Cave_09.png" />
+    <tile x="800" y="640" look="Cave/Cave_09.png" />
+    <tile x="832" y="640" look="Cave/Cave_09.png" />
+    <tile x="864" y="640" look="Cave/Cave_09.png" />
+    <tile x="896" y="640" look="Cave/Cave_09.png" />
+    <tile x="928" y="640" look="Cave/Cave_09.png" />
+    <tile x="960" y="640" look="Cave/Cave_09.png" />
+    <tile x="992" y="640" look="Cave/Cave_20.png" />
+  </tiles>
+</level>
